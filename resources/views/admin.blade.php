@@ -82,13 +82,13 @@
                       
 						
 						<li>
-                            <a href="#"><i class="fa fa-file fa-fw"></i> Page<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-file fa-fw"></i> Hub<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{{url('pages/create')}}">Add Page</a>
+                                    <a href="{{url('hubs/create')}}">Add Hub</a>
                                 </li>
                                 <li>
-                                    <a href="{{url('pages/lists')}}">View Pages</a>
+                                    <a href="{{url('hubs/lists')}}">View Hub</a>
                                 </li>
                             </ul>
                         </li>
