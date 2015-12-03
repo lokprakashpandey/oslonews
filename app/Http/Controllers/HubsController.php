@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Hub;
+
+use Validator;
+
 class HubsController extends Controller
 {
     /**
@@ -37,7 +41,27 @@ class HubsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('builder')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+		
+		$slug = str_slug($request['name']);
+
+		$count = Hub::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+		
+		$request['slug'] = $count ? "{$slug}-{$count}" : $slug;
+		
+		$hub = Hub::create([
+			'name' => $request->name,
+			'slug' => $request['slug'],
+        ]);
+		return redirect('hubs/create')->with('message', 'Hub Added');
     }
 
     /**
