@@ -88,7 +88,7 @@
                                     <a href="{{url('hubs/create')}}">Add Hub</a>
                                 </li>
                                 <li>
-                                    <a href="{{url('hubs/lists')}}">View Hub</a>
+                                    <a href="{{url('hubs/index')}}">View Hub</a>
                                 </li>
                             </ul>
                         </li>

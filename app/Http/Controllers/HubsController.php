@@ -20,7 +20,8 @@ class HubsController extends Controller
      */
     public function index()
     {
-        //
+		$hubs = Hub::get();
+        return view('hubs.index',compact('hubs'));
     }
 
     /**
@@ -61,7 +62,7 @@ class HubsController extends Controller
 			'name' => $request->name,
 			'slug' => $request['slug'],
         ]);
-		return redirect('hubs/create')->with('message', 'Hub Added');
+		return redirect('hubs/index')->with('message', 'Hub Added');
     }
 
     /**
