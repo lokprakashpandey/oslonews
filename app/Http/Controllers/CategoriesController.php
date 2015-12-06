@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Category;
+use App\Country;
+use App\Helpers\CategoryHierarchy;
+
 class CategoriesController extends Controller
 {
     /**
@@ -24,9 +28,19 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(CategoryHierarchy $hierarchy)
     {
-        //
+        $categories = Category::get();
+		
+		$hierarchy->setupItems($categories);
+		
+		$category_opts = $hierarchy->render();
+		
+		$cat_types = array('1'=>'None','2'=>'column');
+		
+		$countries = Country::lists('name','id');
+		
+		return view('categories.create', compact('category_opts','cat_types','countries'));
     }
 
     /**

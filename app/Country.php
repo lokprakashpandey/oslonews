@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-    public function continent()
+   
+   protected $fillable = array('name','slug','continent_id'); 
+	
+   public $timestamps = false;
+	
+   public function continent()
     {
         return $this->belongsTo('App\Continent');
     }
