@@ -1,4 +1,3 @@
-i am veru
 <?php
 
 /**
