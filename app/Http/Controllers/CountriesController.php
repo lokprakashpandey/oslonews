@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Continent;
+use App\Country;
+use Validator;
+
 class CountriesController extends Controller
 {
     /**
@@ -16,7 +20,8 @@ class CountriesController extends Controller
      */
     public function index()
     {
-        //
+        $countries = Country::orderBy('name')->get();
+        return view('countries.index',compact('countries'));
     }
 
     /**
@@ -26,7 +31,9 @@ class CountriesController extends Controller
      */
     public function create()
     {
-        //
+        $continents = Continent::orderBy('name')->lists('name','id');
+		
+		return view('countries.create',compact('continents'));
     }
 
     /**
@@ -37,7 +44,28 @@ class CountriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('countries/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+		
+		$slug = str_slug($request['name']);
+
+		$count = Country::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+		
+		$request['slug'] = $count ? "{$slug}-{$count}" : $slug;
+		
+		$country = Country::create([
+			'name' => $request->name,
+			'slug' => $request['slug'],
+			'continent_id' => $request['continent_id'],
+        ]);
+		return redirect('countries/index')->with('message', 'Country Added');
     }
 
     /**

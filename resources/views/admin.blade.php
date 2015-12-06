@@ -80,6 +80,41 @@
                         </li>
 
                       
+						<li>
+                            <a href="#"><i class="fa fa-file fa-fw"></i> Continent<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{{url('continents/create')}}">Add Continent</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('continents/index')}}">View Continent</a>
+                                </li>
+                            </ul>
+                        </li>
+						
+						<li>
+                            <a href="#"><i class="fa fa-file fa-fw"></i> Country<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{{url('countries/create')}}">Add Country</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('countries/index')}}">View Country</a>
+                                </li>
+                            </ul>
+                        </li>
+						
+						<li>
+                            <a href="#"><i class="fa fa-file fa-fw"></i> Category<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{{url('categories/create')}}">Add Category</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('categories/index')}}">View Category</a>
+                                </li>
+                            </ul>
+                        </li>
 						
 						<li>
                             <a href="#"><i class="fa fa-file fa-fw"></i> Hub<span class="fa arrow"></span></a>

@@ -28,4 +28,12 @@ class Category extends Model
         return $this->belongsToMany('App\Country');
 
     }  
+	
+	
+	//other functions
+	public static function getCategories()
+    {
+			$category = Category::where('parent_id', '=', '0')->orderBy('position', 'asc')->with('children')->get(); 
+			return $category;
+	}
 }
