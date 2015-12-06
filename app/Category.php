@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+	
+	protected $fillable = array('name', 'parent_id', 'in_front','position','slug','in_main_menu','cat_type');
+	
+	public $timestamps = false;
+	
     public function parent() {
 
         return $this->hasOne('App\Category', 'id', 'parent_id');
