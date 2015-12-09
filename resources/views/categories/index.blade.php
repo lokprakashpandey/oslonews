@@ -108,6 +108,37 @@ form{display: inline;}
 									</td>
 								</tr>
 								
+								@if($category->children->count())
+									
+								  @foreach($category->children as $child)
+									<tr>
+									<td>&nbsp;&nbsp;{{ $child->name }}&nbsp;</td>
+									<td>
+									@foreach($child->hubs as $child_hub)
+										{{ $child_hub->name }}&nbsp;
+									@endforeach
+									</td>
+									<td>
+									@foreach($child->countries as $child_country)
+										{{ $child_country->name }}&nbsp;
+									@endforeach
+									</td>
+									<td>
+									
+									
+									{!! link_to('categories/' . $child->id .'/edit', 'Edit', ['class' => 'btn btn-success btn-xs']) !!}
+						
+									{!! Form::open(['method' => 'DELETE', 'route' => ['categories.destroy', $child->id]]) !!}
+									{!! Form::hidden('id', $child->id) !!}
+									 <button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete News" data-message="Are you sure you want to delete this news ?">Delete
+									
+									{!! Form::close() !!}
+																
+									</td>
+								</tr>
+								 @endforeach
+								@endif
+								
 							@endforeach
 							
 							</tbody>
