@@ -47,14 +47,15 @@
                         </div>
                     @endif
 				
-				 <form role="form" method="POST" action="{{ url('/categories/store') }}" class="form-horizontal" enctype="multipart/form-data">
+				
+				  {!! Form::model($category, [ 'method' => 'patch','route' => ['categories.update', $category->id],'class' => 'form-horizontal'] ) !!}
 				 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Name</label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
+						{!! Form::text('name',null,array('class'=>'form-control')) !!}
 					</div>
 				</div>
 				
@@ -72,14 +73,14 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Hub</label>
 					<div class="col-sm-10">	 
-						{!! Form::select('hub_id[]',$hubs , Input::old('hub_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Hub','class'=>'chosen-select form-control']) !!}
-					</div>
+						{!! Form::select('hub_id[]',$hubs , $hubs_selected, ['multiple'=>'multiple','data-placeholder'=>'Please Select Hub','class'=>'chosen-select form-control']) !!}
+					</div>	
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Country</label>
 					<div class="col-sm-10">	 
-						{!! Form::select('country_id[]',$countries , Input::old('country_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
+						{!! Form::select('country_id[]',$countries , $countries_selected, ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
 				
@@ -99,11 +100,11 @@
 					
 					<label class="checkbox-inline">
 						{!! Form::hidden('in_main_menu', 0) !!}
-						<input type="checkbox" value="1" name="in_main_menu" checked>In Main Manu
+						{!! Form::checkbox('in_main_menu',1, $category->in_main_menu) !!} In Main Manu
 					  </label>
 					<label class="checkbox-inline">
-					{!! Form::hidden('in_front', 0) !!}
-						<input type="checkbox" value="1" name="main_menu">Display in Front
+					    {!! Form::hidden('in_front', 0) !!}
+						{!! Form::checkbox('in_front', 1, $category->in_front) !!}Display in Front
 					</label>
 					</div>
                   </div>

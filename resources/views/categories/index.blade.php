@@ -38,11 +38,11 @@ form{display: inline;}
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Country 
+                            Categories 
                         </h1>
                         <ol class="breadcrumb">
                              <li class="active">
-                                <i class="fa fa-table"></i> country
+                                <i class="fa fa-table"></i> category
                             </li>
                         </ol>
                     </div>
@@ -71,32 +71,73 @@ form{display: inline;}
                                 <thead>
 
 								<tr>
-										<th>Country</th>
-										<th>Continent</th>
+										<th>Category</th>
+										<th>Hubs</th>
+										<th>Countries</th>
 										<th>Action</th>
 								</tr>
 								</thead>
 								
 								<tbody>
 										
-								@foreach( $countries as $country )
+								@foreach( $categories as $category )
 								
 								<tr>
-									<td>{{ $country->name }}&nbsp;</td>
-									<td>{{ $country->continent->name }}&nbsp;</td>
+									<td>{{ $category->name }}&nbsp;</td>
+									<td>
+									@foreach($category->hubs as $hub)
+										{{ $hub->name }}&nbsp;
+									@endforeach
+									</td>
+									<td>
+									@foreach($category->countries as $country)
+										{{ $country->name }}&nbsp;
+									@endforeach
+									</td>
 									<td>
 									
 									
-									{!! link_to('countries/' . $country->id .'/edit', 'Edit', ['class' => 'btn btn-success btn-xs']) !!}
+									{!! link_to('categories/' . $category->id .'/edit', 'Edit', ['class' => 'btn btn-success btn-xs']) !!}
 						
-									{!! Form::open(['method' => 'DELETE', 'route' => ['countries.destroy', $country->id]]) !!}
-									{!! Form::hidden('id', $country->id) !!}
+									{!! Form::open(['method' => 'DELETE', 'route' => ['categories.destroy', $category->id]]) !!}
+									{!! Form::hidden('id', $category->id) !!}
 									 <button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete News" data-message="Are you sure you want to delete this news ?">Delete
 									
 									{!! Form::close() !!}
 																
 									</td>
 								</tr>
+								
+								@if($category->children->count())
+									
+								  @foreach($category->children as $child)
+									<tr>
+									<td>&nbsp;&nbsp;{{ $child->name }}&nbsp;</td>
+									<td>
+									@foreach($child->hubs as $child_hub)
+										{{ $child_hub->name }}&nbsp;
+									@endforeach
+									</td>
+									<td>
+									@foreach($child->countries as $child_country)
+										{{ $child_country->name }}&nbsp;
+									@endforeach
+									</td>
+									<td>
+									
+									
+									{!! link_to('categories/' . $child->id .'/edit', 'Edit', ['class' => 'btn btn-success btn-xs']) !!}
+						
+									{!! Form::open(['method' => 'DELETE', 'route' => ['categories.destroy', $child->id]]) !!}
+									{!! Form::hidden('id', $child->id) !!}
+									 <button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete News" data-message="Are you sure you want to delete this news ?">Delete
+									
+									{!! Form::close() !!}
+																
+									</td>
+								</tr>
+								 @endforeach
+								@endif
 								
 							@endforeach
 							
