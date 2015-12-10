@@ -24,3 +24,9 @@ Route::get('/categories/create', 'CategoriesController@create');
 Route::post('categories/store', 'CategoriesController@store');
 Route::resource('categories', 'CategoriesController');
 
+//News
+Route::get('/news/index', 'NewsController@index');
+Route::get('/news/create', 'NewsController@create');
+Route::post('news/store', 'NewsController@store');
+Route::resource('news', 'NewsController');
+
