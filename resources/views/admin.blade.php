@@ -105,6 +105,18 @@
                         </li>
 						
 						<li>
+                            <a href="#"><i class="fa fa-file fa-fw"></i> Hub<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{{url('hubs/create')}}">Add Hub</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('hubs/index')}}">View Hub</a>
+                                </li>
+                            </ul>
+                        </li>
+						
+						<li>
                             <a href="#"><i class="fa fa-file fa-fw"></i> Category<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -117,13 +129,13 @@
                         </li>
 						
 						<li>
-                            <a href="#"><i class="fa fa-file fa-fw"></i> Hub<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-file fa-fw"></i> News<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{{url('hubs/create')}}">Add Hub</a>
+                                    <a href="{{url('news/create')}}">Add News</a>
                                 </li>
                                 <li>
-                                    <a href="{{url('hubs/index')}}">View Hub</a>
+                                    <a href="{{url('news/index')}}">View News</a>
                                 </li>
                             </ul>
                         </li>
