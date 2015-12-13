@@ -48,49 +48,49 @@
                             </ul>
                         </div>
                     @endif
+				 {!! Form::model($news, [ 'method' => 'patch','route' => ['news.update', $news->id],'files' => true,'class' => 'form-horizontal'] ) !!}
 				
-				 <form role="form" method="POST" action="{{ url('/news/store') }}" class="form-horizontal" enctype="multipart/form-data">
 				 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Title</label>
 					<div class="col-sm-10">	 
-						<input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
+						{!! Form::text('name',null,array('class'=>'form-control')) !!}
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">News Type</label>
 					<div class="col-sm-8">	 
-						{!! Form::select('type_id[]',$news_types , Input::old('type_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select News Types','class'=>'chosen-select form-control']) !!}
+						{!! Form::select('type_id[]',$news_types , $news_types_selected, ['multiple'=>'multiple','data-placeholder'=>'Please Select News Types','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Hub</label>
 					<div class="col-sm-10">	 
-						{!! Form::select('hub_id[]',$hubs , Input::old('hub_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Hub','class'=>'chosen-select form-control']) !!}
+						{!! Form::select('hub_id[]',$hubs , $hubs_selected, ['multiple'=>'multiple','data-placeholder'=>'Please Select Hub','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Country</label>
 					<div class="col-sm-10">	 
-						{!! Form::select('country_id[]',$countries , Input::old('country_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
+						{!! Form::select('country_id[]',$countries , $countries_selected, ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">News Category</label>
 					<div class="col-sm-10">	 
-						{!! Form::select('category_id[]',$categories , Input::old('category_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
+						{!! Form::select('category_id[]',$categories , $categories_selected, ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Content</label>
 					<div class="col-sm-10">
-					<textarea class="ckeditor form-control" name="content" id="content" value="{{ old('content') }}"></textarea>
+					{!! Form::textarea('content',null,array('class'=>'ckeditor form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
@@ -103,7 +103,7 @@
 
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-				  <button type="submit" class="btn btn-default">Add</button>
+				  <button type="submit" class="btn btn-default">Update</button>
 				</div>
 			  </div>
 
