@@ -19,17 +19,16 @@ class News extends Model
         return $this->belongsToMany('App\Category');
 
     } 
-	
+	public function types()
+    {
+        return $this->belongsToMany('App\Type');
+    }
 	public function countries() {
 
         return $this->belongsToMany('App\Country');
 
     }  
 	
-	public function types()
-    {
-        return $this->belongsToMany('App\Type');
-    }
 	
 	public function user()
     {
