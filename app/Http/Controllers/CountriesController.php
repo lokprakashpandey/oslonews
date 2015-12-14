@@ -64,6 +64,7 @@ class CountriesController extends Controller
 			'name' => $request->name,
 			'slug' => $request['slug'],
 			'continent_id' => $request['continent_id'],
+			'cnt_in_main_menu'=> $request['in_main_menu'],
         ]);
 		return redirect('countries/index')->with('message', 'Country Added');
     }
@@ -87,7 +88,9 @@ class CountriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $country = Country::find($id);
+		$continents = Continent::orderBy('name')->lists('name','id');
+		return view('countries.edit', compact('country','continents'));
     }
 
     /**
@@ -99,7 +102,20 @@ class CountriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $country = Country::findOrFail($id);
+		
+		if($country['name'] != $request['name']){
+			
+			$slug = str_slug($request['name']);
+
+			$count = Country::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+		
+			$request['slug'] = $count ? "{$slug}-{$count}" : $slug;
+		}
+		
+		$country->update($request->all());
+		
+		return redirect('countries/index')->with('message', 'Country Updated');
     }
 
     /**

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 10, 2015 at 06:45 PM
+-- Generation Time: Dec 14, 2015 at 06:57 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -36,7 +36,14 @@ CREATE TABLE IF NOT EXISTS `author_profiles` (
   `img` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `author_profiles`
+--
+
+INSERT INTO `author_profiles` (`id`, `name`, `address`, `phone`, `email`, `twitter`, `img`, `description`, `user_id`) VALUES
+(2, 'oslo', NULL, NULL, '', '', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -60,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `parent_id`, `position`, `in_front`, `in_main_menu`, `cat_type`, `slug`) VALUES
-(1, 'Rights Issues', 0, 1, 1, 0, 1, 'rights-issues'),
+(1, 'Rights Issues', 0, 1, 1, 1, 1, 'rights-issues'),
 (2, 'Human Rights', 1, 2, 0, 1, 1, 'human-rights'),
 (3, 'Women Rights', 1, 3, 0, 1, 1, 'women-rights');
 
@@ -73,22 +80,23 @@ INSERT INTO `categories` (`id`, `name`, `parent_id`, `position`, `in_front`, `in
 CREATE TABLE IF NOT EXISTS `category_country` (
 `id` int(4) NOT NULL,
   `country_id` int(3) NOT NULL,
-  `category_id` int(4) NOT NULL
+  `category_id` int(4) NOT NULL,
+  `cnt_in_main_menu` tinyint(1) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `category_country`
 --
 
-INSERT INTO `category_country` (`id`, `country_id`, `category_id`) VALUES
-(1, 1, 1),
-(2, 3, 1),
-(3, 1, 2),
-(4, 3, 2),
-(5, 5, 2),
-(6, 1, 3),
-(7, 4, 3),
-(8, 6, 3);
+INSERT INTO `category_country` (`id`, `country_id`, `category_id`, `cnt_in_main_menu`) VALUES
+(1, 1, 1, 1),
+(2, 3, 1, 0),
+(3, 1, 2, 0),
+(4, 3, 2, 0),
+(5, 5, 2, 0),
+(6, 1, 3, 0),
+(7, 4, 3, 0),
+(8, 6, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -124,7 +132,15 @@ CREATE TABLE IF NOT EXISTS `category_news` (
 `id` int(10) unsigned NOT NULL,
   `category_id` int(11) NOT NULL,
   `news_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `category_news`
+--
+
+INSERT INTO `category_news` (`id`, `category_id`, `news_id`) VALUES
+(1, 2, 5),
+(3, 3, 5);
 
 -- --------------------------------------------------------
 
@@ -176,20 +192,21 @@ CREATE TABLE IF NOT EXISTS `countries` (
 `id` int(3) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `slug` varchar(100) DEFAULT NULL,
-  `continent_id` int(3) NOT NULL
+  `continent_id` int(3) NOT NULL,
+  `in_main_menu` tinyint(1) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `countries`
 --
 
-INSERT INTO `countries` (`id`, `name`, `slug`, `continent_id`) VALUES
-(1, 'Nepal', 'nepal', 1),
-(2, 'Algeria', 'algeria', 3),
-(3, 'China', 'china', 1),
-(4, 'Norway', 'norway', 2),
-(5, 'Cuba', 'cuba', 6),
-(6, 'Brazil', 'brazil', 7);
+INSERT INTO `countries` (`id`, `name`, `slug`, `continent_id`, `in_main_menu`) VALUES
+(1, 'Nepal', 'nepal', 1, 1),
+(2, 'Algeria', 'algeria', 3, 0),
+(3, 'China', 'china', 1, 0),
+(4, 'Norway', 'norway', 2, 0),
+(5, 'Cuba', 'cuba', 6, 0),
+(6, 'Brazil', 'brazil', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -201,7 +218,15 @@ CREATE TABLE IF NOT EXISTS `country_news` (
 `id` int(11) NOT NULL,
   `news_id` int(11) NOT NULL,
   `country_id` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `country_news`
+--
+
+INSERT INTO `country_news` (`id`, `news_id`, `country_id`) VALUES
+(1, 5, 1),
+(3, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -238,7 +263,15 @@ CREATE TABLE IF NOT EXISTS `hub_news` (
 `id` int(11) NOT NULL,
   `news_id` int(11) NOT NULL,
   `hub_id` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `hub_news`
+--
+
+INSERT INTO `hub_news` (`id`, `news_id`, `hub_id`) VALUES
+(1, 5, 4),
+(3, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -272,7 +305,14 @@ CREATE TABLE IF NOT EXISTS `news` (
   `position` int(4) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `author_profile_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`id`, `name`, `content`, `front_img`, `user_id`, `created_at`, `updated_at`, `publish`, `position`, `slug`, `author_profile_id`) VALUES
+(5, 'The Republicans pour outrage over President Obama''s Oval Office Speech', 'Dec 7, WASHINGTON &mdash; President Obama&#39;s oval&nbsp; office speech has sparked an outrage amongst the Republicans who have criticized him for it. According to reports,&nbsp; Donald Trump, tweeted that Obama had too little to say about defeating the Islamic State in the wake of mass attacks in Paris and San Bernardino, Calif. &ldquo;Is that all there is?&rdquo; Trump said. &ldquo;We need a new President &ndash; FAST!&rdquo; While, Sen. Marco Rubio, R-Fla, right after the speech, told fox news that Obama had failed to address public concerns about the threats from the Islamic State.&quot; Nothing the president said &ldquo;will assuage people&rsquo;s fears,&rdquo; the Florida senator said. &ldquo;We are at war with a radical jihadist group,&rdquo; Rubio said. Leaders of the Republican-run Congress have also denounced Obama&rsquo;s speech. House Speaker Paul Ryan, R-Wis., called it &ldquo;disappointing: no new plan, just a half-hearted attempt to defend and distract from a failing policy.&rdquo; Meanwhile, the Republicans have also said that Obama&rsquo;s strategy has not been working, and mocked the president for declining to use the words &ldquo;radical Islamic terrorism.&rdquo;&nbsp; After Obama&rsquo;s speech Sunday,&nbsp; Sen. Ted Cruz, R-Tex., said that if he wins the presidency, he will order the Pentagon to &ldquo;destroy&rdquo; the Islamic State, and &ldquo;shut down the broken immigration system&rdquo; that is letting terrorists into the country. &ldquo;Nothing President Obama said tonight will assist in either case,&rdquo; Cruz said. In his remarks, Obama appeared to reference the presidential campaign by denouncing what he called divisive rhetoric about Muslims and terrorism. &ldquo;We cannot turn against one another by letting this fight be defined as a war between America and Islam,&rdquo; he said.&nbsp;', 'test', 1, '2015-12-13 00:06:41', '2015-12-13 00:06:41', 1, 0, 'the-republicans-pour-outrage-over-president-obamas-oval-office-speech', 2);
 
 -- --------------------------------------------------------
 
@@ -284,7 +324,15 @@ CREATE TABLE IF NOT EXISTS `news_type` (
 `id` int(11) NOT NULL,
   `news_id` int(11) NOT NULL,
   `type_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `news_type`
+--
+
+INSERT INTO `news_type` (`id`, `news_id`, `type_id`) VALUES
+(1, 5, 1),
+(3, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -351,7 +399,17 @@ CREATE TABLE IF NOT EXISTS `types` (
 `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `slug` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `types`
+--
+
+INSERT INTO `types` (`id`, `name`, `slug`) VALUES
+(1, 'General', 'general'),
+(2, 'Breaking News', 'breaking'),
+(3, 'Top Stories', 'top'),
+(4, 'Scrolling News', 'scrolling');
 
 -- --------------------------------------------------------
 
@@ -374,7 +432,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `avatar` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `provider` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `provider_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `password`, `remember_token`, `created_at`, `updated_at`, `active`, `confirmation_code`, `avatar`, `provider`, `provider_id`) VALUES
+(1, 'oslo', 'oslo@oslo.com', '', '', '', NULL, NULL, NULL, 1, NULL, '', '', '');
 
 --
 -- Indexes for dumped tables
@@ -508,7 +573,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `author_profiles`
 --
 ALTER TABLE `author_profiles`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `categories`
 --
@@ -528,7 +593,7 @@ MODIFY `id` int(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 -- AUTO_INCREMENT for table `category_news`
 --
 ALTER TABLE `category_news`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `comments`
 --
@@ -548,7 +613,7 @@ MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 -- AUTO_INCREMENT for table `country_news`
 --
 ALTER TABLE `country_news`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `hubs`
 --
@@ -558,7 +623,7 @@ MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 -- AUTO_INCREMENT for table `hub_news`
 --
 ALTER TABLE `hub_news`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `images`
 --
@@ -568,12 +633,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `news_type`
 --
 ALTER TABLE `news_type`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `pages`
 --
@@ -593,12 +658,12 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `types`
 --
 ALTER TABLE `types`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --

@@ -30,7 +30,7 @@ class Category extends Model
     } 
 	public function countries() {
 
-        return $this->belongsToMany('App\Country');
+        return $this->belongsToMany('App\Country')->withPivot('cnt_in_main_menu');
 
     }  
 	
@@ -40,5 +40,15 @@ class Category extends Model
     {
 			$category = Category::where('parent_id', '=', '0')->orderBy('position', 'asc')->with('children')->get(); 
 			return $category;
+	}
+	
+	public static function getTopMenuCategories()
+    {
+			$categories = Category::where('parent_id', '=', '0')
+				->where('in_main_menu',1)
+				->orderBy('position', 'asc')
+				->with('children')->get(); 
+				
+			return $categories;
 	}
 }
