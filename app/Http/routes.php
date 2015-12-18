@@ -1,5 +1,7 @@
 <?php
 
+Route::get('/', 'PagesController@index');
+
 //Continent
 Route::get('/continents/index', 'ContinentsController@index');
 Route::get('/continents/create', 'ContinentsController@create');

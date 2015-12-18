@@ -41,7 +41,7 @@
                         </div>
                     @endif
 				
-				 <form role="form" method="POST" action="{{ url('/countries/store') }}" class="form-horizontal" enctype="multipart/form-data">
+				  {!! Form::model($country, [ 'method' => 'patch','route' => ['countries.update', $country->id],'class' => 'form-horizontal'] ) !!}
 				 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 				 
 				 <div class="form-group">
@@ -54,7 +54,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Country</label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
+						{!! Form::text('name',null,array('class'=>'form-control')) !!}
 					</div>
 				</div>
 				 <div class="form-group">
@@ -63,7 +63,7 @@
 					
 					<label class="checkbox-inline">
 						{!! Form::hidden('cnt_in_main_menu', 0) !!}
-						<input type="checkbox" value="1" name="in_main_menu" checked>In Main Manu
+						{!! Form::checkbox('cnt_in_main_menu',1, $country->cnt_in_main_menu) !!} In Main Manu
 					  </label>
 					  </div>
 				</div>

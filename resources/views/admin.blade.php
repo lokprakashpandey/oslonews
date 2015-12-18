@@ -15,7 +15,6 @@
 	<link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/metisMenu.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/sb-admin-2.css') }}" rel="stylesheet">
-	<link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 	 <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
 
