@@ -69,14 +69,15 @@ class CategoriesController extends Controller
 		   'name'		 => $request['name'],
 		   'parent_id' 	 => $request['parent_id'],
 		   'position'	 => $new_position,
-		   'in_front'    => $request['in_front'],
-		   'in_main_menu'=> $request['in_main_menu'],
+		   //'in_front'    => $request['in_front'],
+		   //'in_main_menu'=> $request['in_main_menu'],
 		   'cat_type'	 => $request['cat_type'],
 		   'slug'		 => $request['slug']
 	   
 	   ]);
-		$category->hubs()->attach($request['hub_id']);
-		$category->countries()->attach($request['country_id']);
+		//$category->hubs()->attach($request['hub_id']);
+		$category->hubs()->attach($request['hub_id'],['in_front'=>1, 'in_main_menu'=>1]);
+		//$category->countries()->attach($request['country_id']);
 		
 		return redirect('categories/index')->with('message', 'Category Added');
     }
@@ -153,11 +154,20 @@ class CategoriesController extends Controller
 		
 		$category->hubs()->sync($request['hub_id']);
 		
-		$category->countries()->sync($request['country_id']);
+		//$category->countries()->sync($request['country_id']);
 		
 		return redirect('categories/index')->with('message', 'Category Updated');
     }
 
+	public function in_main_menu(Request $request)
+	{
+		$category = Category::find($request['category_id']);
+		//$category->hubs()->sync((array)$hub_id,['in_front'=>1, 'in_main_menu'=>1],false);
+		$category->hubs()->sync([$request['hub_id']=>['in_main_menu'=>$request['in_main_menu'],
+											'in_front'=>$request['in_front']]],false);
+		//return redirect('categories/index')->with('message', 'Category Updated');
+		
+	}
     /**
      * Remove the specified resource from storage.
      *

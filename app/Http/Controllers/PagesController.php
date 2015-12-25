@@ -39,6 +39,11 @@ class PagesController extends Controller
 			return view('pages.index');
     }
 	
+	public function hub($id)
+	{
+		return view('pages.index');
+	}
+	
 	public function archive()
 	{
 		$categories = Category::getTopCategoriesAll();

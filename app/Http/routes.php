@@ -1,7 +1,14 @@
 <?php
 
 Route::get('/', 'PagesController@index');
+Route::get('pages/hub/{hub_slug}', 'PagesController@index');
 
+//Menu
+Route::get('/menus', 'MenusController@index');
+/*Route::get('/continents/create', 'ContinentsController@create');
+Route::post('continents/store', 'ContinentsController@store');
+Route::resource('continents', 'ContinentsController');
+*/
 //Continent
 Route::get('/continents/index', 'ContinentsController@index');
 Route::get('/continents/create', 'ContinentsController@create');
@@ -24,6 +31,11 @@ Route::resource('hubs', 'HubsController');
 Route::get('/categories/index', 'CategoriesController@index');
 Route::get('/categories/create', 'CategoriesController@create');
 Route::post('categories/store', 'CategoriesController@store');
+Route::put('categories/in_main_menu', [
+	'uses' => 'CategoriesController@in_main_menu', 
+	'as' => 'in_main_menu'
+]);
+
 Route::resource('categories', 'CategoriesController');
 
 //News

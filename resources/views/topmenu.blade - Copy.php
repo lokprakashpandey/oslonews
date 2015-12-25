@@ -1,4 +1,11 @@
-
+@foreach($countries as $country)
+{{$country->name}}
+ @foreach($country->getCountryCategories($country->pivot->id) as $cat)
+ 
+ {{$cat->name}}
+ 
+ @endforeach
+@endforeach
 <nav class="navbar navbar-default">
 		  <div class="container">
 			<div class="navbar-header">
@@ -15,11 +22,11 @@
 			  <ul class="nav navbar-nav">
 			  
 			 @foreach($countries as $country) 
-			   <li @if($country->getCountryCategories($country->pivot->id)->count()) class="dropdown" @endif>
-			    <a href="{{ url( '/countries/'.$country->id ) }}" @if($country->getCountryCategories($country->pivot->id)->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{$country->name}} @if($country->getCountryCategories($country->pivot->id)->count()) <span class="caret"></span> @endif</a>
-						@if($country->getCountryCategories($country->pivot->id)->count())
+			   <li @if($country->categories->count()) class="dropdown" @endif>
+			    <a href="{{ url( '/countries/'.$country->id ) }}" @if($country->categories->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{$country->name}} @if($country->categories->count()) <span class="caret"></span> @endif</a>
+						@if($country->categories->count())
 							<ul class="dropdown-menu" role="menu">
-								@foreach($country->getCountryCategories($country->pivot->id) as $category)
+								@foreach($country->categories as $category)
 									<li><a href="{{ url( '/category/'.$category->slug ) }}">{{$category->name}}</a></li>
 								@endforeach
 							</ul>
