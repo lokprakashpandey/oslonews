@@ -75,8 +75,8 @@ class CategoriesController extends Controller
 		   'slug'		 => $request['slug']
 	   
 	   ]);
-		//$category->hubs()->attach($request['hub_id']);
-		$category->hubs()->attach($request['hub_id'],['in_front'=>1, 'in_main_menu'=>1]);
+		$category->hubs()->attach($request['hub_id']);
+		//$category->hubs()->attach($request['hub_id'],['in_front'=>1, 'in_main_menu'=>1]);
 		//$category->countries()->attach($request['country_id']);
 		
 		return redirect('categories/index')->with('message', 'Category Added');

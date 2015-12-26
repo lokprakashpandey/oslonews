@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
    
-   protected $fillable = array('name','slug','continent_id','cnt_in_main_menu'); 
+   protected $fillable = array('name','slug','continent_id'); 
 	
    public $timestamps = false;
 	
@@ -18,12 +18,12 @@ class Country extends Model
 	
 	public function categories() {
 
-        return $this->belongsToMany('App\Category')->withPivot('cnt_in_main_menu');
+        return $this->belongsToMany('App\Category');
 
     }
 	public function hubs() {
 
-        return $this->belongsToMany('App\Hub')->withPivot('id');
+        return $this->belongsToMany('App\Hub')->withPivot('id','cnt_in_main_menu','cnt_in_front');
 
     }
 	public static function getMainMenuCountries($hub_slug)
@@ -36,7 +36,7 @@ class Country extends Model
 										->get(); 
 		*/
 		$hub_id = Hub::where('slug',$hub_slug)->first();
-		$countries = Hub::find($hub_id->id)->countries()->get();
+		$countries = Hub::find($hub_id->id)->countries()->where('cnt_in_main_menu', '1')->get();
 
 		return $countries;
 	}

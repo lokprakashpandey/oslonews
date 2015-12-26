@@ -19,6 +19,10 @@ Route::resource('continents', 'ContinentsController');
 Route::get('/countries/index', 'CountriesController@index');
 Route::get('/countries/create', 'CountriesController@create');
 Route::post('countries/store', 'CountriesController@store');
+Route::put('countries/country_in_main_menu', [
+	'uses' => 'CountriesController@country_in_main_menu', 
+	'as' => 'country_in_main_menu'
+]);
 Route::resource('countries', 'CountriesController');
 
 //Hub

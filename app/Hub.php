@@ -17,7 +17,7 @@ class Hub extends Model
     } 
 	 public function countries() {
 
-        return $this->belongsToMany('App\Country')->withPivot('id');
+        return $this->belongsToMany('App\Country')->withPivot('id','cnt_in_main_menu','cnt_in_front');
 
     }  
 	public static function getHubs()

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Continent;
 use App\Country;
+use App\Hub;
 use Validator;
 
 class CountriesController extends Controller
@@ -32,8 +33,8 @@ class CountriesController extends Controller
     public function create()
     {
         $continents = Continent::orderBy('name')->lists('name','id');
-		
-		return view('countries.create',compact('continents'));
+		$hubs = Hub::lists('name','id');
+		return view('countries.create',compact('continents','hubs'));
     }
 
     /**
@@ -66,6 +67,7 @@ class CountriesController extends Controller
 			'continent_id' => $request['continent_id'],
 			'cnt_in_main_menu'=> $request['in_main_menu'],
         ]);
+		$country->hubs()->attach($request['hub_id']);
 		return redirect('countries/index')->with('message', 'Country Added');
     }
 
@@ -90,9 +92,19 @@ class CountriesController extends Controller
     {
         $country = Country::find($id);
 		$continents = Continent::orderBy('name')->lists('name','id');
-		return view('countries.edit', compact('country','continents'));
-    }
-
+		
+		//hubs
+		$hubs = Hub::lists('name','id');
+		
+		$hubs_selected = $country->hubs->lists('id')->toArray();
+		
+		return view('countries.edit', compact('country',
+    
+											   'continents',
+											   'hubs',
+											   'hubs_selected'));
+												
+	}
     /**
      * Update the specified resource in storage.
      *
@@ -115,9 +127,19 @@ class CountriesController extends Controller
 		
 		$country->update($request->all());
 		
+		$country->hubs()->sync($request['hub_id']);
+		
 		return redirect('countries/index')->with('message', 'Country Updated');
     }
-
+	public function country_in_main_menu(Request $request)
+	{
+		$country = Country::find($request['country_id']);
+	
+		$country->hubs()->sync([$request['hub_id']=>['cnt_in_main_menu'=>$request['cnt_in_main_menu'],
+											'cnt_in_front'=>$request['cnt_in_front']]],false);
+		//return redirect('categories/index')->with('message', 'Category Updated');
+		
+	}
     /**
      * Remove the specified resource from storage.
      *

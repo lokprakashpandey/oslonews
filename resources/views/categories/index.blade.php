@@ -28,7 +28,6 @@ form{display: inline;}
   
   $('#in_main_menu_modal').on('show.bs.modal', function(e) {
     //get data-id attribute of the clicked element
-	var inMainMenu = 0;
     var categoryId = $(e.relatedTarget).data('category_id');
 	var hubId = $(e.relatedTarget).data('hub_id');
 	var inMainMenu = $(e.relatedTarget).data('in_main_menu');
