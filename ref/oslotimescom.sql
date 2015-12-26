@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 25, 2015 at 08:19 PM
+-- Generation Time: Dec 26, 2015 at 06:34 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `category_hub` (
   `category_id` int(4) DEFAULT NULL,
   `in_main_menu` tinyint(1) NOT NULL,
   `in_front` tinyint(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
 
 --
 -- Dumping data for table `category_hub`
@@ -151,9 +151,9 @@ INSERT INTO `category_hub` (`id`, `hub_id`, `category_id`, `in_main_menu`, `in_f
 (22, 1, 113, 1, 1),
 (25, 5, 113, 1, 1),
 (27, 3, 106, 1, 0),
-(28, 3, 1, 1, 0),
 (29, 3, 113, 1, 0),
-(30, 5, 1, 1, 0);
+(30, 5, 1, 1, 0),
+(31, 6, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -217,21 +217,22 @@ CREATE TABLE IF NOT EXISTS `countries` (
 `id` int(3) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `slug` varchar(100) DEFAULT NULL,
-  `continent_id` int(3) NOT NULL,
-  `in_main_menu` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+  `continent_id` int(3) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `countries`
 --
 
-INSERT INTO `countries` (`id`, `name`, `slug`, `continent_id`, `in_main_menu`) VALUES
-(1, 'Nepal', 'nepal', 1, 1),
-(2, 'Algeria', 'algeria', 3, 0),
-(3, 'China', 'china', 1, 0),
-(4, 'Norway', 'norway', 2, 0),
-(5, 'Cuba', 'cuba', 6, 0),
-(6, 'Brazil', 'brazil', 7, 1);
+INSERT INTO `countries` (`id`, `name`, `slug`, `continent_id`) VALUES
+(1, 'Nepal', 'nepal', 1),
+(2, 'Algeria', 'algeria', 3),
+(3, 'China', 'china', 1),
+(4, 'Norway', 'norway', 2),
+(5, 'Cuba', 'cuba', 6),
+(6, 'Brazil', 'brazil', 7),
+(7, 'India', 'india', 1),
+(8, 'Bhutan', 'bhutan', 1);
 
 -- --------------------------------------------------------
 
@@ -242,19 +243,34 @@ INSERT INTO `countries` (`id`, `name`, `slug`, `continent_id`, `in_main_menu`) V
 CREATE TABLE IF NOT EXISTS `country_hub` (
 `id` int(4) NOT NULL,
   `hub_id` int(3) NOT NULL,
-  `country_id` int(3) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+  `country_id` int(3) NOT NULL,
+  `cnt_in_main_menu` tinyint(1) NOT NULL,
+  `cnt_in_front` tinyint(1) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `country_hub`
 --
 
-INSERT INTO `country_hub` (`id`, `hub_id`, `country_id`) VALUES
-(1, 1, 1),
-(2, 1, 4),
-(3, 1, 3),
-(4, 2, 4),
-(5, 2, 5);
+INSERT INTO `country_hub` (`id`, `hub_id`, `country_id`, `cnt_in_main_menu`, `cnt_in_front`) VALUES
+(1, 1, 1, 0, 0),
+(2, 1, 4, 0, 0),
+(3, 1, 3, 0, 0),
+(4, 2, 4, 1, 0),
+(5, 2, 5, 1, 0),
+(6, 2, 2, 1, 0),
+(7, 3, 1, 0, 0),
+(8, 3, 8, 0, 0),
+(9, 3, 7, 0, 0),
+(10, 1, 6, 0, 0),
+(11, 2, 6, 1, 0),
+(12, 3, 6, 0, 0),
+(13, 4, 6, 0, 0),
+(14, 5, 6, 0, 0),
+(15, 6, 6, 0, 0),
+(16, 7, 6, 0, 0),
+(17, 6, 8, 1, 0),
+(18, 6, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -617,7 +633,7 @@ MODIFY `id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 -- AUTO_INCREMENT for table `category_hub`
 --
 ALTER TABLE `category_hub`
-MODIFY `id` int(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+MODIFY `id` int(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `category_news`
 --
@@ -637,12 +653,12 @@ MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 -- AUTO_INCREMENT for table `countries`
 --
 ALTER TABLE `countries`
-MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `country_hub`
 --
 ALTER TABLE `country_hub`
-MODIFY `id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `country_news`
 --
