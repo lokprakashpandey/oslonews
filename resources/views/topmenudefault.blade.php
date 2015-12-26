@@ -27,7 +27,8 @@
 			  </li> 
 					
 
-			
+			<?php
+			/*
 			 @foreach($countries as $country) 
 			   <li @if($country->getCountryCategories($country->pivot->id)->count()) class="dropdown" @endif>
 			    <a href="{{ url( '/countries/'.$country->id ) }}" @if($country->getCountryCategories($country->pivot->id)->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{$country->name}} @if($country->getCountryCategories($country->pivot->id)->count()) <span class="caret"></span> @endif</a>
@@ -41,8 +42,17 @@
 			  </li> 
 					
 			@endforeach
-		
-			  
+		*/
+			  ?>
+	<?php $hub_slug = (Request::segment(3))?Request::segment(3):"international-edition"; //set the default hub?>
+	
+			  @foreach($countries as $country) 
+			   <li>
+			    <a href="{{ url( '/pages/country/'.$hub_slug.'/'.$country->slug ) }}" >{{$country->name}}</a>
+						
+			  </li> 
+					
+			@endforeach
 			 
 			   @foreach( $categories as $cat )
 					<li @if($cat->children->count()) class="dropdown" @endif>

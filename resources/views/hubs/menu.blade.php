@@ -8,23 +8,6 @@ form{display: inline;}
     
     $(function() {
 
-	<!-- Dialog show event handler -->
-  $('#confirmDelete').on('show.bs.modal', function (e) {
-      $message = $(e.relatedTarget).attr('data-message');
-      $(this).find('.modal-body p').text($message);
-      $title = $(e.relatedTarget).attr('data-title');
-      $(this).find('.modal-title').text($title);
-
-      // Pass form reference to modal for submission on yes/ok
-      var form = $(e.relatedTarget).closest('form');
-      $(this).find('.modal-footer #confirm').data('form', form);
-  });
-
-  <!-- Form confirm (yes/ok) handler, submits form -->
-  $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-      $(this).data('form').submit();
-  });
-  
   $('#in_main_menu_modal').on('show.bs.modal', function(e) {
     //get data-id attribute of the clicked element
 
@@ -46,12 +29,12 @@ form{display: inline;}
         e.preventDefault();
 
         $.ajax({
-            url: 'country_in_main_menu', //this is the submit URL
+            url: '{{ url("countries/country_in_main_menu")}}', //this is the submit URL
             type: 'put', 
             data: $('#in_main_menu_form').serialize(),
             success: function(data){
                  $("#in_main_menu_modal").modal('hide'); 
-				 window.location.href = "index";
+				 window.location.href = '{{ url("hubs/menu")}}';
             },
 			error: function(){
 				alert($('#in_main_menu_form').serialize());
@@ -72,11 +55,11 @@ form{display: inline;}
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Country 
+                            Menu 
                         </h1>
                         <ol class="breadcrumb">
                              <li class="active">
-                                <i class="fa fa-table"></i> country
+                                <i class="fa fa-table"></i> menu
                             </li>
                         </ol>
                     </div>
@@ -105,33 +88,32 @@ form{display: inline;}
                                 <thead>
 
 								<tr>
-										<th>Country</th>
-										<th>Continent</th>
-										<th class="col-lg-7">Hubs</th>
-										<th>Action</th>
+										<th>Hub</th>
+										<th class="col-lg-7">Country</th>
+										
 								</tr>
 								</thead>
 								
 								<tbody>
 										
-								@foreach( $countries as $country )
+								@foreach( $hubs as $hub )
 								
 								<tr>
-									<td>{{ $country->name }}&nbsp;</td>
-									<td>{{ $country->continent->name }}&nbsp;</td>
+									<td>{{ $hub->name }}&nbsp;</td>
+									
 									<td>
-									@foreach($country->hubs as $hub)
+									@foreach($hub->countries as $country)
 									<div class="btn-group" style="margin-bottom:5px">
-										<button type="button" class="btn btn-{{($hub->pivot->cnt_in_main_menu)?'primary':'info'}} btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-											<i class="fa fa-gear"></i> {{ $hub->name }} <span class="caret"></span>
+										<button type="button" class="btn btn-{{($country->pivot->cnt_in_main_menu)?'primary':'info'}} btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+											<i class="fa fa-gear"></i> {{ $country->name }} <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu" role="menu">
 											<li>
-											<a href="#" 
+											<a href="#"
 											data-country_id="{{$country->id}}" 
 											data-hub_id="{{$hub->id}}" 
-											data-in_main_menu="{{ $hub->pivot->cnt_in_main_menu }}" 
-											data-in_front="{{ $hub->pivot->cnt_in_front }}" 
+											data-in_main_menu="{{ $country->pivot->cnt_in_main_menu }}" 
+											data-in_front="{{ $country->pivot->cnt_in_front }}" 
 											data-toggle="modal" 
 											data-target="#in_main_menu_modal">Set Menu</a>
 											</li>
@@ -145,18 +127,7 @@ form{display: inline;}
 									
 									@endforeach
 									</td>
-									<td>
 									
-									
-									{!! link_to('countries/' . $country->id .'/edit', 'Edit', ['class' => 'btn btn-success btn-xs']) !!}
-						
-									{!! Form::open(['method' => 'DELETE', 'route' => ['countries.destroy', $country->id]]) !!}
-									{!! Form::hidden('id', $country->id) !!}
-									 <button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete News" data-message="Are you sure you want to delete this news ?">Delete
-									
-									{!! Form::close() !!}
-																
-									</td>
 								</tr>
 								
 							@endforeach
@@ -172,24 +143,7 @@ form{display: inline;}
 	</div>
 </div>
 
-<!-- Modal Dialog -->
-<div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Delete Parmanently</h4>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure about this ?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" id="confirm">Delete</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <div class="modal fade" role="dialog" aria-labelledby="inMainMenu" aria-hidden="true" id="in_main_menu_modal">
   <div class="modal-dialog">

@@ -28,16 +28,11 @@ class Country extends Model
     }
 	public static function getMainMenuCountries($hub_slug)
 	{
-		/*$countries = Country::with(['categories'=>function($query) {
-																$query->where('cnt_in_main_menu', 1);
-															}])
-										->where('in_main_menu',1)
-										->orderBy('name', 'asc')
-										->get(); 
-		*/
+		
 		$hub_id = Hub::where('slug',$hub_slug)->first();
+		
 		$countries = Hub::find($hub_id->id)->countries()->where('cnt_in_main_menu', '1')->get();
-
+			
 		return $countries;
 	}
 	

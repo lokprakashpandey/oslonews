@@ -39,6 +39,7 @@ class MenuServiceProvider extends ServiceProvider
 		view()->composer('topmenudefault', function ($view) {
 
 		   $viewdata= $view->getData();
+		   
 		   $hub_slug = ($viewdata['hub_slug'])?$viewdata['hub_slug']:'international-edition';
 		   
 		   $hubs = \App\Hub::getHubs();//hub
@@ -54,14 +55,22 @@ class MenuServiceProvider extends ServiceProvider
 	private function composeTopmenu() ///top menu can be Continent/country/category
     {
         view()->composer('topmenu', function ($view) {
+			
+		   $viewdata= $view->getData();
+		   
+		   $hub_slug = ($viewdata['hub_slug'])?$viewdata['hub_slug']:'international-edition';
+		   $country_slug = $viewdata['country_slug'];
+
 
 		   $hubs = \App\Hub::getHubs();//hub
 		   
-		   $categories = \App\Category::getTopMenuCategories(2,4);//hub,country
+		   $categories = \App\Category::getTopMenuCategories($hub_slug,$country_slug);//hub,country
+		  
+		   //$categories = \App\Category::getTopMenuHubCategories($hub_slug);//hub_id
 			
-			$countries = \App\Country::getMainMenuCountries(2);//hub
+		   $countries = \App\Country::getMainMenuCountries($hub_slug);//hub
             
-            $view->with(compact('categories','countries','hubs'));
+           $view->with(compact('categories','countries','hubs'));
         });
     }
 

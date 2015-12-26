@@ -114,6 +114,9 @@
                                 <li>
                                     <a href="{{url('hubs/index')}}">View Hub</a>
                                 </li>
+								<li>
+                                    <a href="{{url('hubs/menu')}}">Hub Menu</a>
+                                </li>
                             </ul>
                         </li>
 						

@@ -98,6 +98,12 @@ class HubsController extends Controller
     {
         //
     }
+	
+	public function menu()
+	{
+		$hubs = Hub::orderBy('name')->get();
+        return view('hubs.menu',compact('hubs'));
+	}
 
     /**
      * Remove the specified resource from storage.
