@@ -7,6 +7,7 @@
 	$('.chosen-select').chosen();
   });
 </script>
+
 <div id="page-wrapper">
  <div class="container-fluid">
 
@@ -14,12 +15,12 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Categories 
+                            Country 
                         </h1>
                         <ol class="breadcrumb">
                            
                             <li class="active">
-                                <i class="fa fa-file"></i> Category
+                                <i class="fa fa-file"></i> country
                             </li>
                         </ol>
                     </div>
@@ -30,7 +31,7 @@
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					Category Information
+					Country Information
 				</div>
 
 
@@ -47,72 +48,33 @@
                         </div>
                     @endif
 				
-				
-				  {!! Form::model($category, [ 'method' => 'patch','route' => ['categories.update', $category->id],'class' => 'form-horizontal'] ) !!}
+				  {!! Form::model($country_hub, [ 'method' => 'patch','route' => ['hub_country_category_update', $country_hub->id],'class' => 'form-horizontal'] ) !!}
 				 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-				
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Name</label>
-					<div class="col-sm-8">
-						{!! Form::text('name',null,array('class'=>'form-control')) !!}
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Parent</label>
-					<div class="col-sm-5">
 				 
-						<select class='form-control' name="parent_id">
-							<option value='0'>--Top Menu--</option>
-							{!!$category_opts!!} 
-						</select>
-					</div>
-				</div>
-				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Hub</label>
-					<div class="col-sm-10">	 
-						{!! Form::select('hub_id[]',$hubs , $hubs_selected, ['multiple'=>'multiple','data-placeholder'=>'Please Select Hub','class'=>'chosen-select form-control']) !!}
-					</div>	
+					<div class="col-sm-8">
+						{!! Form::text('hub',$hub->name,array('class'=>'form-control','disabled')) !!}
+					</div>
 				</div>
-				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Country</label>
-					<div class="col-sm-10">	 
-						{!! Form::select('country_id[]',$countries , $countries_selected, ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
+					<div class="col-sm-8">
+						{!! Form::text('country',$country->name,array('class'=>'form-control','disabled')) !!}
 					</div>
 				</div>
-				
-				
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Type</label>
-					<div class="col-sm-4">
-					{!! Form::select('cat_type', $cat_types , null, ['class'=>'form-control']) !!}
+					<label class="col-sm-2 control-label">Category</label>
+					<div class="col-sm-10">
+						{!! Form::select('category_id[]',$categories , $categories_selected, ['multiple'=>'multiple','class'=>'chosen-select form-control']) !!}
 					</div>
-					
-
-                  </div>
-				  
-				  <div class="form-group">
-					
-					<div class="col-sm-offset-2 col-sm-10">
-					
-					<label class="checkbox-inline">
-						{!! Form::hidden('in_main_menu', 0) !!}
-						{!! Form::checkbox('in_main_menu',1, $category->in_main_menu) !!} In Main Manu
-					  </label>
-					<label class="checkbox-inline">
-					    {!! Form::hidden('in_front', 0) !!}
-						{!! Form::checkbox('in_front', 1, $category->in_front) !!}Display in Front
-					</label>
-					</div>
-                  </div>
+				</div>
+			
 				
 
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-				  <button type="submit" class="btn btn-default">Update</button>
+				  <button type="submit" class="btn btn-default">Add</button>
 				</div>
 			  </div>
 

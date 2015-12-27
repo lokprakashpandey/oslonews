@@ -1,6 +1,12 @@
 @extends('admin')
 @section('content')
-
+<link href="{{ asset('/css/bootstrap-chosen.css') }}" rel="stylesheet">
+<script src="{{ asset('/js/chosen.jquery.js') }}"></script>
+<script>
+  $(function() {
+	$('.chosen-select').chosen();
+  });
+</script>
 <div id="page-wrapper">
  <div class="container-fluid">
 
@@ -58,14 +64,10 @@
 					</div>
 				</div>
 				 <div class="form-group">
-					
-					<div class="col-sm-offset-2 col-sm-10">
-					
-					<label class="checkbox-inline">
-						{!! Form::hidden('cnt_in_main_menu', 0) !!}
-						<input type="checkbox" value="1" name="in_main_menu" checked>In Main Manu
-					  </label>
-					  </div>
+					<label class="col-sm-2 control-label">Hub</label>
+					<div class="col-sm-10">	 
+						{!! Form::select('hub_id[]',$hubs , Input::old('hub_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Hub','class'=>'chosen-select form-control']) !!}
+					</div>
 				</div>
 				
 

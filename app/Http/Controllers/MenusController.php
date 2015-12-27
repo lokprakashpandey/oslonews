@@ -6,12 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Category;
+use App\Helpers\CategoryHierarchy;
 
-use App\Hub;
-
-use Validator;
-
-class HubsController extends Controller
+class MenusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +18,8 @@ class HubsController extends Controller
      */
     public function index()
     {
-		$hubs = Hub::get();
-        return view('hubs.index',compact('hubs'));
+        $categories = Category::getCategories();
+		return view('menus.index', compact('categories'));
     }
 
     /**
@@ -31,7 +29,7 @@ class HubsController extends Controller
      */
     public function create()
     {
-         return view('hubs.create');
+        //
     }
 
     /**
@@ -42,27 +40,7 @@ class HubsController extends Controller
      */
     public function store(Request $request)
     {
-       $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('builder')
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-		
-		$slug = str_slug($request['name']);
-
-		$count = Hub::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
-		
-		$request['slug'] = $count ? "{$slug}-{$count}" : $slug;
-		
-		$hub = Hub::create([
-			'name' => $request->name,
-			'slug' => $request['slug'],
-        ]);
-		return redirect('hubs/index')->with('message', 'Hub Added');
+        //
     }
 
     /**
@@ -98,12 +76,6 @@ class HubsController extends Controller
     {
         //
     }
-	
-	public function menu()
-	{
-		$hubs = Hub::orderBy('name')->get();
-        return view('hubs.menu',compact('hubs'));
-	}
 
     /**
      * Remove the specified resource from storage.

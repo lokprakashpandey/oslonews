@@ -10,8 +10,7 @@ use App\Category;
 use Input;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-//use Datatables;
-//use Twitter;
+
 class PagesController extends Controller
 {
     /**
@@ -38,6 +37,15 @@ class PagesController extends Controller
 			*/
 			return view('pages.index');
     }
+	
+	public function hub($id)
+	{
+		return view('pages.index');
+	}
+	public function country()
+	{
+		return view('pages.country');
+	}
 	
 	public function archive()
 	{

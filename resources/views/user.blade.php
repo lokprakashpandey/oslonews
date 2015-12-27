@@ -153,8 +153,11 @@ $(function () {
 	
 	<div class="oslo-navigation-wrapper">
 		<div class="container oslo-navigation">
-		
-		 @include('topmenu')
+		@if(Request::segment(2)=='country')
+			@include('topmenu', array('hub_slug'=>Request::segment(3),'country_slug'=>Request::segment(4)))
+		@else
+		 @include('topmenudefault', array('hub_slug'=>Request::segment(3)))
+		@endif
 		
 		</div>
 	</div><!-- //oslo-navigation-wrapper-->

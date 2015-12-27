@@ -10,7 +10,6 @@ form{display: inline;}
 
 	<!-- Dialog show event handler -->
   $('#confirmDelete').on('show.bs.modal', function (e) {
-
       $message = $(e.relatedTarget).attr('data-message');
       $(this).find('.modal-body p').text($message);
       $title = $(e.relatedTarget).attr('data-title');
@@ -28,26 +27,26 @@ form{display: inline;}
   
   $('#in_main_menu_modal').on('show.bs.modal', function(e) {
     //get data-id attribute of the clicked element
-    var categoryId = $(e.relatedTarget).data('category_id');
+
+    var countryId = $(e.relatedTarget).data('country_id');
 	var hubId = $(e.relatedTarget).data('hub_id');
 	var inMainMenu = $(e.relatedTarget).data('in_main_menu');
     var inFront = $(e.relatedTarget).data('in_front');
     //populate the textbox
-    $(e.currentTarget).find('input[name="category_id"]').val(categoryId);
+    $(e.currentTarget).find('input[name="country_id"]').val(countryId);
 	$(e.currentTarget).find('input[name="hub_id"]').val(hubId);
 	(inMainMenu==1)?$("#in_main_menu_checked").prop("checked", true):$("#in_main_menu_checked").prop("checked", false);
 	(inFront==1)?$("#in_front_checked").prop("checked", true):$("#in_front_checked").prop("checked", false);
 	
 
   });
-
   
   $('#confirmMenu').on('click', function(e){
 	  
         e.preventDefault();
 
         $.ajax({
-            url: 'in_main_menu', //this is the submit URL
+            url: 'country_in_main_menu', //this is the submit URL
             type: 'put', 
             data: $('#in_main_menu_form').serialize(),
             success: function(data){
@@ -73,11 +72,11 @@ form{display: inline;}
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Categories 
+                            Country 
                         </h1>
                         <ol class="breadcrumb">
                              <li class="active">
-                                <i class="fa fa-table"></i> category
+                                <i class="fa fa-table"></i> country
                             </li>
                         </ol>
                     </div>
@@ -106,84 +105,52 @@ form{display: inline;}
                                 <thead>
 
 								<tr>
-										<th>Category</th>
-										<th class="col-lg-7">Hubs</th>
-										<th>Countries</th>
+										<th>Country</th>
+										<th>Continent</th>
+										<th>Hubs</th>
 										<th>Action</th>
 								</tr>
 								</thead>
 								
 								<tbody>
 										
-								@foreach( $categories as $category )
+								@foreach( $countries as $country )
 								
 								<tr>
-									<td>{{ $category->name }}&nbsp;</td>
+									<td>{{ $country->name }}&nbsp;</td>
+									<td>{{ $country->continent->name }}&nbsp;</td>
 									<td>
-									@foreach($category->hubs as $hub)
+									@foreach($country->hubs as $hub)
 									
 										<a href="#" 
-										data-category_id="{{$category->id}}" 
+										data-country_id="{{$country->id}}" 
 										data-hub_id="{{$hub->id}}" 
-										data-in_main_menu="{{ $hub->pivot->in_main_menu }}" 
-										data-in_front="{{ $hub->pivot->in_front }}" 
+										data-in_main_menu="{{ $hub->pivot->cnt_in_main_menu }}" 
+										data-in_front="{{ $hub->pivot->cnt_in_front }}" 
 										data-toggle="modal" 
 										data-target="#in_main_menu_modal" 
-										class="btn btn-xs btn-{{($hub->pivot->in_main_menu)?'primary':'info'}}" style="margin-bottom:5px">
-										<i class="fa fa-gear"></i> {{ $hub->name }}
+										class="btn btn-xs btn-info">
+										{{ $hub->name }}
 										</a>
 										
-									@endforeach
-									</td>
-									<td>
-									@foreach($category->countries as $country)
-										<span class="btn btn-xs btn-info">{{ $country->name }}</span>
+										<a href="{{url('countries/hub_country_category/'.$hub->id.'/'.$country->id)}}" class="btn btn-xs btn-info">
+										>
+										</a>
 									@endforeach
 									</td>
 									<td>
 									
 									
-									{!! link_to('categories/' . $category->id .'/edit', 'Edit', ['class' => 'btn btn-success btn-xs']) !!}
+									{!! link_to('countries/' . $country->id .'/edit', 'Edit', ['class' => 'btn btn-success btn-xs']) !!}
 						
-									{!! Form::open(['method' => 'DELETE', 'route' => ['categories.destroy', $category->id]]) !!}
-									{!! Form::hidden('id', $category->id) !!}
+									{!! Form::open(['method' => 'DELETE', 'route' => ['countries.destroy', $country->id]]) !!}
+									{!! Form::hidden('id', $country->id) !!}
 									 <button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete News" data-message="Are you sure you want to delete this news ?">Delete
 									
 									{!! Form::close() !!}
 																
 									</td>
 								</tr>
-								
-								@if($category->children->count())
-									
-								  @foreach($category->children as $child)
-									<tr>
-									<td>&nbsp;&nbsp;{{ $child->name }}&nbsp;</td>
-									<td>
-									@foreach($child->hubs as $child_hub)
-										<span class="btn btn-xs btn-default">{{ $child_hub->name }}</span>
-									@endforeach
-									</td>
-									<td>
-									@foreach($child->countries as $child_country)
-										<span class="btn btn-xs btn-info">{{ $child_country->name }}</span>
-									@endforeach
-									</td>
-									<td>
-									
-									
-									{!! link_to('categories/' . $child->id .'/edit', 'Edit', ['class' => 'btn btn-success btn-xs']) !!}
-						
-									{!! Form::open(['method' => 'DELETE', 'route' => ['categories.destroy', $child->id]]) !!}
-									{!! Form::hidden('id', $child->id) !!}
-									 <button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete News" data-message="Are you sure you want to delete this Category ?">Delete
-									
-									{!! Form::close() !!}
-																
-									</td>
-								</tr>
-								 @endforeach
-								@endif
 								
 							@endforeach
 							
@@ -217,7 +184,6 @@ form{display: inline;}
   </div>
 </div>
 
-
 <div class="modal fade" role="dialog" aria-labelledby="inMainMenu" aria-hidden="true" id="in_main_menu_modal">
   <div class="modal-dialog">
 
@@ -225,12 +191,12 @@ form{display: inline;}
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Category</h4>
+        <h4 class="modal-title">Country</h4>
       </div>
       <div class="modal-body">
- {!! Form::model('',['method' => 'put','route' => ['in_main_menu'],'id'=>'in_main_menu_form','class' => 'form-horizontal'] ) !!}
+ {!! Form::model('',['method' => 'put','route' => ['country_in_main_menu'],'id'=>'in_main_menu_form','class' => 'form-horizontal'] ) !!}
 
-		 <input type="hidden" name="category_id"/>
+		 <input type="hidden" name="country_id"/>
 		 <input type="hidden" name="hub_id"/>
 	
 		
@@ -239,12 +205,12 @@ form{display: inline;}
 			<div class="col-sm-10">
 			
 				<label class="checkbox-inline">
-					{!! Form::hidden('in_main_menu', 0) !!}
-					{!! Form::checkbox('in_main_menu',1,null,array('id'=>'in_main_menu_checked')) !!} In Main Manu
+					{!! Form::hidden('cnt_in_main_menu', 0) !!}
+					{!! Form::checkbox('cnt_in_main_menu',1,null,array('id'=>'in_main_menu_checked')) !!} In Main Manu
 				  </label>
 				<label class="checkbox-inline">
-					{!! Form::hidden('in_front', 0) !!}
-					{!! Form::checkbox('in_front',1,null,array('id'=>'in_front_checked')) !!}Display in Front
+					{!! Form::hidden('cnt_in_front', 0) !!}
+					{!! Form::checkbox('cnt_in_front',1,null,array('id'=>'in_front_checked')) !!}Display in Front
 					
 				</label>
 			</div>

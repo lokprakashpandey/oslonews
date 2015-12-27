@@ -7,14 +7,17 @@ use Illuminate\Support\ServiceProvider;
 
 class MenuServiceProvider extends ServiceProvider
 {
-    /**
+ 
+	
+	/**
      * Bootstrap the application services.
      *
      * @return void
      */
     public function boot()
     {
-       $this->composeTopmenu();
+	   $this->composeTopMenuDefault();// top menu for default(overall) hub wise
+	   $this->composeTopmenu();
 	   $this->composeSidemenu();
 	   $this->composePagemenu();
     }
@@ -29,15 +32,45 @@ class MenuServiceProvider extends ServiceProvider
         //
     }
 	
+
+	private function composeTopMenuDefault() ///top menu for default overall hub wise
+    {
+
+		view()->composer('topmenudefault', function ($view) {
+
+		   $viewdata= $view->getData();
+		   
+		   $hub_slug = ($viewdata['hub_slug'])?$viewdata['hub_slug']:'international-edition';
+		   
+		   $hubs = \App\Hub::getHubs();//hub
+		   
+		    $categories = \App\Category::getTopMenuHubCategories($hub_slug);//hub_id
+			
+			$countries = \App\Country::getMainMenuCountries($hub_slug);//hub_id
+            
+            $view->with(compact('categories','countries','hubs'));
+        });
+    }
+	
 	private function composeTopmenu() ///top menu can be Continent/country/category
     {
         view()->composer('topmenu', function ($view) {
-
-            $categories = \App\Category::getTopMenuCategories();
 			
-			$countries = \App\Country::getMainMenuCountries();
+		   $viewdata= $view->getData();
+		   
+		   $hub_slug = ($viewdata['hub_slug'])?$viewdata['hub_slug']:'international-edition';
+		   $country_slug = $viewdata['country_slug'];
+
+
+		   $hubs = \App\Hub::getHubs();//hub
+		   
+		   $categories = \App\Category::getTopMenuCategories($hub_slug,$country_slug);//hub,country
+		  
+		   //$categories = \App\Category::getTopMenuHubCategories($hub_slug);//hub_id
+			
+		   $countries = \App\Country::getMainMenuCountries($hub_slug);//hub
             
-            $view->with(compact('categories','countries'));
+           $view->with(compact('categories','countries','hubs'));
         });
     }
 

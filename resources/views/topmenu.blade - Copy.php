@@ -1,4 +1,11 @@
-
+@foreach($countries as $country)
+{{$country->name}}
+ @foreach($country->getCountryCategories($country->pivot->id) as $cat)
+ 
+ {{$cat->name}}
+ 
+ @endforeach
+@endforeach
 <nav class="navbar navbar-default">
 		  <div class="container">
 			<div class="navbar-header">
@@ -12,29 +19,23 @@
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 			
-			  			  
 			  <ul class="nav navbar-nav">
 			  
-			   <li class="dropdown">
-			    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" >Hub <span class="caret"></span> </a>
-		
+			 @foreach($countries as $country) 
+			   <li @if($country->categories->count()) class="dropdown" @endif>
+			    <a href="{{ url( '/countries/'.$country->id ) }}" @if($country->categories->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{$country->name}} @if($country->categories->count()) <span class="caret"></span> @endif</a>
+						@if($country->categories->count())
 							<ul class="dropdown-menu" role="menu">
-								@foreach($hubs as $hub)
-									<li><a href="{{ url( '/pages/hub/'.$hub->slug ) }}">{{$hub->name}}</a></li>
+								@foreach($country->categories as $category)
+									<li><a href="{{ url( '/category/'.$category->slug ) }}">{{$category->name}}</a></li>
 								@endforeach
 							</ul>
-
-			  </li>
-			  
-			 <?php $hub_slug = (Request::segment(3))?Request::segment(3):"international-edition"; //set the default hub?>
-	
-			  @foreach($countries as $country) 
-			   <li>
-			    <a href="{{ url( '/pages/country/'.$hub_slug.'/'.$country->slug ) }}" >{{$country->name}}</a>
-						
+						@endif
 			  </li> 
+					
+			@endforeach
 		
-			  @endforeach
+			  
 			 
 			   @foreach( $categories as $cat )
 					<li @if($cat->children->count()) class="dropdown" @endif>
