@@ -79,7 +79,7 @@
                         </li>
 
                          <li>
-                            <a href="{{url('menus')}}"><i class="fa fa-dashboard fa-fw"></i> Menu</a>
+                            <a href="{{url('hubs/menu')}}"><i class="fa fa-dashboard fa-fw"></i> Menu</a>
                         </li>
 						<li>
                             <a href="#"><i class="fa fa-file fa-fw"></i> Continent<span class="fa arrow"></span></a>
@@ -114,9 +114,7 @@
                                 <li>
                                     <a href="{{url('hubs/index')}}">View Hub</a>
                                 </li>
-								<li>
-                                    <a href="{{url('hubs/menu')}}">Hub Menu</a>
-                                </li>
+								
                             </ul>
                         </li>
 						

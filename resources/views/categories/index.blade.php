@@ -107,8 +107,7 @@ form{display: inline;}
 
 								<tr>
 										<th>Category</th>
-										<th class="col-lg-7">Hubs</th>
-										<th>Countries</th>
+										<th class="col-lg-7">Hubs</th>									
 										<th>Action</th>
 								</tr>
 								</thead>
@@ -135,11 +134,7 @@ form{display: inline;}
 										
 									@endforeach
 									</td>
-									<td>
-									@foreach($category->countries as $country)
-										<span class="btn btn-xs btn-info">{{ $country->name }}</span>
-									@endforeach
-									</td>
+									
 									<td>
 									
 									
@@ -164,11 +159,7 @@ form{display: inline;}
 										<span class="btn btn-xs btn-default">{{ $child_hub->name }}</span>
 									@endforeach
 									</td>
-									<td>
-									@foreach($child->countries as $child_country)
-										<span class="btn btn-xs btn-info">{{ $child_country->name }}</span>
-									@endforeach
-									</td>
+									
 									<td>
 									
 									

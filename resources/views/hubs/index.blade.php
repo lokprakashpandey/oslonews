@@ -72,6 +72,8 @@ form{display: inline;}
 
 								<tr>
 										<th>Hubs</th>
+										<th class="col-lg-4">Country</th>
+										<th class="col-lg-4">Categories</th>
 										<th>Action</th>
 								</tr>
 								</thead>
@@ -82,6 +84,22 @@ form{display: inline;}
 								
 								<tr>
 									<td>{{ $hub->name }}&nbsp;</td>
+									
+									<td>
+									@foreach($hub->countries as $country)
+									
+											<span class="btn btn-xs btn-default" style="margin-bottom:5px">{{$country->name}}</span>
+											
+									@endforeach
+									</td>
+									
+									<td>
+									@foreach($hub->categories as $category)
+									
+											<span class="btn btn-xs btn-default" style="margin-bottom:5px">{{$category->name}}</span>
+											
+									@endforeach
+									</td>
 									<td>
 									
 									

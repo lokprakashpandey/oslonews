@@ -10,7 +10,7 @@ class CountryHub extends Model
 	
 	public function categories() {
 
-        return $this->belongsToMany('App\Category')->withPivot('cnt_cat_in_main_menu', 'cnt_cat_in_front');
+        return $this->belongsToMany('App\Category')->withPivot('id','cnt_cat_in_main_menu', 'cnt_cat_in_front');
 
     } 
 	

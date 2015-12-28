@@ -13,6 +13,7 @@ use App\Hub;
 use App\Category;
 use App\Country;
 use App\AuthorProfile;
+use App\CountryHub;
 use App\Helpers\CategoryHierarchy;
 
 class NewsController extends Controller
@@ -37,7 +38,46 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $hubs = Hub::lists('name','id');
+        //$hubs = Hub::lists('name','id');
+		
+		$hubs = Hub::get();
+		
+		$category_array = array();
+		
+		foreach($hubs as $hub)
+		{
+			
+				
+				foreach($hub->countries as $country)
+				{
+
+						$country_hub_id = CountryHub::where('hub_id',$hub->id)
+													->where('country_id',$country->id)
+													->first();
+						$country_hub = CountryHub::find($country_hub_id->id);
+
+						$categories = $country_hub->categories()->with('children')->get();
+	
+						foreach($categories as $category){
+							
+							if($category->children->count())
+							{
+					
+								foreach($category->children as $child)
+								{
+									$category_array[$hub->id.'_'.$country->id.'_'.$child->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name.' &raquo; '.$child->name;
+								}
+							}
+							else
+							{
+									$category_array[$hub->id.'_'.$country->id.'_'.$category->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
+							}
+							//$category_array[$category->pivot->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
+						}
+						
+				}
+			
+		}
 		
 		$countries = Country::lists('name','id');
 		
@@ -65,7 +105,7 @@ class NewsController extends Controller
 				$categories[$cat->id]=$cat->name;
 			}
 		}
-		return view('news.create', compact('hubs','countries','categories','news_types','authors'));
+		return view('news.create', compact('category_array','countries','categories','news_types','authors'));
     }
 
     /**
