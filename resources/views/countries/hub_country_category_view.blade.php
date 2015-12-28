@@ -7,6 +7,7 @@
 	$('.chosen-select').chosen();
   });
 </script>
+
 <div id="page-wrapper">
  <div class="container-fluid">
 
@@ -14,12 +15,12 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Hub 
+                            Country 
                         </h1>
                         <ol class="breadcrumb">
                            
                             <li class="active">
-                                <i class="fa fa-file"></i> Hub
+                                <i class="fa fa-file"></i> country
                             </li>
                         </ol>
                     </div>
@@ -30,7 +31,7 @@
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					Hub Information
+					Country Information
 				</div>
 
 
@@ -47,28 +48,28 @@
                         </div>
                     @endif
 				
-				 <form role="form" method="POST" action="{{ url('/hubs/store') }}" class="form-horizontal" enctype="multipart/form-data">
+				  {!! Form::model($country_hub, [ 'method' => 'patch','route' => ['hub_country_category_update', $country_hub->id],'class' => 'form-horizontal'] ) !!}
 				 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-				  <div class="form-group">
-					<label class="col-sm-2 control-label">Name</label>
-					<div class="col-sm-8">
-						<input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
-					</div>
-				</div>
-				
+				 
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Category</label>
-					<div class="col-sm-10">	 
-						{!! Form::select('category_id[]',$categories , Input::old('category_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
+					<label class="col-sm-2 control-label">Hub</label>
+					<div class="col-sm-8">
+						{!! Form::text('hub',$hub->name,array('class'=>'form-control','disabled')) !!}
 					</div>
 				</div>
-				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Country</label>
-					<div class="col-sm-10">	 
-						{!! Form::select('country_id[]',$countries , Input::old('country_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
+					<div class="col-sm-8">
+						{!! Form::text('country',$country->name,array('class'=>'form-control','disabled')) !!}
 					</div>
 				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Category</label>
+					<div class="col-sm-10">
+						{!! Form::select('category_id[]',$categories , $categories_selected, ['multiple'=>'multiple','class'=>'chosen-select form-control']) !!}
+					</div>
+				</div>
+			
 				
 
 			<div class="form-group">

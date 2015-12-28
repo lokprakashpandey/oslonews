@@ -9,6 +9,9 @@ use App\Http\Controllers\Controller;
 
 use App\Continent;
 use App\Country;
+use App\Hub;
+use App\Category;             
+use App\CountryHub;
 use Validator;
 
 class CountriesController extends Controller
@@ -23,7 +26,7 @@ class CountriesController extends Controller
         $countries = Country::orderBy('name')->get();
         return view('countries.index',compact('countries'));
     }
-
+                                                                                                                                                                                                                                
     /**
      * Show the form for creating a new resource.
      *
@@ -32,8 +35,8 @@ class CountriesController extends Controller
     public function create()
     {
         $continents = Continent::orderBy('name')->lists('name','id');
-		
-		return view('countries.create',compact('continents'));
+		$hubs = Hub::lists('name','id');
+		return view('countries.create',compact('continents','hubs'));
     }
 
     /**
@@ -66,6 +69,7 @@ class CountriesController extends Controller
 			'continent_id' => $request['continent_id'],
 			'cnt_in_main_menu'=> $request['in_main_menu'],
         ]);
+		$country->hubs()->attach($request['hub_id']);
 		return redirect('countries/index')->with('message', 'Country Added');
     }
 
@@ -90,9 +94,19 @@ class CountriesController extends Controller
     {
         $country = Country::find($id);
 		$continents = Continent::orderBy('name')->lists('name','id');
-		return view('countries.edit', compact('country','continents'));
-    }
-
+		
+		//hubs
+		$hubs = Hub::lists('name','id');
+		
+		$hubs_selected = $country->hubs->lists('id')->toArray();
+		
+		return view('countries.edit', compact('country',
+    
+											   'continents',
+											   'hubs',
+											   'hubs_selected'));
+												
+	}
     /**
      * Update the specified resource in storage.
      *
@@ -115,9 +129,65 @@ class CountriesController extends Controller
 		
 		$country->update($request->all());
 		
+		$country->hubs()->sync($request['hub_id']);
+		
 		return redirect('countries/index')->with('message', 'Country Updated');
     }
-
+	public function country_in_main_menu(Request $request)
+	{
+		$country = Country::find($request['country_id']);
+	
+		$country->hubs()->sync([$request['hub_id']=>['cnt_in_main_menu'=>$request['cnt_in_main_menu'],
+											'cnt_in_front'=>$request['cnt_in_front']]],false);
+		//return redirect('hubs/menu')->with('message', 'Category Updated');
+		
+	}
+	
+	public function cnt_category_in_main_menu(Request $request)
+	{
+		$country_hub = CountryHub::find($request['country_hub_id']);
+	
+		$country_hub->categories()->sync([$request['category_id']=>['cnt_cat_in_main_menu'=>$request['cnt_cat_in_main_menu'],
+											'cnt_cat_in_front'=>$request['cnt_cat_in_front']]],false);
+	
+		
+	}
+	public function hub_country_category($hub_id,$country_id)
+	{
+		$country_hub_id = CountryHub::where('hub_id',$hub_id)
+								  ->where('country_id',$country_id)
+								  ->first();
+	
+		$country_hub = CountryHub::find($country_hub_id->id);
+		
+		$hub = Hub::find($hub_id);
+		
+		$country = Country::find($country_id);
+		
+		$categories = Category::where('parent_id',0)->lists('name','id');
+		
+		$categories_selected = $country_hub->categories()->get();
+		
+		//dd($categories_selected->toArray());
+			
+		$categories_selected_ids = $country_hub->categories->lists('id')->toArray();
+		
+		return view('countries.hub_country_category',compact('country_hub',
+															 'categories',
+															 'categories_selected',
+															 'categories_selected_ids',
+															 'hub',
+															 'country'));
+	}
+	
+	public function hub_country_category_update(Request $request, $id)
+	{
+		$country_hub = CountryHub::find($id);
+		
+		$country_hub->categories()->sync($request['category_id']);
+		
+		return redirect('countries/index')->with('message', 'Updated');
+	}
     /**
      * Remove the specified resource from storage.
      *

@@ -47,33 +47,34 @@
                         </div>
                     @endif
 				
-				 <form role="form" method="POST" action="{{ url('/hubs/store') }}" class="form-horizontal" enctype="multipart/form-data">
+				
+				 {!! Form::model($hub, [ 'method' => 'patch','route' => ['hubs.update', $hub->id],'class' => 'form-horizontal'] ) !!}
 				 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 				  <div class="form-group">
 					<label class="col-sm-2 control-label">Name</label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
+						{!! Form::text('name',null,array('class'=>'form-control')) !!}
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Category</label>
 					<div class="col-sm-10">	 
-						{!! Form::select('category_id[]',$categories , Input::old('category_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
+						{!! Form::select('category_id[]',$categories , $categories_selected, ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Country</label>
 					<div class="col-sm-10">	 
-						{!! Form::select('country_id[]',$countries , Input::old('country_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
+						{!! Form::select('country_id[]',$countries , $countries_selected, ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
 				
 
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-				  <button type="submit" class="btn btn-default">Add</button>
+				  <button type="submit" class="btn btn-default">Update</button>
 				</div>
 			  </div>
 

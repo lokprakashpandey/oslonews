@@ -42,9 +42,9 @@ class CategoriesController extends Controller
 		
 		$hubs = Hub::lists('name','id');
 		
-		$countries = Country::lists('name','id');
+		//$countries = Country::lists('name','id');
 		
-		return view('categories.create', compact('category_opts','cat_types','hubs','countries'));
+		return view('categories.create', compact('category_opts','cat_types','hubs'));
     }
 
     /**
@@ -69,14 +69,15 @@ class CategoriesController extends Controller
 		   'name'		 => $request['name'],
 		   'parent_id' 	 => $request['parent_id'],
 		   'position'	 => $new_position,
-		   'in_front'    => $request['in_front'],
-		   'in_main_menu'=> $request['in_main_menu'],
+		   //'in_front'    => $request['in_front'],
+		   //'in_main_menu'=> $request['in_main_menu'],
 		   'cat_type'	 => $request['cat_type'],
 		   'slug'		 => $request['slug']
 	   
 	   ]);
 		$category->hubs()->attach($request['hub_id']);
-		$category->countries()->attach($request['country_id']);
+		//$category->hubs()->attach($request['hub_id'],['in_front'=>1, 'in_main_menu'=>1]);
+		//$category->countries()->attach($request['country_id']);
 		
 		return redirect('categories/index')->with('message', 'Category Added');
     }
@@ -116,17 +117,15 @@ class CategoriesController extends Controller
 		$hubs_selected = $category->hubs->lists('id')->toArray();
 		
 		//countries
-		$countries = Country::lists('name','id');
+		/*$countries = Country::lists('name','id');
 		
-		$countries_selected = $category->countries->lists('id')->toArray();
+		$countries_selected = $category->countries->lists('id')->toArray();*/
 		
 		return view('categories.edit', compact('category',
 												'category_opts',
 												'cat_types',
 												'hubs',
-												'hubs_selected',
-												'countries',
-												'countries_selected'));
+												'hubs_selected'));
     }
 
     /**
@@ -153,11 +152,21 @@ class CategoriesController extends Controller
 		
 		$category->hubs()->sync($request['hub_id']);
 		
-		$category->countries()->sync($request['country_id']);
+		//$category->countries()->sync($request['country_id']);
 		
 		return redirect('categories/index')->with('message', 'Category Updated');
     }
 
+	public function in_main_menu(Request $request)
+	{
+		$category = Category::find($request['category_id']);
+		
+		//$category->hubs()->sync((array)$hub_id,['in_front'=>1, 'in_main_menu'=>1],false);
+		$category->hubs()->sync([$request['hub_id']=>['in_main_menu'=>$request['in_main_menu'],
+											'in_front'=>$request['in_front']]],false);
+		//return redirect('categories/index')->with('message', 'Category Updated');
+		
+	}
     /**
      * Remove the specified resource from storage.
      *

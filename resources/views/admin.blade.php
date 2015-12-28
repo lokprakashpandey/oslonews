@@ -78,7 +78,9 @@
                             <a href="{{url('dashboard')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
 
-                      
+                         <li>
+                            <a href="{{url('hubs/menu')}}"><i class="fa fa-dashboard fa-fw"></i> Menu</a>
+                        </li>
 						<li>
                             <a href="#"><i class="fa fa-file fa-fw"></i> Continent<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -112,6 +114,7 @@
                                 <li>
                                     <a href="{{url('hubs/index')}}">View Hub</a>
                                 </li>
+								
                             </ul>
                         </li>
 						

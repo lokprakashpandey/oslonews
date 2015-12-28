@@ -65,11 +65,12 @@
 						{!! Form::select('type_id[]',$news_types , Input::old('type_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select News Types','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
-				
+				<?php
+				/*
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Hub</label>
 					<div class="col-sm-10">	 
-						{!! Form::select('hub_id[]',$hubs , Input::old('hub_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Hub','class'=>'chosen-select form-control']) !!}
+						 {!! Form::select('hub_id[]',$category_array , Input::old('hub_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Hub','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
 				
@@ -79,11 +80,13 @@
 						{!! Form::select('country_id[]',$countries , Input::old('country_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
+				*/
+				?>
 				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">News Category</label>
 					<div class="col-sm-10">	 
-						{!! Form::select('category_id[]',$categories , Input::old('category_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
+						{!! Form::select('category_id[]',$category_array , Input::old('category_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
 				

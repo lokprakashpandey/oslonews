@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 14, 2015 at 06:57 AM
+-- Generation Time: Dec 26, 2015 at 06:37 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -36,14 +36,7 @@ CREATE TABLE IF NOT EXISTS `author_profiles` (
   `img` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `user_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `author_profiles`
---
-
-INSERT INTO `author_profiles` (`id`, `name`, `address`, `phone`, `email`, `twitter`, `img`, `description`, `user_id`) VALUES
-(2, 'oslo', NULL, NULL, '', '', '', '', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -56,20 +49,24 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `name` varchar(45) DEFAULT NULL,
   `parent_id` int(4) DEFAULT NULL,
   `position` int(3) NOT NULL,
-  `in_front` tinyint(1) NOT NULL,
-  `in_main_menu` tinyint(1) NOT NULL,
   `cat_type` tinyint(1) NOT NULL,
   `slug` varchar(255) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=114 ;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `parent_id`, `position`, `in_front`, `in_main_menu`, `cat_type`, `slug`) VALUES
-(1, 'Rights Issues', 0, 1, 1, 1, 1, 'rights-issues'),
-(2, 'Human Rights', 1, 2, 0, 1, 1, 'human-rights'),
-(3, 'Women Rights', 1, 3, 0, 1, 1, 'women-rights');
+INSERT INTO `categories` (`id`, `name`, `parent_id`, `position`, `cat_type`, `slug`) VALUES
+(1, 'Rights Issues', 0, 1, 1, 'rights-issues'),
+(2, 'Human Rights', 1, 2, 1, 'human-rights'),
+(3, 'Women Rights', 1, 3, 1, 'women-rights'),
+(106, 'Lifestyle', 0, 4, 1, 'lifestyle'),
+(108, 'Business', 0, 6, 1, 'business'),
+(109, 'Sports', 0, 7, 1, 'sports'),
+(110, 'Politics', 0, 8, 1, 'politics'),
+(111, 'Beauty', 106, 9, 1, 'beauty'),
+(113, 'Entertainment', 0, 10, 1, 'entertainment');
 
 -- --------------------------------------------------------
 
@@ -81,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `category_country` (
 `id` int(4) NOT NULL,
   `country_id` int(3) NOT NULL,
   `category_id` int(4) NOT NULL,
-  `cnt_in_main_menu` tinyint(1) NOT NULL
+  `cnt_in_main_menu` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
@@ -89,14 +86,44 @@ CREATE TABLE IF NOT EXISTS `category_country` (
 --
 
 INSERT INTO `category_country` (`id`, `country_id`, `category_id`, `cnt_in_main_menu`) VALUES
-(1, 1, 1, 1),
-(2, 3, 1, 0),
-(3, 1, 2, 0),
-(4, 3, 2, 0),
-(5, 5, 2, 0),
-(6, 1, 3, 0),
-(7, 4, 3, 0),
-(8, 6, 3, 0);
+(1, 1, 1, NULL),
+(2, 3, 1, NULL),
+(3, 1, 2, NULL),
+(4, 3, 2, NULL),
+(5, 1, 3, NULL),
+(6, 3, 3, NULL),
+(7, 1, 106, NULL),
+(8, 5, 106, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category_country_hub`
+--
+
+CREATE TABLE IF NOT EXISTS `category_country_hub` (
+`id` int(11) NOT NULL,
+  `country_hub_id` int(4) NOT NULL,
+  `category_id` int(4) NOT NULL,
+  `cnt_cat_in_main_menu` tinyint(1) NOT NULL,
+  `cnt_cat_in_front` tinyint(1) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `category_country_hub`
+--
+
+INSERT INTO `category_country_hub` (`id`, `country_hub_id`, `category_id`, `cnt_cat_in_main_menu`, `cnt_cat_in_front`) VALUES
+(1, 2, 1, 1, 0),
+(2, 4, 106, 0, 1),
+(3, 4, 1, 1, 0),
+(4, 5, 110, 0, 0),
+(5, 2, 108, 0, 0),
+(6, 5, 113, 0, 0),
+(7, 6, 109, 0, 0),
+(8, 6, 106, 1, 0),
+(9, 7, 110, 0, 0),
+(10, 7, 106, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -107,20 +134,37 @@ INSERT INTO `category_country` (`id`, `country_id`, `category_id`, `cnt_in_main_
 CREATE TABLE IF NOT EXISTS `category_hub` (
 `id` int(8) NOT NULL,
   `hub_id` int(3) DEFAULT NULL,
-  `category_id` int(4) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+  `category_id` int(4) DEFAULT NULL,
+  `in_main_menu` tinyint(1) NOT NULL,
+  `in_front` tinyint(1) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
 
 --
 -- Dumping data for table `category_hub`
 --
 
-INSERT INTO `category_hub` (`id`, `hub_id`, `category_id`) VALUES
-(1, 2, 1),
-(2, 3, 1),
-(4, 3, 2),
-(5, 2, 2),
-(6, 2, 3),
-(7, 6, 3);
+INSERT INTO `category_hub` (`id`, `hub_id`, `category_id`, `in_main_menu`, `in_front`) VALUES
+(1, 1, 1, 1, 1),
+(5, 1, 3, 0, 0),
+(7, 1, 106, 0, 1),
+(10, 2, 2, 0, 0),
+(11, 2, 108, 1, 0),
+(12, 2, 109, 1, 1),
+(13, 3, 109, 0, 0),
+(14, 3, 108, 1, 1),
+(15, 1, 110, 1, 1),
+(16, 2, 110, 0, 1),
+(17, 1, 111, 1, 1),
+(18, 2, 111, 1, 1),
+(22, 1, 113, 1, 1),
+(25, 5, 113, 1, 1),
+(27, 3, 106, 1, 0),
+(29, 3, 113, 1, 0),
+(30, 5, 1, 1, 0),
+(31, 6, 1, 1, 0),
+(32, 2, 106, 1, 0),
+(33, 3, 1, 0, 0),
+(34, 2, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -132,15 +176,7 @@ CREATE TABLE IF NOT EXISTS `category_news` (
 `id` int(10) unsigned NOT NULL,
   `category_id` int(11) NOT NULL,
   `news_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `category_news`
---
-
-INSERT INTO `category_news` (`id`, `category_id`, `news_id`) VALUES
-(1, 2, 5),
-(3, 3, 5);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -192,21 +228,60 @@ CREATE TABLE IF NOT EXISTS `countries` (
 `id` int(3) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `slug` varchar(100) DEFAULT NULL,
-  `continent_id` int(3) NOT NULL,
-  `in_main_menu` tinyint(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+  `continent_id` int(3) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `countries`
 --
 
-INSERT INTO `countries` (`id`, `name`, `slug`, `continent_id`, `in_main_menu`) VALUES
-(1, 'Nepal', 'nepal', 1, 1),
-(2, 'Algeria', 'algeria', 3, 0),
-(3, 'China', 'china', 1, 0),
-(4, 'Norway', 'norway', 2, 0),
-(5, 'Cuba', 'cuba', 6, 0),
-(6, 'Brazil', 'brazil', 7, 1);
+INSERT INTO `countries` (`id`, `name`, `slug`, `continent_id`) VALUES
+(1, 'Nepal', 'nepal', 1),
+(2, 'Algeria', 'algeria', 3),
+(3, 'China', 'china', 1),
+(4, 'Norway', 'norway', 2),
+(5, 'Cuba', 'cuba', 6),
+(6, 'Brazil', 'brazil', 7),
+(7, 'India', 'india', 1),
+(8, 'Bhutan', 'bhutan', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `country_hub`
+--
+
+CREATE TABLE IF NOT EXISTS `country_hub` (
+`id` int(4) NOT NULL,
+  `hub_id` int(3) NOT NULL,
+  `country_id` int(3) NOT NULL,
+  `cnt_in_main_menu` tinyint(1) NOT NULL,
+  `cnt_in_front` tinyint(1) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+
+--
+-- Dumping data for table `country_hub`
+--
+
+INSERT INTO `country_hub` (`id`, `hub_id`, `country_id`, `cnt_in_main_menu`, `cnt_in_front`) VALUES
+(1, 1, 1, 0, 0),
+(2, 1, 4, 1, 0),
+(3, 1, 3, 0, 0),
+(4, 2, 4, 1, 0),
+(5, 2, 5, 1, 0),
+(6, 2, 2, 1, 0),
+(7, 3, 1, 1, 0),
+(8, 3, 8, 1, 0),
+(9, 3, 7, 0, 0),
+(10, 1, 6, 0, 0),
+(11, 2, 6, 1, 0),
+(12, 3, 6, 0, 0),
+(13, 4, 6, 0, 0),
+(14, 5, 6, 0, 0),
+(15, 6, 6, 0, 0),
+(16, 7, 6, 0, 0),
+(17, 6, 8, 0, 0),
+(18, 6, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -218,15 +293,7 @@ CREATE TABLE IF NOT EXISTS `country_news` (
 `id` int(11) NOT NULL,
   `news_id` int(11) NOT NULL,
   `country_id` int(3) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `country_news`
---
-
-INSERT INTO `country_news` (`id`, `news_id`, `country_id`) VALUES
-(1, 5, 1),
-(3, 5, 3);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -263,15 +330,7 @@ CREATE TABLE IF NOT EXISTS `hub_news` (
 `id` int(11) NOT NULL,
   `news_id` int(11) NOT NULL,
   `hub_id` int(3) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `hub_news`
---
-
-INSERT INTO `hub_news` (`id`, `news_id`, `hub_id`) VALUES
-(1, 5, 4),
-(3, 5, 3);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -305,14 +364,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `position` int(4) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `author_profile_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
-
---
--- Dumping data for table `news`
---
-
-INSERT INTO `news` (`id`, `name`, `content`, `front_img`, `user_id`, `created_at`, `updated_at`, `publish`, `position`, `slug`, `author_profile_id`) VALUES
-(5, 'The Republicans pour outrage over President Obama''s Oval Office Speech', 'Dec 7, WASHINGTON &mdash; President Obama&#39;s oval&nbsp; office speech has sparked an outrage amongst the Republicans who have criticized him for it. According to reports,&nbsp; Donald Trump, tweeted that Obama had too little to say about defeating the Islamic State in the wake of mass attacks in Paris and San Bernardino, Calif. &ldquo;Is that all there is?&rdquo; Trump said. &ldquo;We need a new President &ndash; FAST!&rdquo; While, Sen. Marco Rubio, R-Fla, right after the speech, told fox news that Obama had failed to address public concerns about the threats from the Islamic State.&quot; Nothing the president said &ldquo;will assuage people&rsquo;s fears,&rdquo; the Florida senator said. &ldquo;We are at war with a radical jihadist group,&rdquo; Rubio said. Leaders of the Republican-run Congress have also denounced Obama&rsquo;s speech. House Speaker Paul Ryan, R-Wis., called it &ldquo;disappointing: no new plan, just a half-hearted attempt to defend and distract from a failing policy.&rdquo; Meanwhile, the Republicans have also said that Obama&rsquo;s strategy has not been working, and mocked the president for declining to use the words &ldquo;radical Islamic terrorism.&rdquo;&nbsp; After Obama&rsquo;s speech Sunday,&nbsp; Sen. Ted Cruz, R-Tex., said that if he wins the presidency, he will order the Pentagon to &ldquo;destroy&rdquo; the Islamic State, and &ldquo;shut down the broken immigration system&rdquo; that is letting terrorists into the country. &ldquo;Nothing President Obama said tonight will assist in either case,&rdquo; Cruz said. In his remarks, Obama appeared to reference the presidential campaign by denouncing what he called divisive rhetoric about Muslims and terrorism. &ldquo;We cannot turn against one another by letting this fight be defined as a war between America and Islam,&rdquo; he said.&nbsp;', 'test', 1, '2015-12-13 00:06:41', '2015-12-13 00:06:41', 1, 0, 'the-republicans-pour-outrage-over-president-obamas-oval-office-speech', 2);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -324,15 +376,7 @@ CREATE TABLE IF NOT EXISTS `news_type` (
 `id` int(11) NOT NULL,
   `news_id` int(11) NOT NULL,
   `type_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `news_type`
---
-
-INSERT INTO `news_type` (`id`, `news_id`, `type_id`) VALUES
-(1, 5, 1),
-(3, 5, 3);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -464,6 +508,12 @@ ALTER TABLE `category_country`
  ADD PRIMARY KEY (`id`), ADD KEY `fk_countries_has_categories_categories1_idx` (`category_id`), ADD KEY `fk_countries_has_categories_countries1_idx` (`country_id`);
 
 --
+-- Indexes for table `category_country_hub`
+--
+ALTER TABLE `category_country_hub`
+ ADD PRIMARY KEY (`id`), ADD KEY `fk_country_hub_has_categories_categories1_idx` (`category_id`), ADD KEY `fk_country_hub_has_categories_country_hub1_idx` (`country_hub_id`);
+
+--
 -- Indexes for table `category_hub`
 --
 ALTER TABLE `category_hub`
@@ -491,7 +541,13 @@ ALTER TABLE `continents`
 -- Indexes for table `countries`
 --
 ALTER TABLE `countries`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_countries_continents1_idx` (`continent_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `slug_UNIQUE` (`slug`), ADD KEY `fk_countries_continents1_idx` (`continent_id`);
+
+--
+-- Indexes for table `country_hub`
+--
+ALTER TABLE `country_hub`
+ ADD PRIMARY KEY (`id`), ADD KEY `fk_hubs_has_countries_countries1_idx` (`country_id`), ADD KEY `fk_hubs_has_countries_hubs1_idx` (`hub_id`);
 
 --
 -- Indexes for table `country_news`
@@ -515,13 +571,13 @@ ALTER TABLE `hub_news`
 -- Indexes for table `images`
 --
 ALTER TABLE `images`
- ADD PRIMARY KEY (`id`), ADD KEY `news_id` (`news_id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `fk_images_news1_idx` (`news_id`);
 
 --
 -- Indexes for table `news`
 --
 ALTER TABLE `news`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `slug` (`slug`), ADD KEY `fk_news_users1_idx` (`user_id`), ADD KEY `author_profile_id` (`author_profile_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `slug` (`slug`), ADD KEY `fk_news_users1_idx` (`user_id`), ADD KEY `fk_news_author_profiles1_idx` (`author_profile_id`);
 
 --
 -- Indexes for table `news_type`
@@ -573,27 +629,32 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `author_profiles`
 --
 ALTER TABLE `author_profiles`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-MODIFY `id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=114;
 --
 -- AUTO_INCREMENT for table `category_country`
 --
 ALTER TABLE `category_country`
 MODIFY `id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
+-- AUTO_INCREMENT for table `category_country_hub`
+--
+ALTER TABLE `category_country_hub`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+--
 -- AUTO_INCREMENT for table `category_hub`
 --
 ALTER TABLE `category_hub`
-MODIFY `id` int(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT for table `category_news`
 --
 ALTER TABLE `category_news`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `comments`
 --
@@ -608,12 +669,17 @@ MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 -- AUTO_INCREMENT for table `countries`
 --
 ALTER TABLE `countries`
-MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `country_hub`
+--
+ALTER TABLE `country_hub`
+MODIFY `id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `country_news`
 --
 ALTER TABLE `country_news`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `hubs`
 --
@@ -623,7 +689,7 @@ MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 -- AUTO_INCREMENT for table `hub_news`
 --
 ALTER TABLE `hub_news`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `images`
 --
@@ -633,12 +699,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `news_type`
 --
 ALTER TABLE `news_type`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pages`
 --
@@ -682,6 +748,13 @@ ADD CONSTRAINT `fk_countries_has_categories_categories1` FOREIGN KEY (`category_
 ADD CONSTRAINT `fk_countries_has_categories_countries1` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `category_country_hub`
+--
+ALTER TABLE `category_country_hub`
+ADD CONSTRAINT `fk_country_hub_has_categories_categories1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_country_hub_has_categories_country_hub1` FOREIGN KEY (`country_hub_id`) REFERENCES `country_hub` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `category_hub`
 --
 ALTER TABLE `category_hub`
@@ -709,6 +782,13 @@ ALTER TABLE `countries`
 ADD CONSTRAINT `fk_countries_continents1` FOREIGN KEY (`continent_id`) REFERENCES `continents` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `country_hub`
+--
+ALTER TABLE `country_hub`
+ADD CONSTRAINT `fk_hubs_has_countries_countries1` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_hubs_has_countries_hubs1` FOREIGN KEY (`hub_id`) REFERENCES `hubs` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `country_news`
 --
 ALTER TABLE `country_news`
@@ -726,13 +806,13 @@ ADD CONSTRAINT `fk_news_has_hubs_news1` FOREIGN KEY (`news_id`) REFERENCES `news
 -- Constraints for table `images`
 --
 ALTER TABLE `images`
-ADD CONSTRAINT `fk_news_has_images` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`) ON DELETE CASCADE;
+ADD CONSTRAINT `fk_images_news1` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `news`
 --
 ALTER TABLE `news`
-ADD CONSTRAINT `fk_news_has_author` FOREIGN KEY (`author_profile_id`) REFERENCES `author_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `fk_news_author_profiles1` FOREIGN KEY (`author_profile_id`) REFERENCES `author_profiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `fk_news_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
