@@ -15,7 +15,6 @@
 	<link href="<?php echo e(asset('/css/bootstrap.min.css')); ?>" rel="stylesheet">
 	<link href="<?php echo e(asset('/css/metisMenu.min.css')); ?>" rel="stylesheet">
 	<link href="<?php echo e(asset('/css/sb-admin-2.css')); ?>" rel="stylesheet">
-	<link href="<?php echo e(asset('/css/style.css')); ?>" rel="stylesheet">
 	 <link href="<?php echo e(asset('font-awesome/css/font-awesome.min.css')); ?>" rel="stylesheet" type="text/css">
 
 
@@ -79,7 +78,9 @@
                             <a href="<?php echo e(url('dashboard')); ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
 
-                      
+                         <li>
+                            <a href="<?php echo e(url('menus')); ?>"><i class="fa fa-dashboard fa-fw"></i> Menu</a>
+                        </li>
 						<li>
                             <a href="#"><i class="fa fa-file fa-fw"></i> Continent<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -112,6 +113,9 @@
                                 </li>
                                 <li>
                                     <a href="<?php echo e(url('hubs/index')); ?>">View Hub</a>
+                                </li>
+								<li>
+                                    <a href="<?php echo e(url('hubs/menu')); ?>">Hub Menu</a>
                                 </li>
                             </ul>
                         </li>
