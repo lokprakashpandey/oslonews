@@ -42,9 +42,9 @@ class CategoriesController extends Controller
 		
 		$hubs = Hub::lists('name','id');
 		
-		$countries = Country::lists('name','id');
+		//$countries = Country::lists('name','id');
 		
-		return view('categories.create', compact('category_opts','cat_types','hubs','countries'));
+		return view('categories.create', compact('category_opts','cat_types','hubs'));
     }
 
     /**
@@ -117,17 +117,15 @@ class CategoriesController extends Controller
 		$hubs_selected = $category->hubs->lists('id')->toArray();
 		
 		//countries
-		$countries = Country::lists('name','id');
+		/*$countries = Country::lists('name','id');
 		
-		$countries_selected = $category->countries->lists('id')->toArray();
+		$countries_selected = $category->countries->lists('id')->toArray();*/
 		
 		return view('categories.edit', compact('category',
 												'category_opts',
 												'cat_types',
 												'hubs',
-												'hubs_selected',
-												'countries',
-												'countries_selected'));
+												'hubs_selected'));
     }
 
     /**
@@ -162,6 +160,7 @@ class CategoriesController extends Controller
 	public function in_main_menu(Request $request)
 	{
 		$category = Category::find($request['category_id']);
+		
 		//$category->hubs()->sync((array)$hub_id,['in_front'=>1, 'in_main_menu'=>1],false);
 		$category->hubs()->sync([$request['hub_id']=>['in_main_menu'=>$request['in_main_menu'],
 											'in_front'=>$request['in_front']]],false);

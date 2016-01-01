@@ -41,6 +41,40 @@ form{display: inline;}
 			}
         });
     });
+	
+	$('#category_in_main_menu_modal').on('show.bs.modal', function(e) {
+    //get data-id attribute of the clicked element
+
+    var categoryId = $(e.relatedTarget).data('category_id');
+	var hubId = $(e.relatedTarget).data('hub_id');
+	var inMainMenu = $(e.relatedTarget).data('in_main_menu');
+    var inFront = $(e.relatedTarget).data('in_front');
+    //populate the textbox
+    $(e.currentTarget).find('input[name="category_id"]').val(categoryId);
+	$(e.currentTarget).find('input[name="hub_id"]').val(hubId);
+	(inMainMenu==1)?$("#category_in_main_menu_checked").prop("checked", true):$("#category_in_main_menu_checked").prop("checked", false);
+	(inFront==1)?$("#category_in_front_checked").prop("checked", true):$("#category_in_front_checked").prop("checked", false);
+	
+
+  });
+  
+  $('#categoryConfirmMenu').on('click', function(e){
+	  
+        e.preventDefault();
+
+        $.ajax({
+            url: '{{ url("categories/in_main_menu")}}', //this is the submit URL
+            type: 'put', 
+            data: $('#category_in_main_menu_form').serialize(),
+            success: function(data){
+                 $("#category_in_main_menu_modal").modal('hide'); 
+				 window.location.href = '{{ url("hubs/menu")}}';
+            },
+			error: function(){
+				alert($('#category_in_main_menu_form').serialize());
+			}
+        });
+    });
 
 });
 	
@@ -89,7 +123,8 @@ form{display: inline;}
 
 								<tr>
 										<th>Hub</th>
-										<th class="col-lg-7">Country</th>
+										<th class="col-lg-5">Country</th>
+										<th>Categories</th>
 										
 								</tr>
 								</thead>
@@ -125,6 +160,22 @@ form{display: inline;}
 										</ul>
                                       </div>
 									
+									@endforeach
+									</td>
+									
+									<td>
+									@foreach($hub->categories as $category)
+						
+										<a href="#" 
+										data-category_id="{{$category->id}}" 
+										data-hub_id="{{$hub->id}}" 
+										data-in_main_menu="{{ $category->pivot->in_main_menu }}" 
+										data-in_front="{{ $category->pivot->in_front }}" 
+										data-toggle="modal" 
+										data-target="#category_in_main_menu_modal" 
+										class="btn btn-xs btn-{{($category->pivot->in_main_menu)?'primary':'info'}}" style="margin-bottom:5px">
+										<i class="fa fa-gear"></i> {{ $category->name }}
+										</a>
 									@endforeach
 									</td>
 									
@@ -181,6 +232,52 @@ form{display: inline;}
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		<button type="submit" class="btn btn-danger" id="confirmMenu">Update</button>
+      </div>
+	  
+	  </form>
+	  
+    </div>
+
+  </div>
+</div>
+
+
+<div class="modal fade" role="dialog" aria-labelledby="categoryMainMenu" aria-hidden="true" id="category_in_main_menu_modal">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Category</h4>
+      </div>
+      <div class="modal-body">
+ {!! Form::model('',['method' => 'put','route' => ['in_main_menu'],'id'=>'category_in_main_menu_form','class' => 'form-horizontal'] ) !!}
+
+		 <input type="hidden" name="category_id"/>
+		 <input type="hidden" name="hub_id"/>
+	
+		
+		 <div class="form-group">
+					
+			<div class="col-sm-10">
+			
+				<label class="checkbox-inline">
+					{!! Form::hidden('in_main_menu', 0) !!}
+					{!! Form::checkbox('in_main_menu',1,null,array('id'=>'category_in_main_menu_checked')) !!} In Main Manu
+				  </label>
+				<label class="checkbox-inline">
+					{!! Form::hidden('in_front', 0) !!}
+					{!! Form::checkbox('in_front',1,null,array('id'=>'category_in_front_checked')) !!}Display in Front
+					
+				</label>
+			</div>
+          </div>
+				  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-danger" id="categoryConfirmMenu">Update</button>
       </div>
 	  
 	  </form>

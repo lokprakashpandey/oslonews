@@ -139,7 +139,7 @@ class CountriesController extends Controller
 	
 		$country->hubs()->sync([$request['hub_id']=>['cnt_in_main_menu'=>$request['cnt_in_main_menu'],
 											'cnt_in_front'=>$request['cnt_in_front']]],false);
-		return redirect('hubs/menu')->with('message', 'Category Updated');
+		//return redirect('hubs/menu')->with('message', 'Category Updated');
 		
 	}
 	
