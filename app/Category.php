@@ -36,7 +36,7 @@ class Category extends Model
 	
 	public function country_hubs() {
 
-        return $this->belongsToMany('App\CountryHub')->withPivot('cnt_cat_in_main_menu', 'cnt_cat_in_front');
+        return $this->belongsToMany('App\CountryHub')->withPivot('id','cnt_cat_in_main_menu', 'cnt_cat_in_front');
 
     } 
 	//other functions
@@ -52,11 +52,11 @@ class Category extends Model
 			$hub = Hub::find($hub_id->id);
 			
 			$categories = $hub->categories()
-							->where('parent_id', '=', '0')
+							//->where('parent_id', '=', '0')
 							->where('in_main_menu', '1')
 							->orderBy('position','asc')
 							->get();
-				
+			
 			return $categories;
 	}
 	public static function getTopMenuCategories($hub_slug,$country_slug)
@@ -74,7 +74,23 @@ class Category extends Model
 			$categories = CountryHub::find($country_hub->id)->categories()
 															->where('cnt_cat_in_main_menu', '1')
 															->orderBy('position','desc')->get();
-			
+			//dd($categories->toArray());
 			return $categories;
 	}
+	public function check_sub_category($country_hub_id,$category_id) {
+
+        $status=false;
+		
+		$country_hub = CountryHub::find($country_hub_id);
+		
+		$check_sub_category = $country_hub->categories()->where('category_id',$category_id)->first();
+		
+		if($check_sub_category)
+		{
+			$status=true;
+		}
+		return $status;
+		
+
+    } 
 }

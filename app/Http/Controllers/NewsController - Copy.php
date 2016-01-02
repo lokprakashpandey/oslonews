@@ -87,12 +87,13 @@ class NewsController extends Controller
 			
 		}
 		
-				
+		$countries = Country::lists('name','id');
+		
 		$news_types = Type::lists('name','id');
 		
 		$authors = AuthorProfile::lists('name','id');
 		
-		/*$get_categories = Category::getCategories();
+		$get_categories = Category::getCategories();
 		
 		$categories = array();
 		
@@ -111,8 +112,8 @@ class NewsController extends Controller
 			{
 				$categories[$cat->id]=$cat->name;
 			}
-		}*/
-		return view('news.create', compact('category_array','news_types','authors'));
+		}
+		return view('news.create', compact('category_array','countries','categories','news_types','authors'));
     }
 
     /**
@@ -177,56 +178,37 @@ class NewsController extends Controller
     {
         $news = News::find($id);
 		
-		$categories_selected = $news->category_country_hubs->lists('id')->toArray();//category_country_hub_id
+		$get_categories = Category::getCategories();
 		
-		$hubs = Hub::get();
+		$categories = array();
 		
-		$category_array = array();
-		
-		foreach($hubs as $hub)
+		foreach($get_categories as $cat)
 		{
 			
-				
-				foreach($hub->countries as $country)
+			if($cat->children->count())
+			{
+					
+				foreach($cat->children as $child)
 				{
-
-						$country_hub_id = CountryHub::where('hub_id',$hub->id)
-													->where('country_id',$country->id)
-													->first();
-						$country_hub = CountryHub::find($country_hub_id->id);
-
-						$categories = $country_hub->categories()->get();
-
-						foreach($categories as $category){
-
-							if($category->children->count())
-							{
-					
-								foreach($category->children as $child)
-								{
-									$check_sub_category = $country_hub->categories()->where('category_id',$child->id)->first();
-					
-									if($check_sub_category){
-										//dd($check_sub_category->toArray());
-										$category_array[$check_sub_category->pivot->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name.' &raquo; '.$child->name;
-									}	
-								}
-							}
-							else
-							{
-								if($category->parent_id==0)//only if no parent 
-								{
-									$category_array[$category->pivot->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
-								}	
-							}
-							
-						}
-						
+						$categories[$child->id] = $cat->name.' &raquo; '.$child->name;
 				}
-			
+			}
+			else
+			{
+				$categories[$cat->id]=$cat->name;
+			}
 		}
 		
-			
+		$categories_selected = $news->categories->lists('id')->toArray();
+		
+		$hubs = Hub::lists('name','id');
+		
+		$hubs_selected = $news->hubs->lists('id')->toArray();
+		
+		$countries = Country::lists('name','id');
+		
+		$countries_selected = $news->countries->lists('id')->toArray();
+		
 		$news_types = Type::lists('name','id');
 		
 		$news_types_selected = $news->types->lists('id')->toArray();
@@ -235,11 +217,15 @@ class NewsController extends Controller
 		
 		return view('news.edit', compact(
 									'news',
-									'category_array',
+									'categories',
 									'categories_selected',
 									'authors',
 									'news_types',
-									'news_types_selected'
+									'news_types_selected',
+									'hubs',
+									'hubs_selected',
+									'countries',
+									'countries_selected'
 									));
     }
 
@@ -265,8 +251,9 @@ class NewsController extends Controller
 		
 		$news->update($request->all());
 		
-		$news->category_country_hubs()->sync($request['category_country_hub_id']);
-		
+		$news->hubs()->sync($request['hub_id']);
+	    $news->countries()->sync($request['country_id']);
+	    $news->categories()->sync($request['category_id']);
 	    $news->types()->sync($request['type_id']);
  
 		return redirect('news/index')->with('message', 'News Updated');

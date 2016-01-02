@@ -35,14 +35,18 @@
 			  </li> 
 		
 			  @endforeach
-			 
+			
 			   @foreach( $categories as $cat )
 					<li @if($cat->children->count()) class="dropdown" @endif>
 						<a href="{{ url( '/category/'.$cat->slug ) }}" @if($cat->children->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{ $cat->name }} @if($cat->children->count()) <span class="caret"></span> @endif</a>
 						@if($cat->children->count())
 							<ul class="dropdown-menu" role="menu">
 								@foreach($cat->children as $child)
+								
+								@if($child->check_sub_category($cat->pivot->country_hub_id,$child->id))
 									<li><a href="{{ url( '/category/'.$child->slug ) }}">{{$child->name}}</a></li>
+								@endif
+								
 								@endforeach
 							</ul>
 						@endif

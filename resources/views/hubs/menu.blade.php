@@ -155,8 +155,7 @@ form{display: inline;}
 											<li><a href="{{url('countries/hub_country_category/'.$hub->id.'/'.$country->id)}}">Add Categories</a>
 											</li>
 											
-											
-											</li>
+									
 										</ul>
                                       </div>
 									
@@ -206,6 +205,7 @@ form{display: inline;}
         <h4 class="modal-title">Country</h4>
       </div>
       <div class="modal-body">
+ 
  {!! Form::model('',['method' => 'put','route' => ['country_in_main_menu'],'id'=>'in_main_menu_form','class' => 'form-horizontal'] ) !!}
 
 		 <input type="hidden" name="country_id"/>

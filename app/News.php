@@ -44,4 +44,10 @@ class News extends Model
     {
         return $this->belongsTo('App\AuthorProfile');
     }
+	
+	public function category_country_hubs() {
+
+        return $this->belongsToMany('App\CategoryCountryHub');
+
+    } 
 }
