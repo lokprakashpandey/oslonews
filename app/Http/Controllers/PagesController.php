@@ -38,6 +38,12 @@ class PagesController extends Controller
 			return view('pages.index');
     }
 	
+	public function hub_index()
+    {
+
+			return view('pages.hub_index');
+    }
+	
 	public function hub($id)
 	{
 		return view('pages.index');
