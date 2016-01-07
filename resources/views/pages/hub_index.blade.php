@@ -1,4 +1,4 @@
-@extends('default')
+@extends('user')
 @section('title', 'The Oslo Times')
 @section('content')
 <style>

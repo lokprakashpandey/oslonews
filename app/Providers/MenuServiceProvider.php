@@ -16,8 +16,11 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-	   $this->composeTopMenuDefault();// top menu for default(overall) hub wise
-	   $this->composeTopmenu();
+	   $this->composeTopMenuDefault();// top menu for default main page
+	   $this->composeTopHubMenu();//top menu for default(overall) hub wise
+	   $this->composeTopmenu();//top menu for hub/country/
+	   
+	   $this->composeSidemenuDefault();
 	   $this->composeSidemenu();
 	   $this->composePagemenu();
     }
@@ -33,26 +36,45 @@ class MenuServiceProvider extends ServiceProvider
     }
 	
 
-	private function composeTopMenuDefault() ///top menu for default overall hub wise
+	private function composeTopMenuDefault() ///top menu for default overall
     {
 
 		view()->composer('topmenudefault', function ($view) {
 
-		   $viewdata= $view->getData();
-		   
-		   $hub_slug = ($viewdata['hub_slug'])?$viewdata['hub_slug']:'international-edition';
-		   
 		   $hubs = \App\Hub::getHubs();//hub
 		   
+		   //get overall default categories
+
+		   $categories = \App\Category::getTopMenuDefaultCategories();
+				
+		   $countries = \App\Country::getTopMenuDefaultCountries();
+            
+           $view->with(compact('categories','countries','hubs'));
+        });
+    }
+	
+	private function composeTopHubMenu() ///top menu for hub wise
+    {
+
+		view()->composer('topmenuhub', function ($view) {
+
+		    $viewdata= $view->getData();
+		   
+		    $hub_slug = $viewdata['hub_slug'];
+		   
+		    $hubs = \App\Hub::getHubs();//hub
+		   
+		   //get hub wise categories
+		   
 		    $categories = \App\Category::getTopMenuHubCategories($hub_slug);//hub_id
-			
-			$countries = \App\Country::getMainMenuCountries($hub_slug);//hub_id
+		   				
+		    $countries = \App\Country::getTopMenuHubCountries($hub_slug);//hub_id
             
             $view->with(compact('categories','countries','hubs'));
         });
     }
 	
-	private function composeTopmenu() ///top menu can be Continent/country/category
+	private function composeTopmenu() ///top menu for hub/country/
     {
         view()->composer('topmenu', function ($view) {
 			
@@ -65,22 +87,44 @@ class MenuServiceProvider extends ServiceProvider
 		   $hubs = \App\Hub::getHubs();//hub
 		   
 		   $categories = \App\Category::getTopMenuCategories($hub_slug,$country_slug);//hub,country
-		  
-		   //$categories = \App\Category::getTopMenuHubCategories($hub_slug);//hub_id
-			
-		   $countries = \App\Country::getMainMenuCountries($hub_slug);//hub
+
+		   $countries = \App\Country::getTopMenuHubCountries($hub_slug);//hub
             
            $view->with(compact('categories','countries','hubs'));
         });
     }
 
-	private function composeSidemenu()
+	private function composeSidemenuDefault()//for hub wise only
+    {
+        view()->composer('sidemenudefault', function ($view) {
+
+            $viewdata= $view->getData();
+		   
+		   $hub_slug = ($viewdata['hub_slug'])?$viewdata['hub_slug']:'international-edition';
+		   
+		   $hubs = \App\Hub::getHubs();//hub
+		   
+		    $categories = \App\Category::getSideMenuHubCategories($hub_slug);//hub_id
+            
+            $view->with(compact('categories'));
+        });
+    }
+	
+	private function composeSidemenu()//for hub/country  Continent/country/category
     {
         view()->composer('sidemenu', function ($view) {
 
-            $category = \App\Category::getTopCategoriesAll();
+            $viewdata= $view->getData();
+		   
+		   $hub_slug = ($viewdata['hub_slug'])?$viewdata['hub_slug']:'international-edition';
+		   
+		   $country_slug = $viewdata['country_slug'];
+		   
+		   $hubs = \App\Hub::getHubs();//hub
+		   
+		    $categories = \App\Category::getSideMenuCategories($hub_slug,$country_slug);//hub_id
             
-            $view->with(compact('category'));
+            $view->with(compact('categories'));
         });
     }
 	

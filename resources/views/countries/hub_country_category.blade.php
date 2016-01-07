@@ -89,6 +89,12 @@
                             </ul>
                         </div>
                     @endif
+					
+					@if (session('message'))
+							<div class="alert alert-success">
+								{{ session('message') }}
+							</div>
+						@endif
 				
 				  {!! Form::model($country_hub, [ 'method' => 'patch','route' => ['hub_country_category_update', $country_hub->id],'class' => 'form-horizontal'] ) !!}
 				 <input type="hidden" name="_token" value="{{ csrf_token() }}">

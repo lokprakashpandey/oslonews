@@ -1,8 +1,8 @@
 <?php
 
 Route::get('/', 'PagesController@index');
-Route::get('pages/hub/{hub_slug}', 'PagesController@index');
-Route::get('pages/country/{hub_id}/{country_slug}', 'PagesController@country');
+Route::get('pages/hub/{hub_slug}', 'PagesController@hub_index');
+Route::get('pages/country/{hub_slug}/{country_slug}', 'PagesController@country');
 
 //Menu
 Route::get('/menus', 'MenusController@index');

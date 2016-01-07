@@ -35,14 +35,16 @@
 			  </li> 
 		
 			  @endforeach
-			 
+			
 			   @foreach( $categories as $cat )
-					<li @if($cat->children->count()) class="dropdown" @endif>
-						<a href="{{ url( '/category/'.$cat->slug ) }}" @if($cat->children->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{ $cat->name }} @if($cat->children->count()) <span class="caret"></span> @endif</a>
-						@if($cat->children->count())
+					<li @if($cat->children_category_country_hub($cat->pivot->country_hub_id)->count()) class="dropdown" @endif>
+						<a href="{{ url( '/category/'.$cat->slug ) }}" @if($cat->children_category_country_hub($cat->pivot->country_hub_id)->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{ $cat->name }} @if($cat->children_category_country_hub($cat->pivot->country_hub_id)->count()) <span class="caret"></span> @endif</a>
+						@if($cat->children_category_country_hub($cat->pivot->country_hub_id)->count())
 							<ul class="dropdown-menu" role="menu">
-								@foreach($cat->children as $child)
+								@foreach($cat->children_category_country_hub($cat->pivot->country_hub_id) as $child)
+
 									<li><a href="{{ url( '/category/'.$child->slug ) }}">{{$child->name}}</a></li>
+														
 								@endforeach
 							</ul>
 						@endif

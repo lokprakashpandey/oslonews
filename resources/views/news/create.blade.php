@@ -86,7 +86,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">News Category</label>
 					<div class="col-sm-10">	 
-						{!! Form::select('category_id[]',$category_array , Input::old('category_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
+						{!! Form::select('category_country_hub_id[]',$category_array , Input::old('category_country_hub_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Category','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
 				

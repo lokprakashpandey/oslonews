@@ -37,7 +37,28 @@ class HubsController extends Controller
      */
     public function create()
     {
-         $categories = Category::where('parent_id',0)->lists('name','id');
+         //$categories = Category::where('parent_id',0)->lists('name','id');
+		 $get_categories = Category::getCategories();
+
+		$categories = array();
+		
+		foreach($get_categories as $cat)
+		{
+			$categories[$cat->id]=$cat->name;
+			
+			if($cat->children->count())
+			{
+					
+				foreach($cat->children as $child)
+				{
+						$categories[$child->id] = $cat->name.' &raquo; '.$child->name;
+				}
+			}
+			
+				
+
+		}
+
 		 $countries = Country::lists('name','id');
 		 return view('hubs.create', compact('categories','countries'));
     }
@@ -97,7 +118,27 @@ class HubsController extends Controller
         $hub = Hub::find($id);
 		
 		//category
-		$categories = Category::where('parent_id',0)->lists('name','id');
+		//$categories = Category::where('parent_id',0)->lists('name','id');
+		
+		$get_categories = Category::getCategories();
+		
+		$categories = array();
+		
+		foreach($get_categories as $cat)
+		{
+			$categories[$cat->id]=$cat->name;
+			
+			if($cat->children->count())
+			{
+					
+				foreach($cat->children as $child)
+				{
+						$categories[$child->id] = $cat->name.' &raquo; '.$child->name;
+				}
+			}
+				
+
+		}
 		
 		$categories_selected = $hub->categories->lists('id')->toArray();
 		

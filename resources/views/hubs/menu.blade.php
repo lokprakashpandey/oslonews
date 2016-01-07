@@ -139,9 +139,13 @@ form{display: inline;}
 									<td>
 									@foreach($hub->countries as $country)
 									<div class="btn-group" style="margin-bottom:5px">
-										<button type="button" class="btn btn-{{($country->pivot->cnt_in_main_menu)?'primary':'info'}} btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+										<button type="button" 
+										class="btn btn-@if($country->pivot->cnt_in_main_menu && $country->pivot->cnt_cat_in_front)success @elseif($country->pivot->cnt_in_main_menu && !$country->pivot->cnt_cat_in_front)primary @elseif(!$country->pivot->cnt_in_main_menu && $country->pivot->cnt_cat_in_front)info @elseif(!$country->pivot->cnt_in_main_menu && !$country->pivot->cnt_cat_in_front)danger @endif btn-xs dropdown-toggle" 
+										data-toggle="dropdown" 
+										aria-expanded="true">
 											<i class="fa fa-gear"></i> {{ $country->name }} <span class="caret"></span>
 										</button>
+										
 										<ul class="dropdown-menu" role="menu">
 											<li>
 											<a href="#"
@@ -155,8 +159,7 @@ form{display: inline;}
 											<li><a href="{{url('countries/hub_country_category/'.$hub->id.'/'.$country->id)}}">Add Categories</a>
 											</li>
 											
-											
-											</li>
+									
 										</ul>
                                       </div>
 									
@@ -173,7 +176,7 @@ form{display: inline;}
 										data-in_front="{{ $category->pivot->in_front }}" 
 										data-toggle="modal" 
 										data-target="#category_in_main_menu_modal" 
-										class="btn btn-xs btn-{{($category->pivot->in_main_menu)?'primary':'info'}}" style="margin-bottom:5px">
+										class="btn btn-xs btn-@if($category->pivot->in_main_menu && $category->pivot->in_front)success @elseif($category->pivot->in_main_menu && !$category->pivot->in_front)primary @elseif(!$category->pivot->in_main_menu && $category->pivot->in_front)info @elseif(!$category->pivot->in_main_menu && !$category->pivot->in_front)danger @endif " style="margin-bottom:5px">
 										<i class="fa fa-gear"></i> {{ $category->name }}
 										</a>
 									@endforeach
@@ -206,6 +209,7 @@ form{display: inline;}
         <h4 class="modal-title">Country</h4>
       </div>
       <div class="modal-body">
+ 
  {!! Form::model('',['method' => 'put','route' => ['country_in_main_menu'],'id'=>'in_main_menu_form','class' => 'form-horizontal'] ) !!}
 
 		 <input type="hidden" name="country_id"/>

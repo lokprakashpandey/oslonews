@@ -13,6 +13,7 @@ use App\Hub;
 use App\Category;             
 use App\CountryHub;
 use Validator;
+use Redirect;
 
 class CountriesController extends Controller
 {
@@ -164,7 +165,28 @@ class CountriesController extends Controller
 		
 		$country = Country::find($country_id);
 		
-		$categories = Category::where('parent_id',0)->lists('name','id');
+		//$categories = Category::where('parent_id',0)->lists('name','id');
+		
+		$get_categories = Category::getCategories();
+		
+		$categories = array();
+		
+		foreach($get_categories as $cat)
+		{
+			$categories[$cat->id]=$cat->name;
+			
+			if($cat->children->count())
+			{
+					
+				foreach($cat->children as $child)
+				{
+						$categories[$child->id] = $cat->name.' &raquo; '.$child->name;
+				}
+			}
+			
+				
+
+		}
 		
 		$categories_selected = $country_hub->categories()->get();
 		
@@ -186,7 +208,8 @@ class CountriesController extends Controller
 		
 		$country_hub->categories()->sync($request['category_id']);
 		
-		return redirect('countries/index')->with('message', 'Updated');
+		//return redirect('countries/index')->with('message', 'Updated');
+		return Redirect::back()->with('message','Updated');
 	}
     /**
      * Remove the specified resource from storage.

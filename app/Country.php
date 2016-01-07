@@ -26,7 +26,13 @@ class Country extends Model
         return $this->belongsToMany('App\Hub')->withPivot('id','cnt_in_main_menu','cnt_in_front');
 
     }
-	public static function getMainMenuCountries($hub_slug)
+	public static function getTopMenuDefaultCountries()
+	{
+		$countries = Country::where('default_country',1)->get();
+		
+		return $countries;
+	}
+	public static function getTopMenuHubCountries($hub_slug)
 	{
 		
 		$hub_id = Hub::where('slug',$hub_slug)->first();

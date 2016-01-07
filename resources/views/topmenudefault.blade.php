@@ -27,40 +27,23 @@
 			  </li> 
 					
 
-			<?php
-			/*
-			 @foreach($countries as $country) 
-			   <li @if($country->getCountryCategories($country->pivot->id)->count()) class="dropdown" @endif>
-			    <a href="{{ url( '/countries/'.$country->id ) }}" @if($country->getCountryCategories($country->pivot->id)->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{$country->name}} @if($country->getCountryCategories($country->pivot->id)->count()) <span class="caret"></span> @endif</a>
-						@if($country->getCountryCategories($country->pivot->id)->count())
-							<ul class="dropdown-menu" role="menu">
-								@foreach($country->getCountryCategories($country->pivot->id) as $category)
-									<li><a href="{{ url( '/category/'.$category->slug ) }}">{{$category->name}}</a></li>
-								@endforeach
-							</ul>
-						@endif
-			  </li> 
-					
-			@endforeach
-		*/
-			  ?>
-	<?php $hub_slug = (Request::segment(3))?Request::segment(3):"international-edition"; //set the default hub?>
-	
 			  @foreach($countries as $country) 
 			   <li>
-			    <a href="{{ url( '/pages/country/'.$hub_slug.'/'.$country->slug ) }}" >{{$country->name}}</a>
+			    <a href="{{ url( '/pages/country/'.$country->slug ) }}" >{{$country->name}}</a>
 						
 			  </li> 
 					
 			@endforeach
 			 
 			   @foreach( $categories as $cat )
-					<li @if($cat->children->count()) class="dropdown" @endif>
-						<a href="{{ url( '/category/'.$cat->slug ) }}" @if($cat->children->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{ $cat->name }} @if($cat->children->count()) <span class="caret"></span> @endif</a>
-						@if($cat->children->count())
+					<li @if($cat->children_default_status->count()) class="dropdown" @endif>
+						<a href="{{ url( '/category/'.$cat->slug ) }}" @if($cat->children_default_status->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{ $cat->name }} @if($cat->children_default_status->count()) <span class="caret"></span> @endif</a>
+						@if($cat->children_default_status->count())
 							<ul class="dropdown-menu" role="menu">
-								@foreach($cat->children as $child)
+								@foreach($cat->children_default_status as $child)
+									
 									<li><a href="{{ url( '/category/'.$child->slug ) }}">{{$child->name}}</a></li>
+
 								@endforeach
 							</ul>
 						@endif
