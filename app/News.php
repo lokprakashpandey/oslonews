@@ -8,15 +8,16 @@ class News extends Model
 {
     protected $fillable = array('name', 'content','publish', 'user_id','position','slug','author_profile_id','front_img');
 	
-	public function hubs() {
-
-        return $this->belongsToMany('App\Hub');
-
-    } 
-	
+		
 	public function categories() {
 
         return $this->belongsToMany('App\Category');
+
+    } 
+	
+	public function category_hubs() {
+
+        return $this->belongsToMany('App\CategoryHub');
 
     } 
 	public function types()

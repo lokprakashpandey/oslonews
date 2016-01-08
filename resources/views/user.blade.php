@@ -233,7 +233,7 @@ $(document).scroll(function(e){
 			@if(Request::segment(2)=='country')
 				@include('sidemenu', array('hub_slug'=>Request::segment(3),'country_slug'=>Request::segment(4)))
 			@else
-				@include('sidemenudefault', array('hub_slug'=>Request::segment(3)))
+				@include('sidemenuhub', array('hub_slug'=>Request::segment(3)))
 			@endif
 			  <?php //@include('latestnews')?>
 			<?php //@include('twitter_feed') ?>

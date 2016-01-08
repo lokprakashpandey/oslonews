@@ -149,13 +149,13 @@
 			
 			@foreach( $categories as $cat )
 		
-			@if($cat->children->count())
+			@if($cat->children_category_hub($cat->pivot->hub_id)->count())
 				
 				<li data-toggle="collapse" data-target="#{{ $cat->id }}" class="collapsed">
 					<a href="#">{{ $cat->name }} <i class="fa fa-fw fa-caret-down"></i></a>
 				</li>
 				<ul id="{{ $cat->id }}" class="sub-menu collapse">
-						@foreach($cat->children as $child)
+						@foreach($cat->children_category_hub($cat->pivot->hub_id) as $child)
 							
 							<li><a href="{{ url( '/category/'.$child->slug ) }}">{{$child->name}}</a></li>
 			

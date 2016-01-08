@@ -185,12 +185,13 @@ class HubsController extends Controller
 	
 	public function menu()
 	{
-		$hubs = Hub::with(['categories'=> function($q){
+		/*$hubs = Hub::with(['categories'=> function($q){
 							$q->where('parent_id',0);
 							}
 							
 							])->orderBy('name')->get();
-		//dd($hubs->toArray());
+		*/
+		$hubs = Hub::with(['categories'])->orderBy('name')->get();
         return view('hubs.menu',compact('hubs'));
 	}
 

@@ -165,9 +165,10 @@ class CountriesController extends Controller
 		
 		$country = Country::find($country_id);
 		
-		//$categories = Category::where('parent_id',0)->lists('name','id');
+			
+		//$get_categories = Category::getCategories(); //for all categories
 		
-		$get_categories = Category::getCategories();
+		$get_categories = $hub->categories()->where('parent_id',0)->get(); //** for those categories which is already in that HUB
 		
 		$categories = array();
 		
@@ -175,10 +176,11 @@ class CountriesController extends Controller
 		{
 			$categories[$cat->id]=$cat->name;
 			
-			if($cat->children->count())
+			if($cat->children_category_hub($hub_id)->count()) //for those categories that is already in that hub
+			//if($cat->children->count())
 			{
 					
-				foreach($cat->children as $child)
+				foreach($cat->children_category_hub($hub_id) as $child)
 				{
 						$categories[$child->id] = $cat->name.' &raquo; '.$child->name;
 				}

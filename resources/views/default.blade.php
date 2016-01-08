@@ -226,12 +226,9 @@ $(document).scroll(function(e){
 			</div>
 
 			<div class="col-md-2 col-md-pull-10">
-			  
-			@if(Request::segment(2)=='country')
-				@include('sidemenu', array('hub_slug'=>Request::segment(3),'country_slug'=>Request::segment(4)))
-			@else
+
 				@include('sidemenudefault', array('hub_slug'=>Request::segment(3)))
-			@endif
+
 			  <?php //@include('latestnews')?>
 			<?php //@include('twitter_feed') ?>
 			 </div><!-- //col -->

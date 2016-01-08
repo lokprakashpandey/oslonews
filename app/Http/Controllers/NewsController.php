@@ -14,6 +14,7 @@ use App\Category;
 use App\Country;
 use App\AuthorProfile;
 use App\CountryHub;
+use App\CategoryHub;
 use App\Helpers\CategoryHierarchy;
 
 class NewsController extends Controller
@@ -46,30 +47,32 @@ class NewsController extends Controller
 		
 		foreach($hubs as $hub)
 		{
-			
-				
 				foreach($hub->countries as $country)
 				{
-
 						$country_hub_id = CountryHub::where('hub_id',$hub->id)
 													->where('country_id',$country->id)
 													->first();
 						$country_hub = CountryHub::find($country_hub_id->id);
-
+						
 						$categories = $country_hub->categories()->get();
 
 						foreach($categories as $category){
-
+							
 							if($category->children->count())
 							{
-					
 								foreach($category->children as $child)
 								{
+									//check hub/country/category exits
 									$check_sub_category = $country_hub->categories()->where('category_id',$child->id)->first();
 					
 									if($check_sub_category){
-										//dd($check_sub_category->toArray());
-										$category_array[$check_sub_category->pivot->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name.' &raquo; '.$child->name;
+										 
+										$sub_category_hub_id = CategoryHub::where('category_id',$child->id)
+																		->where('hub_id',$hub->id)
+																		->first();
+																
+									   		$category_array[$check_sub_category->pivot->id.'_'.$sub_category_hub_id->id.'_'.$child->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name.' &raquo; '.$child->name;
+						
 									}	
 								}
 							}
@@ -77,7 +80,11 @@ class NewsController extends Controller
 							{
 								if($category->parent_id==0)//only if no parent 
 								{
-									$category_array[$category->pivot->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
+									$category_hub_id = CategoryHub::where('category_id',$category->id)
+																		->where('hub_id',$hub->id)
+																		->first();
+
+									$category_array[$category->pivot->id.'_'.$category_hub_id->id.'_'.$category->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
 								}	
 							}
 							//$category_array[$category->pivot->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
@@ -123,7 +130,19 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        foreach($request['category_country_hub_id'] as $hub_value)
+		{
+			$hub = explode('_',$hub_value);
+			
+			$category_id[] = $hub[2];
+			
+			$category_hub_id[] = $hub[1];
+
+			$category_country_hub_id[] = $hub[0];
+			
+			
+		}
+		$this->validate($request, [
 				'name'        => 'required|max:100',
 				'content'     => 'required',
 				'category_country_hub_id' => 'required',
@@ -148,7 +167,11 @@ class NewsController extends Controller
 	   
 	   ]);
 	   
-	   $news->category_country_hubs()->attach($request['category_country_hub_id']);
+       $news->categories()->sync($category_id);
+		
+	   $news->category_hubs()->sync($category_hub_id);
+	   
+	   $news->category_country_hubs()->attach($category_country_hub_id);
 
 	   $news->types()->attach($request['type_id']);
 	   
