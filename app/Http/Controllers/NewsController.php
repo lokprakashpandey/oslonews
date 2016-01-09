@@ -171,7 +171,7 @@ class NewsController extends Controller
 		
 	   $news->category_hubs()->sync($category_hub_id);
 	   
-	   $news->category_country_hubs()->attach($category_country_hub_id);
+	   $news->category_country_hubs()->sync($category_country_hub_id);
 
 	   $news->types()->attach($request['type_id']);
 	   

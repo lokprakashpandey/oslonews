@@ -177,4 +177,11 @@ class Category extends Model
 		
         return $category_hub->news()->orderBy('created_at', 'desc')->take(3)->get();
     }
+	
+	public function hubCountryNewsTop5($category_country_hub_id)
+    {
+		$category_country_hub = CategoryCountryHub::find($category_country_hub_id);
+		
+        return $category_country_hub->news()->orderBy('created_at', 'desc')->take(3)->get();
+    }
 }

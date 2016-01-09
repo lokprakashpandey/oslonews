@@ -7,6 +7,8 @@ use App\News;
 use App\User;
 use App\Page;
 use App\Hub;
+use App\Country;
+use App\CountryHub;
 use App\Category;
 use Input;
 use App\Http\Requests;
@@ -56,9 +58,24 @@ class PagesController extends Controller
 	{
 		return view('pages.index');
 	}
-	public function country()
+	
+	public function country($hub_slug,$country_slug)
 	{
-		return view('pages.country');
+		$hub = Hub::where('slug',$hub_slug)->first();
+			
+		$country = Country::where('slug',$country_slug)->first();
+			
+			
+		$country_hub = CountryHub::where('hub_id',$hub->id)
+							   ->where('country_id',$country->id)
+							   ->first();
+							   
+		$front_categories_first_col = CountryHub::find($country_hub->id)->categories()
+															->where('cnt_cat_in_front', '1')
+															->orderBy('position','asc')->get();
+
+		//dd($front_categories_first_col->toArray());
+		return view('pages.country',compact('front_categories_first_col'));
 	}
 	
 	public function archive()
