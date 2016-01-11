@@ -23,11 +23,11 @@ class Hub extends Model
 
     }  
 	
-	/*public function news() {
+	public function news() {
 
         return $this->belongsToMany('App\News');
 
-    }*/
+    }
 	public static function getHubs()
     {
 			$hubs = Hub::get(); 

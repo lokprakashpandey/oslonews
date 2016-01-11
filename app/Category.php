@@ -103,6 +103,7 @@ class Category extends Model
 	public static function getTopMenuHubCategories($hub_slug)// hub wise categories for main menu
     {
 			$hub_id = Hub::where('slug',$hub_slug)->first();
+			
 			$hub = Hub::find($hub_id->id);
 			
 			$categories = $hub->categories()

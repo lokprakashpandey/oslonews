@@ -88,9 +88,15 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_default($slug)
     {
-        //
+        $category = Category::where('slug', $slug)->first();
+		
+														
+		$first_column_news = $category->news()->where('publish','1')->orderBy('created_at', 'desc')->paginate(21);
+
+		
+		return view('categories.show_default', compact('first_column_news'));
     }
 
     /**

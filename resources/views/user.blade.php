@@ -83,7 +83,7 @@ $(function () {
 	
 	<header>
 	
-	<div class="oslo-header navbar-fixed-margin">
+	<div class="oslo-header">
 		
 	
 		  <div class="row header-bg" style="margin-left:0; margin-right:0;">
@@ -212,19 +212,8 @@ $(document).scroll(function(e){
 			</div>
 		
 			<div class="col-md-3 col-md-push-2">
-			<?php /*
-					
-			@if(Route::currentRouteName() != 'column')
-				@include('top_stories')
-				@include('columns')
-				@include('random_news')
-			@else
-				@include('columns_by_author')
-			    @include('top_stories')
-				@include('random_news')
-			@endif
-			*/
-			?>
+		
+				@include('top_stories', array('hub_slug'=>Request::segment(3)))
 			
 			</div>
 

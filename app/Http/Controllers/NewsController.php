@@ -62,7 +62,7 @@ class NewsController extends Controller
 							{
 								foreach($category->children as $child)
 								{
-									//check hub/country/category exits
+									//check hub/country/sub category exits
 									$check_sub_category = $country_hub->categories()->where('category_id',$child->id)->first();
 					
 									if($check_sub_category){
@@ -71,7 +71,8 @@ class NewsController extends Controller
 																		->where('hub_id',$hub->id)
 																		->first();
 																
-									   		$category_array[$check_sub_category->pivot->id.'_'.$sub_category_hub_id->id.'_'.$child->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name.' &raquo; '.$child->name;
+									   		//category_country_hub_id/category_hub_id/category_id/hub_id
+											$category_array[$check_sub_category->pivot->id.'_'.$sub_category_hub_id->id.'_'.$child->id.'_'.$hub->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name.' &raquo; '.$child->name;
 						
 									}	
 								}
@@ -83,8 +84,8 @@ class NewsController extends Controller
 									$category_hub_id = CategoryHub::where('category_id',$category->id)
 																		->where('hub_id',$hub->id)
 																		->first();
-
-									$category_array[$category->pivot->id.'_'.$category_hub_id->id.'_'.$category->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
+									//category_country_hub_id/category_hub_id/categoryt_id/hub_id
+									$category_array[$category->pivot->id.'_'.$category_hub_id->id.'_'.$category->id.'_'.$hub->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
 								}	
 							}
 							//$category_array[$category->pivot->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
@@ -134,6 +135,8 @@ class NewsController extends Controller
 		{
 			$hub = explode('_',$hub_value);
 			
+			$hub_id[] = $hub[3];
+			
 			$category_id[] = $hub[2];
 			
 			$category_hub_id[] = $hub[1];
@@ -166,6 +169,8 @@ class NewsController extends Controller
 		   'publish'			=>1
 	   
 	   ]);
+	   
+	   $news->hubs()->sync($hub_id);
 	   
        $news->categories()->sync($category_id);
 		
