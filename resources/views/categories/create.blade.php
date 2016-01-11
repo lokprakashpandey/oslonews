@@ -68,14 +68,15 @@
 						</select>
 					</div>
 				</div>
-				
+				<?php
+				/*
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Hub</label>
 					<div class="col-sm-10">	 
 						{!! Form::select('hub_id[]',$hubs , Input::old('hub_id[]'), ['multiple'=>'multiple','data-placeholder'=>'Please Select Hub','class'=>'chosen-select form-control']) !!}
 					</div>
 				</div>
-				<?php /*
+				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Country</label>
 					<div class="col-sm-10">	 

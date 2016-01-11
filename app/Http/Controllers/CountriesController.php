@@ -36,8 +36,8 @@ class CountriesController extends Controller
     public function create()
     {
         $continents = Continent::orderBy('name')->lists('name','id');
-		$hubs = Hub::lists('name','id');
-		return view('countries.create',compact('continents','hubs'));
+		//$hubs = Hub::lists('name','id');
+		return view('countries.create',compact('continents'));
     }
 
     /**
@@ -70,7 +70,7 @@ class CountriesController extends Controller
 			'continent_id' => $request['continent_id'],
 			'cnt_in_main_menu'=> $request['in_main_menu'],
         ]);
-		$country->hubs()->attach($request['hub_id']);
+		//$country->hubs()->attach($request['hub_id']);
 		return redirect('countries/index')->with('message', 'Country Added');
     }
 
@@ -97,15 +97,13 @@ class CountriesController extends Controller
 		$continents = Continent::orderBy('name')->lists('name','id');
 		
 		//hubs
-		$hubs = Hub::lists('name','id');
+		/*$hubs = Hub::lists('name','id');
 		
 		$hubs_selected = $country->hubs->lists('id')->toArray();
-		
+		*/
 		return view('countries.edit', compact('country',
     
-											   'continents',
-											   'hubs',
-											   'hubs_selected'));
+											   'continents'));
 												
 	}
     /**
