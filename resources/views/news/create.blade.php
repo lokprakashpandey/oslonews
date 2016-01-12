@@ -1,9 +1,12 @@
 @extends('admin')
 @section('content')
 <link href="{{ asset('/css/bootstrap-chosen.css') }}" rel="stylesheet">
+<link href="{{ asset('/css/fileinput.css') }}" rel="stylesheet">
+
 <script src="{{ asset('/js/chosen.jquery.js') }}"></script>
 <script src="{{ asset('/js/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('/js/chosen.jquery.js') }}"></script>
+<script src="{{ asset('/js/fileinput.js') }}"></script>
 <script>
   $(function() {
 	$('.chosen-select').chosen();
@@ -96,6 +99,14 @@
 					<textarea class="ckeditor form-control" name="content" id="content" value="{{ old('content') }}"></textarea>
 					</div>
 				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Image in front</label>
+					<div class="col-sm-4">
+						{!! Form::file('front_img', ['id'=>'front_img','class'=>'form-control file']) !!}
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Author</label>
 					<div class="col-sm-4">
@@ -131,6 +142,15 @@
 	var config = {	height: 400};	
 
 	CKEDITOR.replace( 'content', config);
+
+	  $("#front_img").fileinput({
+        allowedFileExtensions : ['jpg', 'png','gif'],
+        //uploadUrl: '#',
+        showUpload:false,
+        overwriteInitial: false,
+        maxFileSize: 1000,
+    
+	});
 	
 </script>
 

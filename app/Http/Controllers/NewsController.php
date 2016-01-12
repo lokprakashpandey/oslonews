@@ -16,6 +16,8 @@ use App\AuthorProfile;
 use App\CountryHub;
 use App\CategoryHub;
 use App\Helpers\CategoryHierarchy;
+use File;
+use Intervention\Image\Facades\Image as Image;
 
 class NewsController extends Controller
 {
@@ -120,6 +122,7 @@ class NewsController extends Controller
 				$categories[$cat->id]=$cat->name;
 			}
 		}*/
+		dd($category_array);
 		return view('news.create', compact('category_array','news_types','authors'));
     }
 
@@ -159,10 +162,31 @@ class NewsController extends Controller
 		
 		$request['slug'] = $count ? "{$slug}-{$count}" : $slug;
 		
+		//first image resize
+		if( $request->hasFile('front_img') ){
+			
+			$imageName = str_random(15).'.'.$request->file('front_img')->getClientOriginalExtension();
+		
+			$destination_thumb = base_path() . '/images/news/thumb/'.$imageName;
+			$destination_slide = base_path() . '/images/news/slides/'.$imageName;
+			$destination_main = base_path() . '/images/news/'.$imageName;
+		
+			Image::make($request->file('front_img'))->resize(300, 250, function ($constraint) {
+																	$constraint->aspectRatio();
+																	$constraint->upsize();
+																})->save($destination_thumb);
+																
+			Image::make($request->file('front_img'))->resizeCanvas(700, 400)->save($destination_slide);
+			//Image::make($request->file('front_img_new'))->fit(700, 400)->save($destination_slide);
+			
+			
+			Image::make($request->file('front_img'))->save($destination_main);
+		}
+		
 		$news = News::create([
 		   'name'				=> $request['name'],
 		   'content'			=> $request['content'],
-		   'front_img'			=> 'test',//$imageName,
+		   'front_img'			=> $imageName,
 		   'user_id' 			=> 1,//Auth::user()->id,
 		   'author_profile_id' 	=> $request['author_profile_id'],
 		   'slug'				=> $request['slug'],
@@ -179,7 +203,7 @@ class NewsController extends Controller
 	   $news->category_country_hubs()->sync($category_country_hub_id);
 
 	   $news->types()->attach($request['type_id']);
-	   
+	   	   
 	   return redirect('news/index')->with('message', 'News Added');
 	 
     }
