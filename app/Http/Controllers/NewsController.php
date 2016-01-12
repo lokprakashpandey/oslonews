@@ -122,7 +122,7 @@ class NewsController extends Controller
 				$categories[$cat->id]=$cat->name;
 			}
 		}*/
-		dd($category_array);
+		
 		return view('news.create', compact('category_array','news_types','authors'));
     }
 
@@ -136,7 +136,7 @@ class NewsController extends Controller
     {
         foreach($request['category_country_hub_id'] as $hub_value)
 		{
-			$hub = explode('_',$hub_value);
+				$hub = explode('_',$hub_value);
 			
 			$hub_id[] = $hub[3];
 			
