@@ -54,8 +54,8 @@ Route::put('categories/in_main_menu', [
 	'uses' => 'CategoriesController@in_main_menu', 
 	'as' => 'in_main_menu'
 ]);
-
 Route::resource('categories', 'CategoriesController');
+Route::get('category/{category_slug}', 'CategoriesController@show_default');
 
 //News
 Route::get('/news/index', 'NewsController@index');

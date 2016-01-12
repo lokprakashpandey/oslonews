@@ -3,6 +3,27 @@ body
 	font-family:georgia,serif;
 	background:#f5f5f5;
 }
+/* Preloader */
+#preloader {
+	position: fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background-color:#fff; /* change if the mask should have another color then white */
+	z-index:9999999; /* makes sure it stays on top */
+}
+#status {
+	width:200px;
+	height:200px;
+	position:absolute;
+	left:50%; /* centers the loading animation horizontally one the screen */
+	top:50%; /* centers the loading animation vertically one the screen */
+	background-image:url(../images/status.gif); /* path to your loading animation */
+	background-repeat:no-repeat;
+	background-position:center;
+	margin:-100px 0 0 -100px; /* is width and height divided by two */
+}
 .oslo-header{
 background:#002768;
 padding-bottom:3px;
@@ -13,7 +34,7 @@ padding-bottom:3px;
 }
 .oslo-navigation-wrapper{
 	height:40px;
-	background:#9e0000;
+	background:#1c204f;
 	z-index:999999;
 }
 .oslo-navigation{
@@ -97,7 +118,7 @@ padding-bottom:3px;
 .navbar-default .navbar-toggle{border:none;margin:0px; margin-right:8px; margin-top:5px;}
 
 .navbar-default {
-    background-color: #800000;
+    background-color: #01194e;
     border-color: #e7e7e7;
 }
 

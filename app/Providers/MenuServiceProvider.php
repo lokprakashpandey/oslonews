@@ -21,6 +21,7 @@ class MenuServiceProvider extends ServiceProvider
 	   $this->composeTopmenu();//top menu for hub/country/
 	   
 	   $this->composeSidemenuDefault();
+	    $this->composeSidemenuHub();
 	   $this->composeSidemenu();
 	   $this->composePagemenu();
     }
@@ -94,9 +95,21 @@ class MenuServiceProvider extends ServiceProvider
         });
     }
 
-	private function composeSidemenuDefault()//for hub wise only
+	private function composeSidemenuDefault()//default overall first page
     {
         view()->composer('sidemenudefault', function ($view) {
+		   
+		    $hubs = \App\Hub::getHubs();//hub
+		   
+		    $categories = \App\Category::getCategories();//hub_id
+            
+            $view->with(compact('categories'));
+        });
+    }
+	
+	private function composeSidemenuHub()//for hub wise only
+    {
+        view()->composer('sidemenuhub', function ($view) {
 
             $viewdata= $view->getData();
 		   
@@ -105,6 +118,7 @@ class MenuServiceProvider extends ServiceProvider
 		   $hubs = \App\Hub::getHubs();//hub
 		   
 		    $categories = \App\Category::getSideMenuHubCategories($hub_slug);//hub_id
+		    //$categories = \App\Category::getCategories();//hub_id
             
             $view->with(compact('categories'));
         });

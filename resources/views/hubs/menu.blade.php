@@ -168,7 +168,7 @@ form{display: inline;}
 									
 									<td>
 									@foreach($hub->categories as $category)
-						
+					
 										<a href="#" 
 										data-category_id="{{$category->id}}" 
 										data-hub_id="{{$hub->id}}" 
@@ -177,7 +177,7 @@ form{display: inline;}
 										data-toggle="modal" 
 										data-target="#category_in_main_menu_modal" 
 										class="btn btn-xs btn-@if($category->pivot->in_main_menu && $category->pivot->in_front)success @elseif($category->pivot->in_main_menu && !$category->pivot->in_front)primary @elseif(!$category->pivot->in_main_menu && $category->pivot->in_front)info @elseif(!$category->pivot->in_main_menu && !$category->pivot->in_front)danger @endif " style="margin-bottom:5px">
-										<i class="fa fa-gear"></i> {{ $category->name }}
+										<i class="fa fa-gear"></i> {{ ($category->parent)?$category->parent->name.' &raquo; '.$category->name:$category->name }}
 										</a>
 									@endforeach
 									</td>

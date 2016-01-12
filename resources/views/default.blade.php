@@ -12,6 +12,10 @@
 	
 	<link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
 	
+	<link href="{{ asset('/css/li-scroller.css') }}" rel="stylesheet">
+
+	<link href="{{ asset('/css/slick.css') }}" rel="stylesheet">
+	
 	 <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
 
@@ -21,6 +25,10 @@
 
 	<script src="{{ asset('/js/metisMenu.js') }}"></script>
 	<script src="{{ asset('/js/sb-admin-2.js') }}"></script>
+	
+	<script src="{{ asset('/js/jquery.li-scroller.1.0.js') }}"></script>
+	
+	<script src="{{ asset('/js/slick.min.js') }}"></script>
 	
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/social.css') }}" rel="stylesheet">
@@ -79,12 +87,21 @@ $(function () {
 	
 	
     <body>
+	 <!-- Preloader -->
+  <div id="preloader">
+    <div id="status">&nbsp;</div>
+  </div>
+  <!-- End Preloader -->
 	<?php //@include('scrolling_news')?>
 	
+	 
 	<header>
 	
-	<div class="oslo-header navbar-fixed-margin">
-		
+	
+	
+	<div class="oslo-header">
+	
+	
 	
 		  <div class="row header-bg" style="margin-left:0; margin-right:0;">
 		  
@@ -184,19 +201,19 @@ $(document).scroll(function(e){
     var scrollTop = $(document).scrollTop();
     if(scrollTop > 90){
         $('.oslo-navigation-wrapper').addClass('navbar-fixed-top');
-		$('.oslo-navigation-wrapper').addClass('navbar-fixed-margin');
+		//$('.oslo-navigation-wrapper').addClass('navbar-fixed-margin');
 		$('.oslo-breadcrumb-wrapper').addClass('navbar-fixed-top');
 		$('.oslo-breadcrumb-wrapper').addClass('navbar-fixed-margin-breadcrumb');
 		
     } else {
          $('.oslo-navigation-wrapper').removeClass('navbar-fixed-top');
-		 $('.oslo-navigation-wrapper').removeClass('navbar-fixed-margin');
+		 //$('.oslo-navigation-wrapper').removeClass('navbar-fixed-margin');
 		  $('.oslo-breadcrumb-wrapper').removeClass('navbar-fixed-top');
 		 $('.oslo-breadcrumb-wrapper').removeClass('navbar-fixed-margin-breadcrumb');
     }
   });
 </script>
-	
+
 	<div class="content-wrapper">
 	
 		<div class="container main-content">
@@ -209,6 +226,8 @@ $(document).scroll(function(e){
 			</div>
 		
 			<div class="col-md-3 col-md-push-2">
+			@include('top_stories')
+			
 			<?php /*
 					
 			@if(Route::currentRouteName() != 'column')
@@ -226,12 +245,9 @@ $(document).scroll(function(e){
 			</div>
 
 			<div class="col-md-2 col-md-pull-10">
-			  
-			@if(Request::segment(2)=='country')
-				@include('sidemenu', array('hub_slug'=>Request::segment(3),'country_slug'=>Request::segment(4)))
-			@else
+
 				@include('sidemenudefault', array('hub_slug'=>Request::segment(3)))
-			@endif
+
 			  <?php //@include('latestnews')?>
 			<?php //@include('twitter_feed') ?>
 			 </div><!-- //col -->
@@ -363,5 +379,43 @@ $(document).scroll(function(e){
 		</div>
 	</footer>
 	 
+	 <script>
+	 //<![CDATA[
+    jQuery(window).load(function() { // makes sure the whole site is loaded
+      $('#status').fadeOut(); // will first fade out the loading animation
+      $('#preloader').delay(700).fadeOut('slow'); // will fade out the white DIV that covers the website.
+      $('body').delay(700).css({'overflow':'visible'});
+    })
+  //]]> 
+  
+  // slick slider call
+  $(document).ready(function(){  
+  $('.owl-carousel').slick({
+  centerMode: true,
+  centerPadding: '0px',
+  slidesToShow: 3,
+  responsive: [
+    {
+      breakpoint: 768,
+      settings: {
+        arrows: true,
+        centerMode: true,
+        centerPadding: '0px',
+        slidesToShow: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        arrows: true,
+        centerMode: true,
+        centerPadding: '0px',
+        slidesToShow: 1
+      }
+    }
+  ]
+});
+});
+	 </script>
     </body>
 </html>

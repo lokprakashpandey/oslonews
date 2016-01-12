@@ -14,7 +14,10 @@ use App\Category;
 use App\Country;
 use App\AuthorProfile;
 use App\CountryHub;
+use App\CategoryHub;
 use App\Helpers\CategoryHierarchy;
+use File;
+use Intervention\Image\Facades\Image as Image;
 
 class NewsController extends Controller
 {
@@ -46,30 +49,33 @@ class NewsController extends Controller
 		
 		foreach($hubs as $hub)
 		{
-			
-				
 				foreach($hub->countries as $country)
 				{
-
 						$country_hub_id = CountryHub::where('hub_id',$hub->id)
 													->where('country_id',$country->id)
 													->first();
 						$country_hub = CountryHub::find($country_hub_id->id);
-
+						
 						$categories = $country_hub->categories()->get();
 
 						foreach($categories as $category){
-
+							
 							if($category->children->count())
 							{
-					
 								foreach($category->children as $child)
 								{
+									//check hub/country/sub category exits
 									$check_sub_category = $country_hub->categories()->where('category_id',$child->id)->first();
 					
 									if($check_sub_category){
-										//dd($check_sub_category->toArray());
-										$category_array[$check_sub_category->pivot->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name.' &raquo; '.$child->name;
+										 
+										$sub_category_hub_id = CategoryHub::where('category_id',$child->id)
+																		->where('hub_id',$hub->id)
+																		->first();
+																
+									   		//category_country_hub_id/category_hub_id/category_id/hub_id
+											$category_array[$check_sub_category->pivot->id.'_'.$sub_category_hub_id->id.'_'.$child->id.'_'.$hub->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name.' &raquo; '.$child->name;
+						
 									}	
 								}
 							}
@@ -77,7 +83,11 @@ class NewsController extends Controller
 							{
 								if($category->parent_id==0)//only if no parent 
 								{
-									$category_array[$category->pivot->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
+									$category_hub_id = CategoryHub::where('category_id',$category->id)
+																		->where('hub_id',$hub->id)
+																		->first();
+									//category_country_hub_id/category_hub_id/categoryt_id/hub_id
+									$category_array[$category->pivot->id.'_'.$category_hub_id->id.'_'.$category->id.'_'.$hub->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
 								}	
 							}
 							//$category_array[$category->pivot->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
@@ -112,6 +122,7 @@ class NewsController extends Controller
 				$categories[$cat->id]=$cat->name;
 			}
 		}*/
+		
 		return view('news.create', compact('category_array','news_types','authors'));
     }
 
@@ -123,7 +134,21 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        foreach($request['category_country_hub_id'] as $hub_value)
+		{
+				$hub = explode('_',$hub_value);
+			
+			$hub_id[] = $hub[3];
+			
+			$category_id[] = $hub[2];
+			
+			$category_hub_id[] = $hub[1];
+
+			$category_country_hub_id[] = $hub[0];
+			
+			
+		}
+		$this->validate($request, [
 				'name'        => 'required|max:100',
 				'content'     => 'required',
 				'category_country_hub_id' => 'required',
@@ -137,10 +162,31 @@ class NewsController extends Controller
 		
 		$request['slug'] = $count ? "{$slug}-{$count}" : $slug;
 		
+		//first image resize
+		if( $request->hasFile('front_img') ){
+			
+			$imageName = str_random(15).'.'.$request->file('front_img')->getClientOriginalExtension();
+		
+			$destination_thumb = base_path() . '/images/news/thumb/'.$imageName;
+			$destination_slide = base_path() . '/images/news/slides/'.$imageName;
+			$destination_main = base_path() . '/images/news/'.$imageName;
+		
+			Image::make($request->file('front_img'))->resize(300, 250, function ($constraint) {
+																	$constraint->aspectRatio();
+																	$constraint->upsize();
+																})->save($destination_thumb);
+																
+			Image::make($request->file('front_img'))->resizeCanvas(700, 400)->save($destination_slide);
+			//Image::make($request->file('front_img_new'))->fit(700, 400)->save($destination_slide);
+			
+			
+			Image::make($request->file('front_img'))->save($destination_main);
+		}
+		
 		$news = News::create([
 		   'name'				=> $request['name'],
 		   'content'			=> $request['content'],
-		   'front_img'			=> 'test',//$imageName,
+		   'front_img'			=> $imageName,
 		   'user_id' 			=> 1,//Auth::user()->id,
 		   'author_profile_id' 	=> $request['author_profile_id'],
 		   'slug'				=> $request['slug'],
@@ -148,10 +194,16 @@ class NewsController extends Controller
 	   
 	   ]);
 	   
-	   $news->category_country_hubs()->attach($request['category_country_hub_id']);
+	   $news->hubs()->sync($hub_id);
+	   
+       $news->categories()->sync($category_id);
+		
+	   $news->category_hubs()->sync($category_hub_id);
+	   
+	   $news->category_country_hubs()->sync($category_country_hub_id);
 
 	   $news->types()->attach($request['type_id']);
-	   
+	   	   
 	   return redirect('news/index')->with('message', 'News Added');
 	 
     }

@@ -36,8 +36,8 @@ class CountriesController extends Controller
     public function create()
     {
         $continents = Continent::orderBy('name')->lists('name','id');
-		$hubs = Hub::lists('name','id');
-		return view('countries.create',compact('continents','hubs'));
+		//$hubs = Hub::lists('name','id');
+		return view('countries.create',compact('continents'));
     }
 
     /**
@@ -70,7 +70,7 @@ class CountriesController extends Controller
 			'continent_id' => $request['continent_id'],
 			'cnt_in_main_menu'=> $request['in_main_menu'],
         ]);
-		$country->hubs()->attach($request['hub_id']);
+		//$country->hubs()->attach($request['hub_id']);
 		return redirect('countries/index')->with('message', 'Country Added');
     }
 
@@ -97,15 +97,13 @@ class CountriesController extends Controller
 		$continents = Continent::orderBy('name')->lists('name','id');
 		
 		//hubs
-		$hubs = Hub::lists('name','id');
+		/*$hubs = Hub::lists('name','id');
 		
 		$hubs_selected = $country->hubs->lists('id')->toArray();
-		
+		*/
 		return view('countries.edit', compact('country',
     
-											   'continents',
-											   'hubs',
-											   'hubs_selected'));
+											   'continents'));
 												
 	}
     /**
@@ -165,9 +163,10 @@ class CountriesController extends Controller
 		
 		$country = Country::find($country_id);
 		
-		//$categories = Category::where('parent_id',0)->lists('name','id');
+			
+		//$get_categories = Category::getCategories(); //for all categories
 		
-		$get_categories = Category::getCategories();
+		$get_categories = $hub->categories()->where('parent_id',0)->get(); //** for those categories which is already in that HUB
 		
 		$categories = array();
 		
@@ -175,10 +174,11 @@ class CountriesController extends Controller
 		{
 			$categories[$cat->id]=$cat->name;
 			
-			if($cat->children->count())
+			if($cat->children_category_hub($hub_id)->count()) //for those categories that is already in that hub
+			//if($cat->children->count())
 			{
 					
-				foreach($cat->children as $child)
+				foreach($cat->children_category_hub($hub_id) as $child)
 				{
 						$categories[$child->id] = $cat->name.' &raquo; '.$child->name;
 				}

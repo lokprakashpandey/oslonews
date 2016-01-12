@@ -32,7 +32,6 @@ class Category extends Model
     }  
 	
 	
-	
 	public function hubs() {
 
         return $this->belongsToMany('App\Hub')->withPivot('in_main_menu', 'in_front');
@@ -43,6 +42,12 @@ class Category extends Model
         return $this->belongsToMany('App\Country')->withPivot('cnt_in_main_menu');
 
     }  
+	
+	public function news() {
+
+        return $this->belongsToMany('App\News');
+
+    } 
 	
 	public function country_hubs() {
 
@@ -77,12 +82,15 @@ class Category extends Model
 	//other functions
 	public static function getCategories()
     {
-			$category = Category::where('parent_id', '=', '0')->orderBy('position', 'asc')->with('children')->get(); 
-			return $category;
+			$categories = Category::where('parent_id', '=', '0')
+									->orderBy('position', 'asc')
+									->with('children')
+									->get(); 
+			return $categories;
 	}
 	
 	// get overall default category default page
-	public static function getTopMenuDefaultCategories()// hub wise categories for main menu
+	public static function getTopMenuDefaultCategories()// default all categories for main menu
     {
 			$categories = Category::where('parent_id',0)
 							->where('default_menu', 1)
@@ -95,6 +103,7 @@ class Category extends Model
 	public static function getTopMenuHubCategories($hub_slug)// hub wise categories for main menu
     {
 			$hub_id = Hub::where('slug',$hub_slug)->first();
+			
 			$hub = Hub::find($hub_id->id);
 			
 			$categories = $hub->categories()
@@ -156,5 +165,24 @@ class Category extends Model
 		    return $categories;
 	}
 	
+	// news
+	
+	public function newsTop5()
+    {
+        return $this->news()->orderBy('created_at', 'desc')->take(3);
 	  
+    }
+	public function hubNewsTop5($category_hub_id)
+    {
+		$category_hub = CategoryHub::find($category_hub_id);
+		
+        return $category_hub->news()->orderBy('created_at', 'desc')->take(3)->get();
+    }
+	
+	public function hubCountryNewsTop5($category_country_hub_id)
+    {
+		$category_country_hub = CategoryCountryHub::find($category_country_hub_id);
+		
+        return $category_country_hub->news()->orderBy('created_at', 'desc')->take(3)->get();
+    }
 }
