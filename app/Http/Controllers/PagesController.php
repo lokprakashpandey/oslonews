@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\News;
 use App\User;
 use App\Page;
+use App\Hub;
+use App\Country;
+use App\CountryHub;
 use App\Category;
 use Input;
 use App\Http\Requests;
@@ -35,16 +38,44 @@ class PagesController extends Controller
 				
 			return view('pages.index',compact('slide_news','front_categories_first_col','front_categories_second_col','front_categories_third_col','front_categories_rest'));
 			*/
-			return view('pages.index');
+			$front_categories_first_col = Category::where('default_front', 1)->orderBy('position', 'asc')->take(2)->get();
+			return view('pages.index',compact('front_categories_first_col'));
+    }
+	
+	public function hub_index($hub_slug)
+    {
+		$hub_id = Hub::where('slug',$hub_slug)->first();
+
+		$hub = Hub::find($hub_id->id);
+		
+		$front_categories_first_col = $hub->categories()->where('in_front',1)->orderBy('position', 'asc')->take(2)->get();
+//dd($front_categories_first_col->toArray());
+
+		return view('pages.hub_index',compact('front_categories_first_col'));
     }
 	
 	public function hub($id)
 	{
 		return view('pages.index');
 	}
-	public function country()
+	
+	public function country($hub_slug,$country_slug)
 	{
-		return view('pages.country');
+		$hub = Hub::where('slug',$hub_slug)->first();
+			
+		$country = Country::where('slug',$country_slug)->first();
+			
+			
+		$country_hub = CountryHub::where('hub_id',$hub->id)
+							   ->where('country_id',$country->id)
+							   ->first();
+							   
+		$front_categories_first_col = CountryHub::find($country_hub->id)->categories()
+															->where('cnt_cat_in_front', '1')
+															->orderBy('position','asc')->get();
+
+		//dd($front_categories_first_col->toArray());
+		return view('pages.country',compact('front_categories_first_col'));
 	}
 	
 	public function archive()

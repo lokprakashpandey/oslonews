@@ -8,15 +8,21 @@ class News extends Model
 {
     protected $fillable = array('name', 'content','publish', 'user_id','position','slug','author_profile_id','front_img');
 	
+		
 	public function hubs() {
 
         return $this->belongsToMany('App\Hub');
 
     } 
-	
 	public function categories() {
 
         return $this->belongsToMany('App\Category');
+
+    } 
+	
+	public function category_hubs() {
+
+        return $this->belongsToMany('App\CategoryHub');
 
     } 
 	public function types()
@@ -44,4 +50,38 @@ class News extends Model
     {
         return $this->belongsTo('App\AuthorProfile');
     }
+	
+	public function category_country_hubs() {
+
+        return $this->belongsToMany('App\CategoryCountryHub');
+
+    } 
+	
+	public static function topStories($hub_slug=Null)
+	{
+		if($hub_slug)
+		{
+			//get hub_id
+			$hub_id = Hub::where('slug',$hub_slug)->first();
+			
+			$hub = Hub::find($hub_id->id);
+			
+			$top_stories = $hub->news()->whereHas('types',function($query){ $query->where('slug','top');})
+									   ->where('publish','1')
+									   ->orderBy('created_at', 'desc')
+									   ->take(5)
+									   ->get();
+			
+		}
+		else
+		{
+		 $top_stories = News::whereHas('types',function($query){ $query->where('slug','top');})
+												->where('publish','1')
+												->orderBy('created_at', 'desc')
+												->take(5)
+												->get();
+		}
+		return $top_stories;
+		
+	}
 }

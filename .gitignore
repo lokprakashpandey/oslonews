@@ -4,3 +4,5 @@ Homestead.yaml
 Homestead.json
 /js/ckeditor
 /js/kcfinder
+/ref/designs
+.env

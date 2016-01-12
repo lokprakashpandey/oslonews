@@ -83,7 +83,7 @@ $(function () {
 	
 	<header>
 	
-	<div class="oslo-header navbar-fixed-margin">
+	<div class="oslo-header">
 		
 	
 		  <div class="row header-bg" style="margin-left:0; margin-right:0;">
@@ -156,7 +156,7 @@ $(function () {
 		@if(Request::segment(2)=='country')
 			@include('topmenu', array('hub_slug'=>Request::segment(3),'country_slug'=>Request::segment(4)))
 		@else
-		 @include('topmenudefault', array('hub_slug'=>Request::segment(3)))
+		 @include('topmenuhub', array('hub_slug'=>Request::segment(3)))
 		@endif
 		
 		</div>
@@ -212,24 +212,18 @@ $(document).scroll(function(e){
 			</div>
 		
 			<div class="col-md-3 col-md-push-2">
-			<?php /*
-					
-			@if(Route::currentRouteName() != 'column')
-				@include('top_stories')
-				@include('columns')
-				@include('random_news')
-			@else
-				@include('columns_by_author')
-			    @include('top_stories')
-				@include('random_news')
-			@endif
-			*/
-			?>
+		
+				@include('top_stories', array('hub_slug'=>Request::segment(3)))
 			
 			</div>
 
 			<div class="col-md-2 col-md-pull-10">
-			<?php //  @include('sidemenu')?>
+			  
+			@if(Request::segment(2)=='country')
+				@include('sidemenu', array('hub_slug'=>Request::segment(3),'country_slug'=>Request::segment(4)))
+			@else
+				@include('sidemenuhub', array('hub_slug'=>Request::segment(3)))
+			@endif
 			  <?php //@include('latestnews')?>
 			<?php //@include('twitter_feed') ?>
 			 </div><!-- //col -->

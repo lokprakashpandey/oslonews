@@ -40,11 +40,11 @@ class CategoriesController extends Controller
 		
 		$cat_types = array('1'=>'None','2'=>'column');
 		
-		$hubs = Hub::lists('name','id');
+		//$hubs = Hub::lists('name','id');
 		
 		//$countries = Country::lists('name','id');
 		
-		return view('categories.create', compact('category_opts','cat_types','hubs'));
+		return view('categories.create', compact('category_opts','cat_types'));
     }
 
     /**
@@ -75,7 +75,7 @@ class CategoriesController extends Controller
 		   'slug'		 => $request['slug']
 	   
 	   ]);
-		$category->hubs()->attach($request['hub_id']);
+		//$category->hubs()->attach($request['hub_id']);
 		//$category->hubs()->attach($request['hub_id'],['in_front'=>1, 'in_main_menu'=>1]);
 		//$category->countries()->attach($request['country_id']);
 		
@@ -88,9 +88,15 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_default($slug)
     {
-        //
+        $category = Category::where('slug', $slug)->first();
+		
+														
+		$first_column_news = $category->news()->where('publish','1')->orderBy('created_at', 'desc')->paginate(21);
+
+		
+		return view('categories.show_default', compact('first_column_news'));
     }
 
     /**
@@ -112,10 +118,10 @@ class CategoriesController extends Controller
 		$cat_types = array('1'=>'None','2'=>'column');
 		
 		//hubs
-		$hubs = Hub::lists('name','id');
+		/*$hubs = Hub::lists('name','id');
 		
 		$hubs_selected = $category->hubs->lists('id')->toArray();
-		
+		*/
 		//countries
 		/*$countries = Country::lists('name','id');
 		
@@ -123,9 +129,7 @@ class CategoriesController extends Controller
 		
 		return view('categories.edit', compact('category',
 												'category_opts',
-												'cat_types',
-												'hubs',
-												'hubs_selected'));
+												'cat_types'));
     }
 
     /**
@@ -150,7 +154,7 @@ class CategoriesController extends Controller
 		
 		$category->update($request->all());
 		
-		$category->hubs()->sync($request['hub_id']);
+		//$category->hubs()->sync($request['hub_id']);
 		
 		//$category->countries()->sync($request['country_id']);
 		

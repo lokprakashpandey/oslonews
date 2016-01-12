@@ -88,21 +88,15 @@ form{display: inline;}
 								<tr>
 									<td>{{ $news_content->name }}&nbsp;</td>
 									<td>
-									@foreach($news_content->hubs as $hub) 
-										{{ $hub->name }}
-									@endforeach	
+									
 									</td>
 										
 									<td>
-									@foreach($news_content->categories as $category) 
-										{{ $category->name }}
-									@endforeach	
+									
 									</td>
 									
 									<td>
-									@foreach($news_content->countries as $country) 
-										{{ $country->name }}
-									@endforeach	
+										
 									</td>
 									
 									<td>
