@@ -812,3 +812,78 @@ Stack trace:
 [2016-01-12 09:00:12] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
 Stack trace:
 #0 {main}  
+[2016-01-12 15:01:45] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 15:10:37] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 15:10:49] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 15:11:02] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 15:36:09] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 15:36:15] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 15:40:31] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 15:43:11] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\vendor\laravel\framework\src\Illuminate\Foundation\ProviderRepository.php:146
+Stack trace:
+#0 {main}  
+[2016-01-12 15:43:41] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\vendor\laravel\framework\src\Illuminate\Foundation\ProviderRepository.php:146
+Stack trace:
+#0 {main}  
+[2016-01-12 16:06:22] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:06:40] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:08:35] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:10:36] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:11:14] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:38:09] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:39:25] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:42:03] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:42:14] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:42:24] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:42:37] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:44:10] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:44:45] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:45:10] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 16:45:31] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
+[2016-01-12 17:03:37] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  

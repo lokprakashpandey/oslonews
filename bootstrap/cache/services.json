@@ -28,7 +28,9 @@
         "App\\Providers\\AuthServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
-        "App\\Providers\\MenuServiceProvider"
+        "App\\Providers\\MenuServiceProvider",
+        "App\\Providers\\RightContentServiceProvider",
+        "Intervention\\Image\\ImageServiceProvider"
     ],
     "eager": [
         "Illuminate\\Auth\\AuthServiceProvider",
@@ -46,7 +48,9 @@
         "App\\Providers\\AuthServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
-        "App\\Providers\\MenuServiceProvider"
+        "App\\Providers\\MenuServiceProvider",
+        "App\\Providers\\RightContentServiceProvider",
+        "Intervention\\Image\\ImageServiceProvider"
     ],
     "deferred": {
         "command.app.name": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",
