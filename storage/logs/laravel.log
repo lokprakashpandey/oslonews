@@ -809,3 +809,6 @@ Stack trace:
 #10 C:\xampp\htdocs\oslonews\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php(107): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
 #11 C:\xampp\htdocs\oslonews\artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
 #12 {main}  
+[2016-01-12 09:00:12] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Intervention\Image\ImageServiceProvider' not found' in C:\xampp\htdocs\oslonews\bootstrap\cache\compiled.php:6916
+Stack trace:
+#0 {main}  
