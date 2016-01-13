@@ -81,6 +81,19 @@
                          <li>
                             <a href="{{url('hubs/menu')}}"><i class="fa fa-dashboard fa-fw"></i> Menu</a>
                         </li>
+						
+						<li>
+                            <a href="#"><i class="fa fa-file fa-fw"></i> Author Profile<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{{url('author_profiles/create')}}">Add Author</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('author_profiles/index')}}">View Author</a>
+                                </li>
+                            </ul>
+                        </li>
+						
 						<li>
                             <a href="#"><i class="fa fa-file fa-fw"></i> Continent<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

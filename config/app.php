@@ -148,6 +148,7 @@ return [
 		App\Providers\MenuServiceProvider::class,
 		App\Providers\RightContentServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
+		Bican\Roles\RolesServiceProvider::class,
 
     ],
 
