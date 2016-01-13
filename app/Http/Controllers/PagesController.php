@@ -61,6 +61,7 @@ class PagesController extends Controller
 	
 	public function country($hub_slug,$country_slug)
 	{
+	
 		$hub = Hub::where('slug',$hub_slug)->first();
 			
 		$country = Country::where('slug',$country_slug)->first();
@@ -78,6 +79,23 @@ class PagesController extends Controller
 		return view('pages.country',compact('front_categories_first_col'));
 	}
 	
+	public function hub_country_category_news($hub_slug,$country_slug,$category_slug)
+	{
+		$hub = Hub::where('slug',$hub_slug)->first();
+			
+		$country = Country::where('slug',$country_slug)->first();
+		
+		$category = Category::where('slug',$category_slug)->first();
+			
+		$country_hub = CountryHub::where('hub_id',$hub->id)
+							   ->where('country_id',$country->id)
+							   ->first();
+		$front_categories_first_col = CountryHub::find($country_hub->id)->categories()
+															->where('category_id', $category->id)
+															->first();
+		//dd($front_categories_first_col);													
+		return view('pages.hub_country_category_news',compact('front_categories_first_col'));
+	}
 	public function archive()
 	{
 		$categories = Category::getTopCategoriesAll();

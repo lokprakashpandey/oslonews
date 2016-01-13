@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Hub;
 use App\Category;
+use App\CategoryHub;
 use App\Country;
 use App\Helpers\CategoryHierarchy;
 
@@ -88,7 +89,7 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show_default($slug)
+    public function show_category_news($slug)
     {
         $category = Category::where('slug', $slug)->first();
 		
@@ -99,6 +100,23 @@ class CategoriesController extends Controller
 		return view('categories.show_default', compact('first_column_news'));
     }
 
+	 public function show_hub_category_news($hub_slug,$category_slug)
+    {
+        
+		$hub = Hub::where('slug',$hub_slug)->first();
+			
+		$category = Category::where('slug', $category_slug)->first();
+		
+		$category_hub = CategoryHub::where('hub_id',$hub->id)
+								   ->where('category_id',$category->id)
+								   ->first();
+		
+														
+		$first_column_news = $category_hub->news()->where('publish','1')->orderBy('created_at', 'desc')->paginate(21);
+
+		
+		return view('categories.hub_category_news', compact('first_column_news'));
+    }
     /**
      * Show the form for editing the specified resource.
      *

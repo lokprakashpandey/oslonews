@@ -20,7 +20,7 @@
 		
 							<ul class="dropdown-menu" role="menu">
 								@foreach($hubs as $hub)
-									<li><a href="{{ url( '/pages/hub/'.$hub->slug ) }}">{{$hub->name}}</a></li>
+									<li><a href="{{ url( '/hub/'.$hub->slug ) }}">{{$hub->name}}</a></li>
 								@endforeach
 							</ul>
 
@@ -44,11 +44,11 @@
 			@endforeach
 		*/
 			  ?>
-	<?php $hub_slug = (Request::segment(3))?Request::segment(3):"international-edition"; //set the default hub?>
+	<?php $hub_slug = Request::segment(2);//?Request::segment(2):"international-edition"; //set the default hub?>
 	
 			  @foreach($countries as $country) 
 			   <li>
-			    <a href="{{ url( '/pages/country/'.$hub_slug.'/'.$country->slug ) }}" >{{$country->name}}</a>
+			    <a href="{{ url( '/country/'.$hub_slug.'/'.$country->slug ) }}" >{{$country->name}}</a>
 						
 			  </li> 
 					
@@ -56,12 +56,12 @@
 			 
 			   @foreach( $categories as $cat )
 					<li @if($cat->children_category_hub($cat->pivot->hub_id)->count()) class="dropdown" @endif>
-						<a href="{{ url( '/category/'.$cat->slug ) }}" @if($cat->children_category_hub($cat->pivot->hub_id)->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{ $cat->name }} @if($cat->children_category_hub($cat->pivot->hub_id)->count()) <span class="caret"></span> @endif</a>
+						<a href="{{ url( '/hub/'.$hub_slug.'/'.$cat->slug ) }}" @if($cat->children_category_hub($cat->pivot->hub_id)->count()) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" @endif>{{ $cat->name }} @if($cat->children_category_hub($cat->pivot->hub_id)->count()) <span class="caret"></span> @endif</a>
 						@if($cat->children_category_hub($cat->pivot->hub_id)->count())
 							<ul class="dropdown-menu" role="menu">
 								@foreach($cat->children_category_hub($cat->pivot->hub_id) as $child)
 									
-									<li><a href="{{ url( '/category/'.$child->slug ) }}">{{$child->name}}</a></li>
+									<li><a href="{{ url( '/hub/'.$hub_slug.'/'.$child->slug ) }}">{{$child->name}}</a></li>
 							
 								@endforeach
 							</ul>
