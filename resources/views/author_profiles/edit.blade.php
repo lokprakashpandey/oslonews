@@ -1,4 +1,4 @@
-@extends('app')
+@extends('admin')
 @section('content')
 <script src="{{ asset('/js/ckeditor/ckeditor.js') }}"></script>
 <div id="page-wrapper">

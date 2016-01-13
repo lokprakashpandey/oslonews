@@ -1,4 +1,4 @@
-@extends('app')
+@extends('admin')
 @section('content')
 <style>
 form{display: inline;}
@@ -57,14 +57,14 @@ form{display: inline;}
 									<td>{{ $author->phone }}</td>
 									<td>{{ $author->address }}</td>
 									<td>
-									{!! link_to('author_profiles/' . $author->id .'/edit', 'Edit', ['class' => 'btn btn-success btn-sm']) !!}
+									{!! link_to('author_profiles/' . $author->id .'/edit', 'Edit', ['class' => 'btn btn-success btn-xs']) !!}
 						
 									
 									{!! Form::open([
 												'method' => 'DELETE',
 												'route' => ['author_profiles.destroy', $author->id]
 												]) !!}
-									<button type="submit" class="btn btn-success btn-sm"><i class="fa fa-trash-o"></i> Delete</button>
+									<button type="submit" class="btn btn-success btn-xs"><i class="fa fa-trash-o"></i> Delete</button>
 										
 									
 									{!! Form::close() !!}
