@@ -17,7 +17,7 @@ class AuthorProfilesController extends Controller
     
 	public function __construct()
 	{
-		$this->middleware('role:admin');
+		//$this->middleware('role:admin');
 	}
 	/**
      * Display a listing of the resource.
@@ -65,11 +65,11 @@ class AuthorProfilesController extends Controller
 		   'name'			=> $request['name'],
 		   'address'		=> $request['address'],
 		   'phone'			=> $request['phone'],
-		   'img'			=> $imageName,
+		   //'img'			=> $imageName,
 		   'email'			=> $request['email'],
 		   'twitter'		=> $request['twitter'],
 		   'description'	=> $request['description'],
-		   'user_id' 		=> Auth::user()->id
+		   'user_id' 		=> 1 //Auth::user()->id
 	   
 	   ]);
 	   return redirect('author_profiles/index')->with('message', 'Author Profile Added');
@@ -94,7 +94,8 @@ class AuthorProfilesController extends Controller
      */
     public function edit($id)
     {
-        $author = AuthorProfile::where('user_id',Auth::user()->id)->find($id); //find by id
+        //$author = AuthorProfile::where('user_id',Auth::user()->id)->find($id); //find by id
+		 $author = AuthorProfile::where('user_id',1)->find($id); //find by id
 		 return view('author_profiles.edit',compact('author'));
     }
 
@@ -108,7 +109,8 @@ class AuthorProfilesController extends Controller
     public function update(Request $request, $id)
     {
 	
-       $author = AuthorProfile::where('user_id',Auth::user()->id)->findOrFail($id);
+       //$author = AuthorProfile::where('user_id',Auth::user()->id)->findOrFail($id);
+	   $author = AuthorProfile::where('user_id',1)->findOrFail($id);
 	   
 	   if( $request->hasFile('img_new') ){
 			$imageName = str_random(15).'.'.$request->file('img_new')->getClientOriginalExtension();
