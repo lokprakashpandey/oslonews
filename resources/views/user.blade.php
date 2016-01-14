@@ -153,10 +153,11 @@ $(function () {
 	
 	<div class="oslo-navigation-wrapper">
 		<div class="container oslo-navigation">
-		@if(Request::segment(2)=='country')
-			@include('topmenu', array('hub_slug'=>Request::segment(3),'country_slug'=>Request::segment(4)))
+
+		@if(Request::segment(1)=='country')
+			@include('topmenu', array('hub_slug'=>Request::segment(2),'country_slug'=>Request::segment(3)))
 		@else
-		 @include('topmenuhub', array('hub_slug'=>Request::segment(3)))
+		 @include('topmenuhub', array('hub_slug'=>Request::segment(2)))
 		@endif
 		
 		</div>
@@ -187,13 +188,13 @@ $(document).scroll(function(e){
     var scrollTop = $(document).scrollTop();
     if(scrollTop > 90){
         $('.oslo-navigation-wrapper').addClass('navbar-fixed-top');
-		$('.oslo-navigation-wrapper').addClass('navbar-fixed-margin');
+		//$('.oslo-navigation-wrapper').addClass('navbar-fixed-margin');
 		$('.oslo-breadcrumb-wrapper').addClass('navbar-fixed-top');
 		$('.oslo-breadcrumb-wrapper').addClass('navbar-fixed-margin-breadcrumb');
 		
     } else {
          $('.oslo-navigation-wrapper').removeClass('navbar-fixed-top');
-		 $('.oslo-navigation-wrapper').removeClass('navbar-fixed-margin');
+		 //$('.oslo-navigation-wrapper').removeClass('navbar-fixed-margin');
 		  $('.oslo-breadcrumb-wrapper').removeClass('navbar-fixed-top');
 		 $('.oslo-breadcrumb-wrapper').removeClass('navbar-fixed-margin-breadcrumb');
     }
@@ -213,16 +214,16 @@ $(document).scroll(function(e){
 		
 			<div class="col-md-3 col-md-push-2">
 		
-				@include('top_stories', array('hub_slug'=>Request::segment(3)))
+				@include('top_stories', array('hub_slug'=>Request::segment(2)))
 			
 			</div>
 
 			<div class="col-md-2 col-md-pull-10">
 			  
-			@if(Request::segment(2)=='country')
-				@include('sidemenu', array('hub_slug'=>Request::segment(3),'country_slug'=>Request::segment(4)))
+			@if(Request::segment(1)=='country')
+				@include('sidemenu', array('hub_slug'=>Request::segment(2),'country_slug'=>Request::segment(3)))
 			@else
-				@include('sidemenuhub', array('hub_slug'=>Request::segment(3)))
+				@include('sidemenuhub', array('hub_slug'=>Request::segment(2)))
 			@endif
 			  <?php //@include('latestnews')?>
 			<?php //@include('twitter_feed') ?>

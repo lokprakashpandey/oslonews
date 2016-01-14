@@ -3,9 +3,9 @@
   overflow: auto;
   font-size: 16px;
   font-weight: 200;
-  background-color: #9e0000;
+  background-color: #01194e;
   color: #e1ffff;
-  border-top:1px solid #efca64;
+  border-top:1px solid #1c204f;
 }
 .nav-side-menu .brand {
   background-color: #800000;
@@ -84,8 +84,8 @@
 }
 .nav-side-menu li {
   padding-left: 8px;
-  border-left: 3px solid #9e0000;
-  border-bottom: 1px solid #800000;
+  border-left: 3px solid #161234;
+  border-bottom: 1px solid #161234;
 }
 .nav-side-menu li a {
   text-decoration: none;
@@ -98,7 +98,7 @@
 }
 .nav-side-menu li:hover {
   border-left: 3px solid #d19b3d;
-  background-color: #800000;
+  background-color: #161234;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;

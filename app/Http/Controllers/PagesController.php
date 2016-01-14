@@ -38,8 +38,13 @@ class PagesController extends Controller
 				
 			return view('pages.index',compact('slide_news','front_categories_first_col','front_categories_second_col','front_categories_third_col','front_categories_rest'));
 			*/
-			$front_categories_first_col = Category::where('default_front', 1)->orderBy('position', 'asc')->take(2)->get();
-			return view('pages.index',compact('front_categories_first_col'));
+			$slide_news = News::whereHas('categories',function($query){ $query->where('cat_type','!=',2);})
+												->where('publish','1')
+												->orderBy('created_at', 'desc')
+												->take(10)
+												->get();
+			$front_categories_first_col = Category::with('news')->where('default_front', 1)->orderBy('position', 'asc')->take(2)->get();
+			return view('pages.index',compact('front_categories_first_col','slide_news'));
     }
 	
 	public function hub_index($hub_slug)
@@ -48,10 +53,15 @@ class PagesController extends Controller
 
 		$hub = Hub::find($hub_id->id);
 		
-		$front_categories_first_col = $hub->categories()->where('in_front',1)->orderBy('position', 'asc')->take(2)->get();
-//dd($front_categories_first_col->toArray());
+		$slide_news = $hub->news()->whereHas('categories',function($query){ $query->where('cat_type','!=',2);})
+									->where('publish','1')
+									->orderBy('created_at', 'desc')
+									->take(10)
+									->get();
+		
+		$front_categories_first_col = $hub->categories()->with('news')->where('in_front',1)->orderBy('position', 'asc')->take(2)->get();
 
-		return view('pages.hub_index',compact('front_categories_first_col'));
+		return view('pages.hub_index',compact('front_categories_first_col','slide_news','hub'));
     }
 	
 	public function hub($id)
@@ -61,6 +71,7 @@ class PagesController extends Controller
 	
 	public function country($hub_slug,$country_slug)
 	{
+	
 		$hub = Hub::where('slug',$hub_slug)->first();
 			
 		$country = Country::where('slug',$country_slug)->first();
@@ -78,6 +89,23 @@ class PagesController extends Controller
 		return view('pages.country',compact('front_categories_first_col'));
 	}
 	
+	public function hub_country_category_news($hub_slug,$country_slug,$category_slug)
+	{
+		$hub = Hub::where('slug',$hub_slug)->first();
+			
+		$country = Country::where('slug',$country_slug)->first();
+		
+		$category = Category::where('slug',$category_slug)->first();
+			
+		$country_hub = CountryHub::where('hub_id',$hub->id)
+							   ->where('country_id',$country->id)
+							   ->first();
+		$front_categories_first_col = CountryHub::find($country_hub->id)->categories()
+															->where('category_id', $category->id)
+															->first();
+		//dd($front_categories_first_col);													
+		return view('pages.hub_country_category_news',compact('front_categories_first_col'));
+	}
 	public function archive()
 	{
 		$categories = Category::getTopCategoriesAll();

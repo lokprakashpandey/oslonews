@@ -1,5 +1,5 @@
 @extends('user')
-@section('title', 'The Oslo Times')
+@section('title', $hub->name)
 @section('content')
 <style>
 .carousel {
@@ -38,7 +38,53 @@
 }
 
 </style>
+			 @if(count($slide_news)) 
+			 
+			   <div id="slide-news" class="carousel slide" data-ride="carousel">
+	
+		
+				  <div class="carousel-inner">
+				  <?php $i=0; ?>
+				  @foreach($slide_news as $slide)
+				  
+				   <?php 
+				    $i++;
+					$active=($i==1)?'active':'';
+					/*$first_img = '';
+					$output = preg_match_all('/< *img[^>]*src *= *["\']?([^"\']*)/', $slide->content, $matches);
+					$first_img = @$matches[1][0];*/
+					?>
+		
+				
+				   <div class="item {{$active}}">
+					  <a href='{!! Url('article/'.$slide->slug) !!}'>
+					  {!! Html::image('images/news/slides/'.$slide->front_img,$slide->name,['class'=>'img-responsive']) !!}
+					  </a>
+						<div class="carousel-caption">
+						  <h1>
+						
+						  <a href='{!! Url('article/'.$slide->slug) !!}'>{{$slide->name}}</a>
+						
+						  </h1>
+						  
+						</div>
+					 
+					</div>
+	
+					@endforeach
+				<?php //@endforeach?>
+				  </div>
+			 
+				  <!-- Controls -->
+				  <a class="left carousel-control" href="#slide-news" role="button" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+				  </a>
+				  <a class="right carousel-control" href="#slide-news" role="button" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right"></span>
+				  </a>
+				</div> <!-- Carousel -->
 
+			 @endif	
 <div class="sub-headline">
 	@foreach($front_categories_first_col as $front_category_first)
 				

@@ -1,8 +1,7 @@
 <?php
 
 Route::get('/', 'PagesController@index');
-Route::get('pages/hub/{hub_slug}', 'PagesController@hub_index');
-Route::get('pages/country/{hub_slug}/{country_slug}', 'PagesController@country');
+//Route::get('pages/hub/{hub_slug}', 'PagesController@hub_index');
 
 //Menu
 Route::get('/menus', 'MenusController@index');
@@ -37,7 +36,8 @@ Route::put('countries/cnt_category_in_main_menu', [
 	'as' => 'cnt_category_in_main_menu'
 ]);
 Route::resource('countries', 'CountriesController');
-
+Route::get('country/{hub_slug}/{country_slug}', 'PagesController@country');
+Route::get('country/{hub_slug}/{country_slug}/{category_slug}', 'PagesController@hub_country_category_news');
 
 //Hub
 Route::get('/hubs/index', 'HubsController@index');
@@ -45,6 +45,10 @@ Route::get('/hubs/create', 'HubsController@create');
 Route::post('hubs/store', 'HubsController@store');
 Route::get('/hubs/menu', 'HubsController@menu');
 Route::resource('hubs', 'HubsController');
+Route::get('hub/{hub_slug}', 'PagesController@hub_index');
+Route::get('hub/{hub_slug}/{category_slug}', 'CategoriesController@show_hub_category_news');
+
+//Route::get('hub/{hub_slug}/{category_slug}/{country_slug}', 'CategoriesController@show_hub_category_country_news');
 
 //Category
 Route::get('/categories/index', 'CategoriesController@index');
@@ -55,11 +59,17 @@ Route::put('categories/in_main_menu', [
 	'as' => 'in_main_menu'
 ]);
 Route::resource('categories', 'CategoriesController');
-Route::get('category/{category_slug}', 'CategoriesController@show_default');
+Route::get('category/{category_slug}', 'CategoriesController@show_category_news');
 
 //News
 Route::get('/news/index', 'NewsController@index');
 Route::get('/news/create', 'NewsController@create');
 Route::post('news/store', 'NewsController@store');
 Route::resource('news', 'NewsController');
+
+//Author
+Route::get('author_profiles/index', 'AuthorProfilesController@index');
+Route::post('author_profiles/store', 'AuthorProfilesController@store');
+Route::resource('author_profiles', 'AuthorProfilesController');
+
 

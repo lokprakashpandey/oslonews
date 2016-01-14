@@ -246,7 +246,7 @@ $(document).scroll(function(e){
 
 			<div class="col-md-2 col-md-pull-10">
 
-				@include('sidemenudefault', array('hub_slug'=>Request::segment(3)))
+				@include('sidemenudefault')
 
 			  <?php //@include('latestnews')?>
 			<?php //@include('twitter_feed') ?>

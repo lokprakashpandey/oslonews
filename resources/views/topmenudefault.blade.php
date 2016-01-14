@@ -20,7 +20,7 @@
 		
 							<ul class="dropdown-menu" role="menu">
 								@foreach($hubs as $hub)
-									<li><a href="{{ url( '/pages/hub/'.$hub->slug ) }}">{{$hub->name}}</a></li>
+									<li><a href="{{ url( '/hub/'.$hub->slug ) }}">{{$hub->name}}</a></li>
 								@endforeach
 							</ul>
 
@@ -29,7 +29,7 @@
 
 			  @foreach($countries as $country) 
 			   <li>
-			    <a href="{{ url( '/pages/country/'.$country->slug ) }}" >{{$country->name}}</a>
+			    <a href="{{ url( '/country/'.$country->slug ) }}" >{{$country->name}}</a>
 						
 			  </li> 
 					
