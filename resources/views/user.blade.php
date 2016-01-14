@@ -188,13 +188,13 @@ $(document).scroll(function(e){
     var scrollTop = $(document).scrollTop();
     if(scrollTop > 90){
         $('.oslo-navigation-wrapper').addClass('navbar-fixed-top');
-		$('.oslo-navigation-wrapper').addClass('navbar-fixed-margin');
+		//$('.oslo-navigation-wrapper').addClass('navbar-fixed-margin');
 		$('.oslo-breadcrumb-wrapper').addClass('navbar-fixed-top');
 		$('.oslo-breadcrumb-wrapper').addClass('navbar-fixed-margin-breadcrumb');
 		
     } else {
          $('.oslo-navigation-wrapper').removeClass('navbar-fixed-top');
-		 $('.oslo-navigation-wrapper').removeClass('navbar-fixed-margin');
+		 //$('.oslo-navigation-wrapper').removeClass('navbar-fixed-margin');
 		  $('.oslo-breadcrumb-wrapper').removeClass('navbar-fixed-top');
 		 $('.oslo-breadcrumb-wrapper').removeClass('navbar-fixed-margin-breadcrumb');
     }

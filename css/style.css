@@ -427,7 +427,8 @@ background: #cccccc;
 
 
 .navbar-fixed-margin{margin-top:30px;}
-.navbar-fixed-margin-breadcrumb{margin-top:67px;}
+/*.navbar-fixed-margin-breadcrumb{margin-top:67px;}*/
+.navbar-fixed-margin-breadcrumb{margin-top:40px;}
 hr {margin:0px; border-top: 1px solid #dddddd;}
 
 /*Scroller heading news */
@@ -511,7 +512,7 @@ ul.newsticker {
 /* footer */
 
 .oslo-footer{
-	background:#b10505;
+	background:#1c204f;
 }
 .footer-content{
 	padding-bottom:30px;
