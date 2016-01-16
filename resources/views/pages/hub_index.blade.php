@@ -1,6 +1,3 @@
-@extends('user')
-@section('title', $hub->name)
-@section('content')
 <style>
 .carousel {
         background: #000000;
@@ -113,5 +110,3 @@
 			</div>
 	@endforeach
 </div>
-
-@endsection

@@ -8,7 +8,7 @@
     <meta name="author" content="">
 	<meta name="token" content="{!! csrf_token() !!}"/>
 
-    <title>@yield('title')</title>
+    <title>{!! Theme::get('title') !!}</title>
 	
 	<link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
 	
@@ -30,7 +30,7 @@
 	
 	<script src="{{ asset('/js/slick.min.js') }}"></script>
 	
-    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/style1.css') }}" rel="stylesheet">
 	
 	<link href="{{ asset('/css/social.css') }}" rel="stylesheet">
 <style>
@@ -208,7 +208,8 @@ $(document).scroll(function(e){
 			<div class="col-md-7 col-md-push-2" style="padding:0px;">
 				
 			<?php //	@include('breaking_news')?>
-				@yield('content')
+			<?php //	@yield('content')?>
+			{!! Theme::content() !!}
 			</div>
 		
 			<div class="col-md-3 col-md-push-2">

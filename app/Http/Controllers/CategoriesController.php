@@ -70,8 +70,8 @@ class CategoriesController extends Controller
 		   'name'		 => $request['name'],
 		   'parent_id' 	 => $request['parent_id'],
 		   'position'	 => $new_position,
-		   //'in_front'    => $request['in_front'],
-		   //'in_main_menu'=> $request['in_main_menu'],
+		   'default_front'    => $request['default_front'],
+		   'default_menu'=> $request['default_menu'],
 		   'cat_type'	 => $request['cat_type'],
 		   'slug'		 => $request['slug']
 	   

@@ -3,22 +3,43 @@
 		
 				<h1>Top Stories</h1>
 				
+				<?php $i=0; ?>
+				
 				 @foreach($top_stories AS $top_story)
-				<?php 
-					//$first_img = '';
-					//$output = preg_match_all('/< *img[^>]*src *= *["\']?([^"\']*)/', $top_story->content, $matches);
-					//$first_img = @$matches[1][0];
-				?>
+				
+				<?php $i++;	?>
+				@if($i==1)
 				<a href='{!! Url('article/'.$top_story->slug) !!}'>
 				
-					<div class="top-news-content">
+					<div class="top-news-content" style="border-bottom:1px solid #dddddd">
 						@if($top_story->front_img){!! Html::image('images/news/thumb/'.$top_story->front_img,$top_story->name,['class'=>'img-responsive']) !!} @endif
 						
 						<h2>{{$top_story->name}}</h2>
 						
-						<hr style="height:3px;border:none;color:#333;background-color:#efca64;">
+						
 					</div>
-				 
+				 <div class="clearfix"></div>
 				 </a>
+				 @else
+				 <a href='{!! Url('article/'.$top_story->slug) !!}'>
+				
+					<div class="top-news-content" style="padding:10px 0; border-bottom:1px solid #dddddd">
+					<div class="row">
+					  <div class="col-md-4" style="padding-left:20px; padding-right:0px;">
+						@if($top_story->front_img){!! Html::image('images/news/thumb/'.$top_story->front_img,$top_story->name,['class'=>'img-responsive']) !!} @endif
+					  </div>
+					  
+					  <div class="col-md-8" style="padding-right:20px;">
+						{{$top_story->name}}
+					  <?php //<div class="recent-date"><i class="fa fa-clock-o"></i> {!!$top_story->created_at->diffForHumans()!!}</div>?>
+					  </div>
+					  
+					</div>	
+					</div>
+				 	<div class="clearfix"></div>
+				 </a>
+			 
+				 @endif
 				@endforeach
+				<div class="clearfix"></div>
 				</div>

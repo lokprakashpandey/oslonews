@@ -13,6 +13,7 @@ use App\Category;
 use Input;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Theme;
 
 class PagesController extends Controller
 {
@@ -23,6 +24,9 @@ class PagesController extends Controller
      */
     public function index()
     {
+		$theme = Theme::uses('style1')->layout('default');
+		 
+        
 
 			/*$slide_news = News::whereHas('categories',function($query){ $query->where('cat_type','!=',2);})
 												->where('publish','1')
@@ -44,11 +48,18 @@ class PagesController extends Controller
 												->take(10)
 												->get();
 			$front_categories_first_col = Category::with('news')->where('default_front', 1)->orderBy('position', 'asc')->take(2)->get();
-			return view('pages.index',compact('front_categories_first_col','slide_news'));
+			$front_categories_second_col = Category::with('news')->where('default_front', 1)->orderBy('position', 'asc')->skip(2)->take(2)->get();
+			
+			//return view('pages.index',compact('front_categories_first_col','front_categories_second_col','slide_news'));
+			$theme->setTitle('The Oslo Times');
+			return $theme->of('pages.index',compact('front_categories_first_col','front_categories_second_col','slide_news'))->render();
+
     }
 	
 	public function hub_index($hub_slug)
     {
+		$theme = Theme::uses('style1')->layout('hub_index');
+		
 		$hub_id = Hub::where('slug',$hub_slug)->first();
 
 		$hub = Hub::find($hub_id->id);
@@ -60,8 +71,12 @@ class PagesController extends Controller
 									->get();
 		
 		$front_categories_first_col = $hub->categories()->with('news')->where('in_front',1)->orderBy('position', 'asc')->take(2)->get();
+		
+		$theme->setTitle($hub->name);
+		$theme->asset()->add('style', url('/css/'.$hub->template.'.css'));
 
-		return view('pages.hub_index',compact('front_categories_first_col','slide_news','hub'));
+		//return view('pages.hub_index',compact('front_categories_first_col','slide_news','hub'));
+		return $theme->of('pages.hub_index',compact('front_categories_first_col','slide_news','hub'))->render();
     }
 	
 	public function hub($id)
@@ -72,6 +87,8 @@ class PagesController extends Controller
 	public function country($hub_slug,$country_slug)
 	{
 	
+		$theme = Theme::uses('style1')->layout('hub_country_index');
+		
 		$hub = Hub::where('slug',$hub_slug)->first();
 			
 		$country = Country::where('slug',$country_slug)->first();
@@ -86,7 +103,10 @@ class PagesController extends Controller
 															->orderBy('position','asc')->get();
 
 		//dd($front_categories_first_col->toArray());
-		return view('pages.country',compact('front_categories_first_col'));
+		//return view('pages.country',compact('front_categories_first_col'));
+		$theme->setTitle($country->name.'-'.$hub->name);
+		$theme->asset()->add('style', url('/css/'.$hub->template.'.css'));
+		return $theme->of('pages.country',compact('front_categories_first_col','hub'))->render();
 	}
 	
 	public function hub_country_category_news($hub_slug,$country_slug,$category_slug)

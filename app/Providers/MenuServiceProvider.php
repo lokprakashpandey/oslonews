@@ -16,6 +16,7 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+	   $this->composeHubs();//hub list
 	   $this->composeTopMenuDefault();// top menu for default main page
 	   $this->composeTopHubMenu();//top menu for default(overall) hub wise
 	   $this->composeTopmenu();//top menu for hub/country/
@@ -37,6 +38,15 @@ class MenuServiceProvider extends ServiceProvider
     }
 	
 
+	private function composeHubs() ///top menu for default overall
+    {
+		view()->composer('hubs', function ($view) {
+
+		   $hubs = \App\Hub::getHubs();//hub
+		            
+           $view->with(compact('hubs'));
+        });
+    }
 	private function composeTopMenuDefault() ///top menu for default overall
     {
 

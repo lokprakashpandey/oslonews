@@ -1,7 +1,3 @@
-@extends('default')
-@section('title', 'The Oslo Times')
-@section('content')
-
 <style>
 .carousel {
         background: #000000;
@@ -91,30 +87,58 @@
 <div class="sub-headline">
 	@foreach($front_categories_first_col as $front_category_first)
 				
-					<div class="col-lg-12 news-box">
-					
-					<h2>{{$front_category_first->name}}</h2>	
+		<div class="col-lg-12 news-box">
+		
+		<h2>{{$front_category_first->name}}</h2>	
 
-					@foreach($front_category_first->newsTop5 as $news_first_col)
-					
-					<a href="{{url('article/'.$news_first_col->slug)}}">
-					<div class="box-border-top">
-						<div class="col-lg-3 nopadding">
-						@if($news_first_col->front_img) {!! Html::image('images/news/thumb/'.$news_first_col->front_img,$news_first_col->name,['class'=>'img-responsive']) !!} @endif
-						</div>
-						<div class="col-lg-9">
-							<h3>{{$news_first_col->name}}</h3>
-							{!! str_limit($news_first_col->content, $words = 150, $end = '') !!}
-						</div>
-					
-						 <div class="clearfix"></div>
-					 </div>
-					</a>
+		@foreach($front_category_first->newsTop5 as $news_first_col)
+		
+		<a href="{{url('article/'.$news_first_col->slug)}}">
+		<div class="box-border-top">
+			<div class="col-lg-3 nopadding">
+			@if($news_first_col->front_img) {!! Html::image('images/news/thumb/'.$news_first_col->front_img,$news_first_col->name,['class'=>'img-responsive']) !!} @endif
+			</div>
+			<div class="col-lg-9">
+				<h3>{{$news_first_col->name}}</h3>
+				{!! str_limit($news_first_col->content, $words = 150, $end = '') !!}
+			</div>
+		
+			 <div class="clearfix"></div>
+		 </div>
+		</a>
 
-					@endforeach
-						
-					</div>
-				@endforeach
+		@endforeach
+			
+		</div>
+	@endforeach
+	
+	<?php $i=0;?>
+	@foreach($front_categories_second_col as $front_category_second)
+	<?php $i++; ?>
+
+	<div class="col-lg-4 news-box-3col" @if($i%3==0) style="padding-right:0px" @endif>
+
+	 <h2>{{$front_category_second->name}}</h2>
+	 
+	 <div class="news-box-bg">
+	 
+	 @foreach($front_category_second->newsTop5 as $news_second_col)
+	 
+	 <a href="{{url('article/'.$news_second_col->slug)}}">
+	 
+	 <div class="box-border-bottom-3col">
+	 @if($news_second_col->front_img) {!! Html::image('images/news/thumb/'.$news_second_col->front_img,$news_second_col->name,['class'=>'img-responsive']) !!} @endif
+	  <h3>{{$news_second_col->name}}</h3>
+	  </div>
+	  
+	</a>
+	 @endforeach
+
+	 </div>
+	 
+	</div>
+
+	@endforeach	
+
+	 <div class="clearfix"></div>
 </div>
-
-@endsection
