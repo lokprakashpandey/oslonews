@@ -99,12 +99,12 @@
 					<div class="col-sm-offset-2 col-sm-10">
 					
 					<label class="checkbox-inline">
-						{!! Form::hidden('in_main_menu', 0) !!}
-						{!! Form::checkbox('in_main_menu',1, $category->in_main_menu) !!} In Main Manu
+						{!! Form::hidden('default_menu', 0) !!}
+						{!! Form::checkbox('default_menu',1, $category->default_menu) !!} In Main Manu
 					  </label>
 					<label class="checkbox-inline">
-					    {!! Form::hidden('in_front', 0) !!}
-						{!! Form::checkbox('in_front', 1, $category->in_front) !!}Display in Front
+					    {!! Form::hidden('default_front', 0) !!}
+						{!! Form::checkbox('default_front', 1, $category->default_front) !!}Display in Front
 					</label>
 					</div>
                   </div>

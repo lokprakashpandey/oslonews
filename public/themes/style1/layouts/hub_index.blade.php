@@ -8,13 +8,9 @@
     <meta name="author" content="">
 	<meta name="token" content="{!! csrf_token() !!}"/>
 
-    <title>@yield('title')</title>
+    <title>{!! Theme::get('title') !!}</title>
 	
 	<link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
-	
-	<link href="{{ asset('/css/li-scroller.css') }}" rel="stylesheet">
-
-	<link href="{{ asset('/css/slick.css') }}" rel="stylesheet">
 	
 	 <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
@@ -25,12 +21,8 @@
 
 	<script src="{{ asset('/js/metisMenu.js') }}"></script>
 	<script src="{{ asset('/js/sb-admin-2.js') }}"></script>
-	
-	<script src="{{ asset('/js/jquery.li-scroller.1.0.js') }}"></script>
-	
-	<script src="{{ asset('/js/slick.min.js') }}"></script>
-	
-    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
+
+	{!! Theme::asset()->styles() !!}
 	
 	<link href="{{ asset('/css/social.css') }}" rel="stylesheet">
 <style>
@@ -88,21 +80,12 @@ $(function () {
 	
 	
     <body>
-	 <!-- Preloader -->
-  <div id="preloader">
-    <div id="status">&nbsp;</div>
-  </div>
-  <!-- End Preloader -->
 	<?php //@include('scrolling_news')?>
 	
-	 
 	<header>
 	
-	
-	
 	<div class="oslo-header">
-	
-	
+		
 	
 		  <div class="row header-bg" style="margin-left:0; margin-right:0;">
 		  
@@ -119,7 +102,7 @@ $(function () {
 				<div class="col-md-12 user-login nopadding">
 					<div class="signin">
 					<ul class="edition pull-right">
-						 
+					  
 						 @include('hubs')
 						 
 						<li>
@@ -156,9 +139,9 @@ $(function () {
 	
 	<div class="oslo-navigation-wrapper">
 		<div class="container oslo-navigation">
-		
-		 @include('topmenudefault')
 
+		 @include('topmenuhub', array('hub_slug'=>Request::segment(2)))
+		
 		</div>
 	</div><!-- //oslo-navigation-wrapper-->
 	
@@ -199,7 +182,7 @@ $(document).scroll(function(e){
     }
   });
 </script>
-
+	
 	<div class="content-wrapper">
 	
 		<div class="container main-content">
@@ -208,32 +191,18 @@ $(document).scroll(function(e){
 			<div class="col-md-7 col-md-push-2" style="padding:0px;">
 				
 			<?php //	@include('breaking_news')?>
-				@yield('content')
+				{!! Theme::content() !!}
 			</div>
 		
 			<div class="col-md-3 col-md-push-2">
-			@include('top_stories')
-			@include('latest_news')
-			
-			<?php /*
-					
-			@if(Route::currentRouteName() != 'column')
-				@include('top_stories')
-				@include('columns')
-				@include('random_news')
-			@else
-				@include('columns_by_author')
-			    @include('top_stories')
-				@include('random_news')
-			@endif
-			*/
-			?>
+		
+				@include('top_stories', array('hub_slug'=>Request::segment(2)))
 			
 			</div>
 
 			<div class="col-md-2 col-md-pull-10">
-
-				@include('sidemenudefault')
+	
+				@include('sidemenuhub', array('hub_slug'=>Request::segment(2)))
 
 			  <?php //@include('latestnews')?>
 			<?php //@include('twitter_feed') ?>
@@ -366,43 +335,5 @@ $(document).scroll(function(e){
 		</div>
 	</footer>
 	 
-	 <script>
-	 //<![CDATA[
-    jQuery(window).load(function() { // makes sure the whole site is loaded
-      $('#status').fadeOut(); // will first fade out the loading animation
-      $('#preloader').delay(700).fadeOut('slow'); // will fade out the white DIV that covers the website.
-      $('body').delay(700).css({'overflow':'visible'});
-    })
-  //]]> 
-  
-  // slick slider call
-  $(document).ready(function(){  
-  $('.owl-carousel').slick({
-  centerMode: true,
-  centerPadding: '0px',
-  slidesToShow: 3,
-  responsive: [
-    {
-      breakpoint: 768,
-      settings: {
-        arrows: true,
-        centerMode: true,
-        centerPadding: '0px',
-        slidesToShow: 2
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        arrows: true,
-        centerMode: true,
-        centerPadding: '0px',
-        slidesToShow: 1
-      }
-    }
-  ]
-});
-});
-	 </script>
     </body>
 </html>

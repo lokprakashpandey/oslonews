@@ -14,7 +14,7 @@
 			
 			  <ul class="nav navbar-nav">
 			  
-			    
+			    <?php /*
 			   <li class="dropdown">
 			    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" >Hub <span class="caret"></span> </a>
 		
@@ -25,7 +25,7 @@
 							</ul>
 
 			  </li> 
-					
+			*/ ?>		
 
 			  @foreach($countries as $country) 
 			   <li>

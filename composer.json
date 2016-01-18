@@ -9,7 +9,8 @@
 		"laravelcollective/html": "~5.0",
         "laravel/framework": "5.1.*",
 		"intervention/image": "dev-master",
-		"bican/roles": "2.1.*"
+		"bican/roles": "2.1.*",
+		"teepluss/theme": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

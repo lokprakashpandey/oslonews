@@ -84,4 +84,14 @@ class News extends Model
 		return $top_stories;
 		
 	}
+	public static function getLatestNews()
+	{
+		$latest_news = News::where('publish','1')
+										->orderBy('created_at', 'desc')
+										->take(13)
+										->get();
+
+		return $latest_news;
+		
+	}
 }

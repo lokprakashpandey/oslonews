@@ -1,6 +1,3 @@
-@extends('user')
-@section('title', 'The Oslo Times')
-@section('content')
 <style>
 .carousel {
         background: #000000;
@@ -66,5 +63,3 @@
 			</div>
 	@endforeach
 </div>
-
-@endsection

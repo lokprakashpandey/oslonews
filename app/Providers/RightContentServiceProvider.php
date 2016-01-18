@@ -17,7 +17,7 @@ class RightContentServiceProvider extends ServiceProvider
     {
        $this->composeTopStoriesmenu();
 	  // $this->composeColumnsmenu();
-	   //$this->composeLatestnews();
+	   $this->composeLatestNews();
 	   //$this->composeTwitterFeed();
 	  // $this->composeColumnByAuthor();
 	   //$this->composeRandomNews();
@@ -57,16 +57,17 @@ class RightContentServiceProvider extends ServiceProvider
             $view->with(compact('columns'));
         });
     }
-	
-	private function composeLatestnews()
+	*/
+	private function composeLatestNews()
     {
-        view()->composer('latestnews', function ($view) {
+        view()->composer('latest_news', function ($view) {
 
             $news = \App\News::getLatestNews();
             
             $view->with(compact('news'));
         });
     }
+	/*
 	private function composeTwitterFeed()
     {
         view()->composer('twitter_feed', function ($view) {

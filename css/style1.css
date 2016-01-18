@@ -365,14 +365,13 @@ background: #cccccc;
 	margin:0;
 	color: #333333;
 	font-size:20px;
-	margin-bottom:10px;
 }
 .latest-news-h-bg{background:#ffffff}
 .latest-news  a:hover,.columns  a:hover
 {
 	text-decoration:none;
 }
-
+.top-news-content {color:#000000;font-style:bold;}
 .top-news-content:hover{
 	background: #efefef;
 }
@@ -604,7 +603,8 @@ ul.newsticker {
 }
 .recent-date{
 	color:#000000;
-	text-align:right;
+	padding-top:5px;
+	color:#666666;
 	}
 .author-profile
 {
