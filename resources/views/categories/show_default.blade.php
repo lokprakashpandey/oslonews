@@ -1,7 +1,4 @@
-@extends('default')
-@section('content')
 
-			 
 			 <div class="sub-headline">
 				<?php $i=0; ?>
 				@foreach($first_column_news AS $first_col_news)
@@ -30,5 +27,3 @@
 				 {!! str_replace('/?', '?', $first_column_news->render());!!}
 				 
 			</div>
-
-@endsection

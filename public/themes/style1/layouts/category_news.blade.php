@@ -23,6 +23,9 @@
 	<script src="{{ asset('/js/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('/js/scroll_li.js') }}"></script>
 
+	<script src="{{ asset('/js/metisMenu.js') }}"></script>
+	<script src="{{ asset('/js/sb-admin-2.js') }}"></script>
+	
 	<script src="{{ asset('/js/jquery.li-scroller.1.0.js') }}"></script>
 	
 	<script src="{{ asset('/js/slick.min.js') }}"></script>
@@ -201,20 +204,41 @@ $(document).scroll(function(e){
 	
 		<div class="container main-content">
 			<div class="row">
+						
+			<div class="col-md-7 col-md-push-2" style="padding:0px;">
+				
+			<?php //	@include('breaking_news')?>
+			<?php //	@yield('content')?>
+			{!! Theme::content() !!}
+			</div>
+		
+			<div class="col-md-3 col-md-push-2">
+			@include('top_stories')
+			@include('latest_news')
 			
-			<div class="col-md-2">
+			<?php /*
+					
+			@if(Route::currentRouteName() != 'column')
+				@include('top_stories')
+				@include('columns')
+				@include('random_news')
+			@else
+				@include('columns_by_author')
+			    @include('top_stories')
+				@include('random_news')
+			@endif
+			*/
+			?>
+			
+			</div>
+
+			<div class="col-md-2 col-md-pull-10">
 
 				@include('sidemenudefault')
 
+			  <?php //@include('latestnews')?>
+			<?php //@include('twitter_feed') ?>
 			 </div><!-- //col -->
-						
-			<div class="col-md-10" style="padding:0px;">
-				
-					{!! Theme::content() !!}
-				
-			</div>
-
-			
 					
 			</div><!-- //row -->
 			

@@ -12,6 +12,7 @@ use App\Category;
 use App\CategoryHub;
 use App\Country;
 use App\Helpers\CategoryHierarchy;
+use Theme;
 
 class CategoriesController extends Controller
 {
@@ -91,18 +92,25 @@ class CategoriesController extends Controller
      */
     public function show_category_news($slug)
     {
-        $category = Category::where('slug', $slug)->first();
+        $theme = Theme::uses('style1')->layout('category_news');
+		
+		$category = Category::where('slug', $slug)->first();
 		
 														
 		$first_column_news = $category->news()->where('publish','1')->orderBy('created_at', 'desc')->paginate(21);
 
+		$theme->setTitle($category->name);
 		
-		return view('categories.show_default', compact('first_column_news'));
+		$theme->asset()->add('style', url('/css/style1.css'));
+		
+		//return view('categories.show_default', compact('first_column_news'));
+		return $theme->of('categories.show_default',compact('first_column_news'))->render();
     }
 
 	 public function show_hub_category_news($hub_slug,$category_slug)
     {
-        
+        $theme = Theme::uses('style1')->layout('hub_category_index');
+		
 		$hub = Hub::where('slug',$hub_slug)->first();
 			
 		$category = Category::where('slug', $category_slug)->first();
@@ -114,8 +122,11 @@ class CategoriesController extends Controller
 														
 		$first_column_news = $category_hub->news()->where('publish','1')->orderBy('created_at', 'desc')->paginate(21);
 
+		$theme->setTitle($category->name.'-'.$hub->name);
+		$theme->asset()->add('style', url('/css/'.$hub->template.'.css'));
 		
-		return view('categories.hub_category_news', compact('first_column_news'));
+		//return view('categories.hub_category_news', compact('first_column_news'));
+		return $theme->of('categories.hub_category_news',compact('first_column_news','hub'))->render();
     }
     /**
      * Show the form for editing the specified resource.
