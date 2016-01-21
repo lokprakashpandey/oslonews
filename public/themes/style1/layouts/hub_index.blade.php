@@ -19,9 +19,6 @@
 	<script src="{{ asset('/js/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('/js/scroll_li.js') }}"></script>
 
-	<script src="{{ asset('/js/metisMenu.js') }}"></script>
-	<script src="{{ asset('/js/sb-admin-2.js') }}"></script>
-
 	{!! Theme::asset()->styles() !!}
 	
 	<link href="{{ asset('/css/social.css') }}" rel="stylesheet">
