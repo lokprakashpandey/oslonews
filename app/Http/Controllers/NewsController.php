@@ -149,7 +149,7 @@ class NewsController extends Controller
 			
 		}
 		$this->validate($request, [
-				'name'        => 'required|max:100',
+				'name'        => 'required',
 				'content'     => 'required',
 				'category_country_hub_id' => 'required',
 				'type_id'	  => 'required',

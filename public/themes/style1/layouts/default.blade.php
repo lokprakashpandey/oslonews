@@ -85,11 +85,7 @@ $(function () {
 	
 	
     <body>
-	 <!-- Preloader -->
-  <div id="preloader">
-    <div id="status">&nbsp;</div>
-  </div>
-  <!-- End Preloader -->
+
 	<?php //@include('scrolling_news')?>
 	
 	 
@@ -205,6 +201,7 @@ $(document).scroll(function(e){
 			<div class="col-md-2">
 
 				@include('sidemenudefault')
+				@include('twitter_feed')
 
 			 </div><!-- //col -->
 						
@@ -343,43 +340,6 @@ $(document).scroll(function(e){
 		</div>
 	</footer>
 	 
-	 <script>
-	 //<![CDATA[
-    jQuery(window).load(function() { // makes sure the whole site is loaded
-      $('#status').fadeOut(); // will first fade out the loading animation
-      $('#preloader').delay(700).fadeOut('slow'); // will fade out the white DIV that covers the website.
-      $('body').delay(700).css({'overflow':'visible'});
-    })
-  //]]> 
-  
-  // slick slider call
-  $(document).ready(function(){  
-  $('.owl-carousel').slick({
-  centerMode: true,
-  centerPadding: '0px',
-  slidesToShow: 3,
-  responsive: [
-    {
-      breakpoint: 768,
-      settings: {
-        arrows: true,
-        centerMode: true,
-        centerPadding: '0px',
-        slidesToShow: 2
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        arrows: true,
-        centerMode: true,
-        centerPadding: '0px',
-        slidesToShow: 1
-      }
-    }
-  ]
-});
-});
-	 </script>
+
     </body>
 </html>

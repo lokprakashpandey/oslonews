@@ -147,9 +147,12 @@ return [
         App\Providers\RouteServiceProvider::class,
 		App\Providers\MenuServiceProvider::class,
 		App\Providers\RightContentServiceProvider::class,
+		App\Providers\TwitterServiceProvider::class,
+		
 		Intervention\Image\ImageServiceProvider::class,
 		Bican\Roles\RolesServiceProvider::class,
 		Teepluss\Theme\ThemeServiceProvider::class,
+		Thujohn\Twitter\TwitterServiceProvider::class,
 
     ],
 
@@ -203,6 +206,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
 		'Image' => Intervention\Image\Facades\Image::class,
 		'Theme' => Teepluss\Theme\Facades\Theme::class,
+		'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
 
 
     ],
