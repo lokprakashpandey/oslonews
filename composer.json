@@ -11,7 +11,8 @@
 		"intervention/image": "dev-master",
 		"bican/roles": "2.1.*",
 		"teepluss/theme": "dev-master",
-		"thujohn/twitter": "~2.0"
+		"thujohn/twitter": "~2.0",
+        "rtconner/laravel-tagging": "~2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

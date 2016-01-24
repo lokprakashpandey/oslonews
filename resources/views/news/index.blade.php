@@ -88,11 +88,19 @@ form{display: inline;}
 								<tr>
 									<td>{{ $news_content->name }}&nbsp;</td>
 									<td>
+									@foreach( $news_content->hubs as $hub )
 									
+										<span class="btn btn-xs btn-default" style="margin-bottom:5px">{{$hub->name}}</span>
+										
+									@endforeach
 									</td>
 										
 									<td>
+									@foreach( $news_content->categories as $category )
 									
+										<span class="btn btn-xs btn-default" style="margin-bottom:5px">{{$category->name}}</span>
+										
+									@endforeach
 									</td>
 									
 									<td>

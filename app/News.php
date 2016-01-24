@@ -6,8 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 use Twitter;
 
+use Conner\Tagging\Taggable;
+
 class News extends Model
 {
+	use Taggable;
+	
     protected $fillable = array('name', 'content','publish', 'user_id','position','slug','author_profile_id','front_img');
 	
 		

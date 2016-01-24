@@ -26,6 +26,39 @@ form{display: inline;}
       $(this).data('form').submit();
   });
   
+  $('#in_main_menu_modal').on('show.bs.modal', function(e) {
+    //get data-id attribute of the clicked element
+    var categoryId = $(e.relatedTarget).data('category_id');
+	var hubId = $(e.relatedTarget).data('hub_id');
+	var inMainMenu = $(e.relatedTarget).data('in_main_menu');
+    var inFront = $(e.relatedTarget).data('in_front');
+    //populate the textbox
+    $(e.currentTarget).find('input[name="category_id"]').val(categoryId);
+	$(e.currentTarget).find('input[name="hub_id"]').val(hubId);
+	(inMainMenu==1)?$("#in_main_menu_checked").prop("checked", true):$("#in_main_menu_checked").prop("checked", false);
+	(inFront==1)?$("#in_front_checked").prop("checked", true):$("#in_front_checked").prop("checked", false);
+	
+
+  });
+
+  
+  $('#confirmMenu').on('click', function(e){
+	  
+        e.preventDefault();
+
+        $.ajax({
+            url: 'in_main_menu', //this is the submit URL
+            type: 'put', 
+            data: $('#in_main_menu_form').serialize(),
+            success: function(data){
+                 $("#in_main_menu_modal").modal('hide'); 
+				 window.location.href = "index";
+            },
+			error: function(){
+				alert($('#in_main_menu_form').serialize());
+			}
+        });
+    });
 
 });
 	
@@ -74,7 +107,7 @@ form{display: inline;}
 
 								<tr>
 										<th>Category</th>
-														
+										<th class="col-lg-7">Hubs</th>									
 										<th>Action</th>
 								</tr>
 								</thead>
@@ -85,7 +118,22 @@ form{display: inline;}
 								
 								<tr>
 									<td>{{ $category->name }}&nbsp;</td>
+									<td>
+									@foreach($category->hubs as $hub)
 									
+										<a href="#" 
+										data-category_id="{{$category->id}}" 
+										data-hub_id="{{$hub->id}}" 
+										data-in_main_menu="{{ $hub->pivot->in_main_menu }}" 
+										data-in_front="{{ $hub->pivot->in_front }}" 
+										data-toggle="modal" 
+										data-target="#in_main_menu_modal" 
+										class="btn btn-xs btn-{{($hub->pivot->in_main_menu)?'primary':'info'}}" style="margin-bottom:5px">
+										<i class="fa fa-gear"></i> {{ $hub->name }}
+										</a>
+										
+									@endforeach
+									</td>
 									
 									<td>
 									
@@ -106,7 +154,12 @@ form{display: inline;}
 								  @foreach($category->children as $child)
 									<tr>
 									<td>&nbsp;&nbsp;{{ $child->name }}&nbsp;</td>
-																	
+									<td>
+									@foreach($child->hubs as $child_hub)
+										<span class="btn btn-xs btn-default">{{ $child_hub->name }}</span>
+									@endforeach
+									</td>
+									
 									<td>
 									
 									

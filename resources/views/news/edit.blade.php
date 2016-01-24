@@ -1,9 +1,14 @@
 @extends('admin')
 @section('content')
 <link href="{{ asset('/css/bootstrap-chosen.css') }}" rel="stylesheet">
+<link href="{{ asset('/css/fileinput.css') }}" rel="stylesheet">
+<link href="{{ asset('/css/selectize.bootstrap3.css') }}" rel="stylesheet">
+
 <script src="{{ asset('/js/chosen.jquery.js') }}"></script>
 <script src="{{ asset('/js/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('/js/chosen.jquery.js') }}"></script>
+<script src="{{ asset('/js/fileinput.js') }}"></script>
+<script src="{{ asset('/js/selectize.js') }}"></script>
 <script>
   $(function() {
 	$('.chosen-select').chosen();
@@ -86,7 +91,13 @@
 						{!! Form::select('author_profile_id',$authors , Input::old('author_profile_id'), ['class'=>'form-control']) !!}
 					</div>
 				</div>								
-				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Tags</label>
+					<div class="col-sm-10">	 
+					 {!! Form::text('tags',null,array('id'=>'tags','class'=>'form-control')) !!}
+						
+					</div>
+				</div>
 
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
@@ -116,6 +127,22 @@
 
 	CKEDITOR.replace( 'content', config);
 	
+</script>
+
+<script>
+
+var tags = [
+    @foreach ($tags as $tag)
+    {tag: "{{$tag}}" },
+    @endforeach
+];
+$('#tags').selectize({
+    valueField: 'tag',
+    labelField: 'tag',
+    searchField: 'tag',
+	options: tags,
+    create: true
+});
 </script>
 
 @endsection

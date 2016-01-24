@@ -153,6 +153,7 @@ return [
 		Bican\Roles\RolesServiceProvider::class,
 		Teepluss\Theme\ThemeServiceProvider::class,
 		Thujohn\Twitter\TwitterServiceProvider::class,
+		Conner\Tagging\Providers\TaggingServiceProvider::class,
 
     ],
 

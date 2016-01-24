@@ -66,7 +66,7 @@
 				
 				   <div class="item">
 
-					  <a href='{!! Url('article/'.$slide->slug) !!}'>
+					  <a href='{!! Url('news/'.date('Y-m-d', strtotime($slide->created_at)).'/'.$slide->slug) !!}'>
 					  {!! Html::image('images/news/slides/'.$slide->front_img,$slide->name,['class'=>'img-responsive']) !!}
 					
 					  <div class="caption">{{$slide->name}}</div>
@@ -89,7 +89,7 @@
 
 		@foreach($front_category_first->newsTop5 as $news_first_col)
 		
-		<a href="{{url('article/'.$news_first_col->slug)}}">
+		<a href="{{url('news/'.date('Y-m-d', strtotime($news_first_col->created_at)).'/'.$news_first_col->slug)}}">
 		<div class="box-border-top">
 			<div class="col-lg-3 nopadding">
 			@if($news_first_col->front_img) {!! Html::image('images/news/thumb/'.$news_first_col->front_img,$news_first_col->name,['class'=>'img-responsive']) !!} @endif
@@ -121,7 +121,7 @@
 	 <?php $news_cnt = 0; ?>
 	 @foreach($front_category_second->newsTop5 as $news_second_col)
 	 <?php $news_cnt++ ?>
-	 <a href="{{url('article/'.$news_second_col->slug)}}">
+	 <a href="{{url('news/'.date('Y-m-d', strtotime($news_second_col->created_at)).'/'.$news_second_col->slug)}}">
 	  @if($news_cnt==1)
 	   <div class="box-border-bottom-3col">
 	 @if($news_second_col->front_img) {!! Html::image('images/news/thumb/'.$news_second_col->front_img,$news_second_col->name,['class'=>'img-responsive']) !!} @endif

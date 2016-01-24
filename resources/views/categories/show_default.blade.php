@@ -12,7 +12,7 @@
 					<div class="news-box-bg-cat">
 					
 					 @if($first_col_news->front_img) {!! Html::image('images/news/thumb/'.$first_col_news->front_img,$first_col_news->name,['class'=>'img-responsive']) !!} @endif
-						<h2>{{$first_col_news->name}}</h2>
+						<h3>{{$first_col_news->name}}</h3>
 						<p>{!! str_limit($first_col_news->content, $words = 150, $end = '') !!}</p>
 					
 					
