@@ -66,6 +66,7 @@ Route::get('/news/index', 'NewsController@index');
 Route::get('/news/create', 'NewsController@create');
 Route::post('news/store', 'NewsController@store');
 Route::resource('news', 'NewsController');
+Route::get('news/{date}/{news_slug}', 'NewsController@show');
 
 //Author
 Route::get('author_profiles/index', 'AuthorProfilesController@index');

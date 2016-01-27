@@ -18,6 +18,7 @@ use App\CategoryHub;
 use App\Helpers\CategoryHierarchy;
 use File;
 use Intervention\Image\Facades\Image as Image;
+use Theme;
 
 class NewsController extends Controller
 {
@@ -28,7 +29,9 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::get();
+        $news = News::with(['hubs','categories'])->get();
+		
+		//dd($news);
 		
 		return view('news.index', compact('news'));
 		
@@ -45,6 +48,8 @@ class NewsController extends Controller
 		
 		$hubs = Hub::get();
 		
+		$tags = News::existingTags()->pluck('name');
+
 		$category_array = array();
 		
 		foreach($hubs as $hub)
@@ -123,7 +128,7 @@ class NewsController extends Controller
 			}
 		}*/
 		
-		return view('news.create', compact('category_array','news_types','authors'));
+		return view('news.create', compact('category_array','news_types','authors','tags'));
     }
 
     /**
@@ -136,7 +141,7 @@ class NewsController extends Controller
     {
         foreach($request['category_country_hub_id'] as $hub_value)
 		{
-				$hub = explode('_',$hub_value);
+			$hub = explode('_',$hub_value);
 			
 			$hub_id[] = $hub[3];
 			
@@ -149,7 +154,7 @@ class NewsController extends Controller
 			
 		}
 		$this->validate($request, [
-				'name'        => 'required|max:100',
+				'name'        => 'required',
 				'content'     => 'required',
 				'category_country_hub_id' => 'required',
 				'type_id'	  => 'required',
@@ -194,6 +199,8 @@ class NewsController extends Controller
 	   
 	   ]);
 	   
+	   $news->tag(explode(',', $request->tags));
+	   
 	   $news->hubs()->sync($hub_id);
 	   
        $news->categories()->sync($category_id);
@@ -214,9 +221,20 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($date,$slug)
     {
-        //
+		$theme = Theme::uses('style1')->layout('default');
+		
+        $news = News::where('slug',$slug)->first();
+		
+		$tags = $news->tagNames(); // get array of related tag names 
+		
+		$related_news = News::withAnyTag($tags)->where('id','!=',$news->id)->get();
+		
+		$theme->setTitle($news->name);
+
+		return $theme->of('news.show', compact('news','related_news'))->render();
+		
     }
 
     /**
@@ -233,6 +251,8 @@ class NewsController extends Controller
 		
 		$hubs = Hub::get();
 		
+		$tags = $news->tagNames(); // get array of related tag names 
+		//dd($tags);
 		$category_array = array();
 		
 		foreach($hubs as $hub)
@@ -291,7 +311,8 @@ class NewsController extends Controller
 									'categories_selected',
 									'authors',
 									'news_types',
-									'news_types_selected'
+									'news_types_selected',
+									'tags'
 									));
     }
 

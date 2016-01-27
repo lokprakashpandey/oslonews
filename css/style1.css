@@ -240,7 +240,9 @@ background: #eaeaea; /* make this whatever you want */
 {
 	padding:0px 10px 0px 0px;
 }
-.sub-headline .news-box-3col h2{color:#233269; padding-left:5px;}
+.sub-headline .news-box-3col h2{padding-left:5px;}
+.red-bg{background-color:rgb(158, 29, 10);}
+.blue-bg{background-color:rgb(24, 119, 182)}
 .sub-headline .news-box-3col h3 
 {
 	padding:8px;
@@ -286,9 +288,13 @@ background: #eaeaea; /* make this whatever you want */
 .box-border-bottom-3col{ 
 	margin:0; 
 	border-bottom:1px solid #d9d9d9; 
-	margin-bottom:10px; 
-	padding:0px 0px 10px 0px;
 }
+.box-border-bottom-3col p{ 
+	padding-left:10px;  
+	color:#000000;
+	font-size:16px;
+}
+.news-box-3col h2{color:#ffffff}
 .news-box-bg{border-top:1px solid #d9d9d9; background:#f6f6f6; min-height:450px;}
 .news-box-bg-cat{border-top:1px solid #d9d9d9; background:#f6f6f6; min-height:450px;padding:10px}
 .news-box-3col .news-box-bg-cat h2{padding:0px;}
@@ -311,7 +317,7 @@ background: #cccccc;
 	font-size:24px;	
 	margin:0;
 	padding:0;
-	margin:10px 0px;
+	margin:0px;
 }
 
 .archive-headline h2{font-size:22px;}
@@ -601,8 +607,11 @@ ul.newsticker {
 	padding:4px;
 	border-bottom: 1px solid #333333;	
 }
-.recent-date{
+.recent-date-twitter{
 	color:#000000;
+	padding-top:5px;
+	}
+.recent-date{
 	padding-top:5px;
 	color:#666666;
 	}

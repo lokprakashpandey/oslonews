@@ -4,8 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Twitter;
+
+use Conner\Tagging\Taggable;
+
 class News extends Model
 {
+	use Taggable;
+	
     protected $fillable = array('name', 'content','publish', 'user_id','position','slug','author_profile_id','front_img');
 	
 		
@@ -93,5 +99,15 @@ class News extends Model
 
 		return $latest_news;
 		
+	}
+	
+	
+	public static function twitter_feed()
+	{
+		$tweets = Twitter::getUserTimeline(['screen_name' => 'TheOsloTimes', 'count' => 30, 'format' => 'json']);
+
+		$tweets = json_decode($tweets);
+		//dd($tweets);
+		return $tweets;
 	}
 }

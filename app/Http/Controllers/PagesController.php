@@ -48,7 +48,7 @@ class PagesController extends Controller
 												->take(10)
 												->get();
 			$front_categories_first_col = Category::with('news')->where('default_front', 1)->orderBy('position', 'asc')->take(2)->get();
-			$front_categories_second_col = Category::with('news')->where('default_front', 1)->orderBy('position', 'asc')->skip(2)->take(2)->get();
+			$front_categories_second_col = Category::with('news')->where('default_front', 1)->orderBy('position', 'asc')->skip(2)->take(3)->get();
 			
 			//return view('pages.index',compact('front_categories_first_col','front_categories_second_col','slide_news'));
 			$theme->setTitle('The Oslo Times');
