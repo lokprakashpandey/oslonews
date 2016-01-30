@@ -29,10 +29,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::with(['hubs','categories'])->get();
-		
-		//dd($news);
-		
+        $news = News::with(['hubs','categories'])->orderBy('created_at','desc')->get();
+			
 		return view('news.index', compact('news'));
 		
     }
@@ -139,7 +137,8 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        foreach($request['category_country_hub_id'] as $hub_value)
+        //split category_country_hub_id
+		foreach($request['category_country_hub_id'] as $hub_value)
 		{
 			$hub = explode('_',$hub_value);
 			
@@ -248,14 +247,71 @@ class NewsController extends Controller
         $news = News::find($id);
 		
 		$categories_selected = $news->category_country_hubs->lists('id')->toArray();//category_country_hub_id
-		
+		//$categories_selected = array(4);
+		//dd($categories_selected);
 		$hubs = Hub::get();
 		
-		$tags = $news->tagNames(); // get array of related tag names 
-		//dd($tags);
+		$tags = News::existingTags()->pluck('name');
+		
+		$tag_selected_list = $news->tagNames(); // get array of related tag names 
+		
+		$tag_selected=implode(",", $tag_selected_list);
+		
 		$category_array = array();
 		
+		//category_country_hub_id/category_hub_id/categoryt_id/hub_id
+		
 		foreach($hubs as $hub)
+		{
+				foreach($hub->countries as $country)
+				{
+						$country_hub_id = CountryHub::where('hub_id',$hub->id)
+													->where('country_id',$country->id)
+													->first();
+						$country_hub = CountryHub::find($country_hub_id->id);
+						
+						$categories = $country_hub->categories()->get();
+
+						foreach($categories as $category){
+							
+							if($category->children->count())
+							{
+								foreach($category->children as $child)
+								{
+									//check hub/country/sub category exits
+									$check_sub_category = $country_hub->categories()->where('category_id',$child->id)->first();
+					
+									if($check_sub_category){
+										 
+										$sub_category_hub_id = CategoryHub::where('category_id',$child->id)
+																		->where('hub_id',$hub->id)
+																		->first();
+																
+									   		//category_country_hub_id/category_hub_id/category_id/hub_id
+											$category_array[$check_sub_category->pivot->id.'_'.$sub_category_hub_id->id.'_'.$child->id.'_'.$hub->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name.' &raquo; '.$child->name;
+						
+									}	
+								}
+							}
+							else
+							{
+								if($category->parent_id==0)//only if no parent 
+								{
+									$category_hub_id = CategoryHub::where('category_id',$category->id)
+																		->where('hub_id',$hub->id)
+																		->first();
+									//category_country_hub_id/category_hub_id/categoryt_id/hub_id
+									$category_array[$category->pivot->id.'_'.$category_hub_id->id.'_'.$category->id.'_'.$hub->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
+								}	
+							}
+							//$category_array[$category->pivot->id] = $hub->name.' &raquo; '.$country->name.' &raquo; '.$category->name;
+						}
+						
+				}
+			
+		}
+		
+		/*foreach($hubs as $hub)
 		{
 			
 				
@@ -296,7 +352,7 @@ class NewsController extends Controller
 						
 				}
 			
-		}
+		}*/
 		
 			
 		$news_types = Type::lists('name','id');
@@ -312,7 +368,8 @@ class NewsController extends Controller
 									'authors',
 									'news_types',
 									'news_types_selected',
-									'tags'
+									'tags',
+									'tag_selected'
 									));
     }
 
@@ -325,7 +382,23 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $news = News::findOrFail($id);
+        //split category_country_hub_id
+		foreach($request['category_country_hub_id'] as $hub_value)
+		{
+			$hub = explode('_',$hub_value);
+			
+			$hub_id[] = $hub[3];
+			
+			$category_id[] = $hub[2];
+			
+			$category_hub_id[] = $hub[1];
+
+			$category_country_hub_id[] = $hub[0];
+			
+			
+		}
+		
+		$news = News::findOrFail($id);
 		
 		if($news['name'] != $request['name']){
 			
@@ -337,10 +410,18 @@ class NewsController extends Controller
 		}
 		
 		$news->update($request->all());
+		 
+		$news->tag(explode(',', $request->tags));
+	   
+	   $news->hubs()->sync($hub_id);
+	   
+       $news->categories()->sync($category_id);
 		
-		$news->category_country_hubs()->sync($request['category_country_hub_id']);
-		
-	    $news->types()->sync($request['type_id']);
+	   $news->category_hubs()->sync($category_hub_id);
+	   
+	   $news->category_country_hubs()->sync($category_country_hub_id);
+
+	   $news->types()->attach($request['type_id']);
  
 		return redirect('news/index')->with('message', 'News Updated');
     }
@@ -355,4 +436,6 @@ class NewsController extends Controller
     {
         //
     }
+	
+
 }

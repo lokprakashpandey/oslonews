@@ -94,7 +94,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Tags</label>
 					<div class="col-sm-10">	 
-					 {!! Form::text('tags',null,array('id'=>'tags','class'=>'form-control')) !!}
+					 {!! Form::text('tags',$tag_selected,array('id'=>'tags','class'=>'form-control')) !!}
 						
 					</div>
 				</div>
@@ -130,7 +130,6 @@
 </script>
 
 <script>
-
 var tags = [
     @foreach ($tags as $tag)
     {tag: "{{$tag}}" },

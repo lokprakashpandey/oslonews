@@ -201,7 +201,7 @@ $(document).scroll(function(e){
 			<div class="col-md-2">
 
 				@include('sidemenudefault')
-				@include('twitter_feed')
+				@include('twitter_feed') 
 
 			 </div><!-- //col -->
 						
